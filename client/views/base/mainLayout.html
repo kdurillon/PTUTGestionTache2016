@@ -8,10 +8,27 @@
     <nav class="navbar navbar-static-top navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="{{pathFor route='home'}}">
                     <img alt="Brand" src="/image/logo.png">
                 </a>
             </div>
+            <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse ">
+            {{#if currentUser}}
+                <ul class="nav navbar-nav">
+                    <li><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-plus"></span>   Tâches</a></li>
+                    <li><a href="{{pathFor route='newCategorie'}}"><span class="glyphicon glyphicon-tag"></span>   Catégories</a></li>
+                    <li><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-file"></span>   Modèles</a></li>
+                    <li><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-th-list"></span>   Mailing lists</a></li>
+                    <li><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-pencil"></span>   Formulaires</a></li>
+                    <li><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-wrench"></span>   Paramètres</a></li>
+                </ul>
+            {{/if}}
             <div class="navbar-form navbar-right" role="search">
                 {{#if currentUser}}
                     <a class="btn btn-default logout">Se déconnecter</a>
@@ -19,6 +36,7 @@
                     {{> login}}
                 {{/if}}
 
+            </div>
             </div>
         </div>
     </nav>
