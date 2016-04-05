@@ -1,0 +1,27 @@
+<template name="register">
+    {{setTitle 'Inscription'}}
+    <h1 class="text-center" >Inscription</h1>
+    <form id="formRegister" class="register" method="post" role="form">
+        <fieldset>
+            <div class="form-group">
+                <label class="control-label">Adresse mail</label>
+                <input class="form-control" type="email" name="email_register" placeholder="Entrez l'adresse mail"
+                       data-error="Cette adresse mail est invalide" required />
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mot de passe</label>
+                <input class="form-control" type="password" name="password_register" id="registerPassword" placeholder="Entrez le mot de passe"
+                       data-minlength="8" data-error="8 caractères minimum" required />
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Confirmation du mot de passe</label>
+                <input class="form-control" type="password" name="confirmation_password_register" placeholder="Entrez de nouveau le mot de passe"
+                       data-match="#registerPassword" data-match-error="Les mots de passes ne correspondent pas" required />
+                <div class="help-block with-errors"></div>
+            </div>
+            <input type="submit" class="btn btn-success pull-right" value="Valider" />
+        </fieldset>
+    </form>
+</template>

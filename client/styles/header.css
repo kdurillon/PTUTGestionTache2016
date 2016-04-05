@@ -1,0 +1,13 @@
+.navbar-brand
+{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.navbar-brand > img
+{
+    max-height: 30px;
+    max-width: 30px;
+    vertical-align: middle;
+}
