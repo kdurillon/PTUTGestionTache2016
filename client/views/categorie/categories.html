@@ -1,6 +1,11 @@
-<template name="categorieHome">
+<template name="categoriesHome">
     {{setTitle 'Mes categories'}}
+    <h2>Mes catégories</h2>
     <ul class="list-group">
-
+        {{#each List}}
+           <li class="list-group-item"><span class="glyphicon glyphicon-stop" style="color:{{couleur}};"></span>    {{nom}}</li>
+        {{/each}}
+        <li class="list-group-item disabled"></li>
+        <li class="list-group-item"><a class="btn btn-primary" href="{{pathFor route='newCategorie'}}">Nouvelle catégorie</a></li>
     </ul>
 </template>
