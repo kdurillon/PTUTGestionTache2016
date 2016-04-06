@@ -3,3 +3,5 @@ Template.categoriesHome.helpers({
        return categories.find().fetch();
    }
 });
+
+
