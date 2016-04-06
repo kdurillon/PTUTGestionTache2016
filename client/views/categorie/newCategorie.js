@@ -14,12 +14,12 @@ Template.newCategorie.rendered = function() {
             }
         },
         colorSelectors: {
-            'default': '#777777',
-            'primary': '#337ab7',
-            'success': '#5cb85c',
-            'info': '#5bc0de',
-            'warning': '#f0ad4e',
-            'danger': '#d9534f'
+            '#777777': '#777777',
+            '#337ab7': '#337ab7',
+            '#5cb85c': '#5cb85c',
+            '#5bc0de': '#5bc0de',
+            '#f0ad4e': '#f0ad4e',
+            '#d9534f': '#d9534f'
         }
     });
 };
