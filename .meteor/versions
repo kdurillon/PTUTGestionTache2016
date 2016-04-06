@@ -60,7 +60,6 @@ logging@1.0.10
 mdg:validation-error@0.5.1
 meteor@1.1.12
 meteor-base@1.0.2
-michalvalasek:autoform-bootstrap-colorpicker@0.1.0
 minifier-css@1.1.9
 minifier-js@1.1.9
 minimongo@1.0.12
@@ -84,6 +83,7 @@ reactive-dict@1.1.5
 reactive-var@1.0.7
 reload@1.1.6
 retry@1.0.5
+risul:bootstrap-colorpicker@2.3.0
 routepolicy@1.0.8
 service-configuration@1.0.7
 session@1.1.3
