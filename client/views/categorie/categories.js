@@ -10,7 +10,7 @@ Template.categoriesHome.rendered = function() {
 
 Template.categoriesHome.events({
     'click .modif_categorie': function() {
-        console.log(this);
+        Router.go(Utils.pathFor('updateCategorie',{_id: this._id}));
     },
     'click .delete_categorie': function() {
         categories.remove(this._id);
