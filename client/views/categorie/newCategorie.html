@@ -1,6 +1,6 @@
 <template name="newCategorie">
     {{setTitle 'Nouvelle categorie'}}
-    <h1 class="text-center" >Nouvelle catégorie</h1>
+    <h1 class="text-center">Nouvelle catégorie</h1>
     {{#autoForm collection="categorie" collection="categories" id="newCategorie" type="insert"}}
         {{> afQuickField name="nom"}}
         <div class="form-group{{#if afFieldIsInvalid name='couleur'}} has-error{{/if}}">

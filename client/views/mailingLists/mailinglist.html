@@ -1,76 +1,70 @@
 <template name="mailingList">
+    {{setTitle 'Mailing lists'}}
+    <h1 class="text-center">Mailing lists</h1>
 
-    <h1 id="titreMailingList" class="  ">Mailing lists</h1>
-
-      <div id="listeMailingList" class="dispoMailingList2">
-
-        <!--  <legend>
-              Liste des mailing list
-          </legend>-->
-
-          <fieldset>
-              <div id="liste">
-
-                  <select  id="selectListe" class="form-control">
-                        <option>Ajouter une liste de mails</option>
-                      {{#each Mails}}
-                      <option value={{_id}}>{{name}}</option>
-                      {{/each}}
-                  </select>
-              </div>
-
-          </fieldset>
-
-      </div>
-
-
-    <div id="formMailing" class="dispoMailingList" method="POST" action="">
-        <legend>
-        Création d'une mailing list 
-        </legend>
-        <fieldset>
-            <div class="form-group">
-            <input id="inputNomML" type="text" placeholder="Nom de la mailing list" class="form-control "><br>
-            </div>
-            <div class="form-group">
-            <button id="btValiderNomML" class=' btn btn-default'>Changer titre</button>
-            </div>
-            <div class="form-group">
-            <input id="inputTextMail" type="email" placeholder="Nouveau mail" class="form-control ">
-            </div>
-            <div class="form-group">
-            <button id="btAjouterMailML" class=' btn btn-default'>Ajouter Mail</button>
-            <div id="mailError" class="text-center mailError"></div>
-            </div>
-        </fieldset>
+    <div class="row">
+        <select id="selectListe" class="form-control col-md-12">
+            <option value="">Ajouter une liste de mails</option>
+            {{#each mailingList}}
+                <option value={{_id}}>{{name}}</option>
+            {{/each}}
+        </select>
     </div>
 
-    <div id="apercuMailingList" class="dispoMailingList">
-         <legend>
-        Aperçu de la mailing list 
-        </legend>
-        <fieldset>
-            <table id="tableApercu">
-            <tr>
-                <th id="thtableApercu" >
-                    <div id="NomapercuML" class="text-center"></div>
-                </th>
-                <th>
-                    <button id="buttonSupMailingList" class='buttonMod btn btn-default'>Supprimer</button>
-                    <span id='supList' class='supList'>Supprimer ? <span id='supListok' class='supListok cursor glyphicon glyphicon-ok'></span>
-                        <span class='remove2 cursor glyphicon glyphicon-remove'></span></span>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <button id="buttonEnrMailingList" class='btn btn-default'>Enregistrer</button>
-                    <button id="buttonModMailingList" class='buttonMod btn btn-default'>Enregistrer les modifications</button>
-                </td>
-                <td>
-                </td>
-            </tr>
-            </table>
-        </fieldset>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Création d'une mailing list </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input id="inputNomML" type="text" placeholder="Nom de la mailing list" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button id="btValiderNomML" class='btn btn-default'>Modifier le titre</button>
+                    </div>
+                    <div class="form-group">
+                        <input id="inputTextMail" type="email" placeholder="Nouveau mail" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button id="btAjouterMailML" class=' btn btn-default'>Ajouter Mail</button>
+                        <div id="mailError" class="text-center mailError"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{#if Mails.name}}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Aperçu de la mailing list</div>
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h3>{{Mails.name}}</h3>
+                        {{#if Mails._id}}
+                        <button id="{{Mails._id}}" class='deleteMailing btn btn-default'>Supprimer</button>
+                        {{/if}}
+                    </div>
+                    <hr>
+                    <div id="apercuMail" class="row">
+                        {{#each Mails.emails}}
+                            <input class="form-control" type="email" value="{{this}}">
+                            <input id="{{this}}" class="btn btn-danger deleteMail" type="submit" value="Supprimer">
+                        {{/each}}
+                    </div>
+                    <div>
+                    {{#if Mails.name}}
+                        {{#if Mails.emails}}
+                        <button class='saveMailing btn btn-default pull-right'>Enregistrer</button>
+                        {{/if}}
+                    {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
     </div>
 
 </template>
