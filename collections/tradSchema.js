@@ -1,5 +1,5 @@
 SimpleSchema.messages({
-    required: "[label] est requis",
+    required: "[label] est un champ requis",
     "passwordMismatch": "Les mots de passes ne correspondent pas",
     maxNumber: "[label] ne peut excéder [max]",
     regEx: [

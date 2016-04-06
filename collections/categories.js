@@ -8,10 +8,7 @@ Globals.schemas.Categorie = new SimpleSchema({
     },
     couleur: {
         type: String,
-        label: "Couleur",
-        autoform: {
-            type: "bootstrap-colorpicker"
-        }
+        label: "Couleur"
     },
     description: {
         type: String,
