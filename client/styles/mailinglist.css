@@ -38,21 +38,29 @@
 #tableApercu{
     width:100%;
 }
-tr td:first-child,tr th:first-child{
+#tableApercu tr td:first-child,tr th:first-child{
     width: 330px;
+
 }
-tr td:nth-child(2){
+#tableApercu tr th:first-child{
+    height: 100px;
+}
+#tableApercu tr td:nth-child(2){
     width: 150px;
 }
-td{
+#tableApercu tr td{
     font-size: 1.1em;
     margin: 10px;
     text-align: center;
     padding: 5px;
 }
-.val,.mod{
+
+.val,.mod,.supList,.buttonMod{
     display:none;
 
+}
+.supList span{
+    padding: 5px;
 }
 .modMail{
     display:none;
@@ -88,6 +96,7 @@ legend{
     border: 2px solid white;
     border-radius:8px;
     padding-bottom: 30px;
+    background-color: #ddd;
 }
 .dispoMailingList2{
     margin:auto;
@@ -109,44 +118,23 @@ legend{
     margin: 10px;
     height:30px!important;
 }
-.buttonMailingList
-{
-    width: 150px;
-    background-color:  black;
-    color:white;
-    opacity: 0.8;
-    border-radius: 4px;
-    padding: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid black;
-}
-.buttonMailingList:hover{
-    background-color: darkslategray;
-}
+
+
 .val span, .mod span{
    padding-left: 5px;
 }
 
-#buttonEnrMailingList{
-    margin-top: 30px;
+#buttonEnrMailingList,#buttonModMailingList{
+    margin-top: 50px;
     display:none;
 }
 #formMailing{
     text-align: left;
 }
-#mailError
+.mailError
 {
-    padding-top: 10px;
+    /*border: 1px solid red;*/
+    padding: 5px;
     height:30px;
     color:red;
 }
-
-/*
-.supMail{
-    position: absolute;
-    display: inline-block;
-    right:0px;
-    border: 1px solid black;
-}
-*/

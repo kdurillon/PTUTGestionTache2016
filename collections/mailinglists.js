@@ -10,9 +10,9 @@ Mails.allow({
         // can only change your own documents
         return true;
     },
-    remove: function (userId, doc) {
+    remove: function () {
         // can only remove your own documents
-        return doc.owner === userId;
+        return true;
     },
     fetch: ['owner']
 

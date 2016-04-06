@@ -4,17 +4,17 @@
 
       <div id="listeMailingList" class="dispoMailingList2">
 
-          <legend>
+        <!--  <legend>
               Liste des mailing list
-          </legend>
+          </legend>-->
 
           <fieldset>
               <div id="liste">
 
-                  <select  id="selectListe">
+                  <select  id="selectListe" class="form-control">
                         <option>Ajouter une liste de mails</option>
                       {{#each Mails}}
-                      <option>{{name}}</option>
+                      <option value={{_id}}>{{name}}</option>
                       {{/each}}
                   </select>
               </div>
@@ -29,9 +29,19 @@
         Création d'une mailing list 
         </legend>
         <fieldset>
-            <input id="inputNomML" type="text" placeholder="Nom de la mailing list" class="inputTextMailingLists"><button id="btValiderNomML" class='buttonMailingList'>Changer titre</button><br>
-            <input id="inputTextMail" type="email" placeholder="Nouveau mail" class="inputTextMailingLists"><button id="btAjouterMailML" class='buttonMailingList'>Ajouter Mail</button><br>
-            <div id="mailError" class="text-center"></div>
+            <div class="form-group">
+            <input id="inputNomML" type="text" placeholder="Nom de la mailing list" class="form-control "><br>
+            </div>
+            <div class="form-group">
+            <button id="btValiderNomML" class=' btn btn-default'>Changer titre</button>
+            </div>
+            <div class="form-group">
+            <input id="inputTextMail" type="email" placeholder="Nouveau mail" class="form-control ">
+            </div>
+            <div class="form-group">
+            <button id="btAjouterMailML" class=' btn btn-default'>Ajouter Mail</button>
+            <div id="mailError" class="text-center mailError"></div>
+            </div>
         </fieldset>
     </div>
 
@@ -41,8 +51,25 @@
         </legend>
         <fieldset>
             <table id="tableApercu">
-            <tr><th id="thtableApercu" ><div id="NomapercuML" class="text-center"></div></th><th></th></tr>
-            <td><button id="buttonEnrMailingList" class='buttonMailingList'>Enregistrer</button></td><td></td></table>
+            <tr>
+                <th id="thtableApercu" >
+                    <div id="NomapercuML" class="text-center"></div>
+                </th>
+                <th>
+                    <button id="buttonSupMailingList" class='buttonMod btn btn-default'>Supprimer</button>
+                    <span id='supList' class='supList'>Supprimer ? <span id='supListok' class='supListok cursor glyphicon glyphicon-ok'></span>
+                        <span class='remove2 cursor glyphicon glyphicon-remove'></span></span>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <button id="buttonEnrMailingList" class='btn btn-default'>Enregistrer</button>
+                    <button id="buttonModMailingList" class='buttonMod btn btn-default'>Enregistrer les modifications</button>
+                </td>
+                <td>
+                </td>
+            </tr>
+            </table>
         </fieldset>
     </div>
 
