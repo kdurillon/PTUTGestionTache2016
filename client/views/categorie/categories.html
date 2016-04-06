@@ -3,7 +3,19 @@
     <h2>Mes catégories</h2>
     <ul class="list-group">
         {{#each List}}
-           <li class="list-group-item"><h5><span class="glyphicon glyphicon-stop" style="color:{{couleur}};"></span> {{nom}}<small> - {{description}}</small></h5></li>
+           <li class="list-group-item clearfix">
+               <span class="glyphicon glyphicon-stop" style="color:{{couleur}};"></span>
+               {{nom}}
+               <small> - {{description}}</small>
+               <span class="pull-right">
+                   <button class="btn btn-xs btn-info modif_categorie">
+                       <span class="glyphicon glyphicon-pencil"></span>
+                   </button>
+                    <button class="btn btn-xs btn-warning delete_categorie">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+               </span>
+           </li>
         {{/each}}
         <li class="list-group-item disabled"></li>
         <li class="list-group-item"><a class="btn btn-primary" href="{{pathFor route='newCategorie'}}">Nouvelle catégorie</a></li>
