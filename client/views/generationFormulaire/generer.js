@@ -3,8 +3,10 @@
  */
 
 //************************************************************ chargement
+/*Template.formulaireGe
 
-
+$('.datepicker').datepicker();
+*/
 //************************************************************ événements
 
 
@@ -67,7 +69,7 @@ div =function(label,elmt,plus){
             break;
         }
     }
-    var html="<div class='form-group text-center'><label for='' class='control-label'>"+label+"</label>"+ctrl+"</div>";
+    var html="<div class='form-group '><label for='' class='control-label'>"+label+"</label>"+ctrl+"</div>";
 
     return html;
 }
