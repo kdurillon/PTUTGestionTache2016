@@ -1,0 +1,60 @@
+<template name="formulaireGenere">
+
+    <div class="form-group">
+        <label for="inputTitreGenForm" class="control-label">Titre de votre formulaire </label>
+        <input id="inputTitreGenForm" class="form-control" type="text"  placeholder="Entrez le titre..."/>
+    </div>
+    <div class="form-group text-center">
+        <button id="ajouterTitreFormGen" class=" btn btn-default">Ajouter</button>
+    </div>
+
+    <div class="form-group">
+        <label for="inputTextGenForm" class="control-label">Libellé de votre élément :</label>
+        <input id="inputTextGenForm" class="form-control" type="text"  placeholder="Votre question, le document demandé, le type de rendez-vous..."/>
+    </div>
+
+    <div class="form-group">
+        <label for="inputSelectGenForm" class="control-label ">L'élément :</label>
+        <select name="" id="inputSelectGenForm" class="form-control">
+            <option value="1">Une réponse simple</option>
+            <option value="2">Un message</option>
+            <option value="3">Une date et heure </option>
+            <option value="4">Un choix binaire</option>
+            <option value="5">Un choix multiple</option>
+            <option value="6">Une check list</option>
+            <option value="7">Upload de fichier</option>
+        </select>
+    </div>
+
+    <div id="elemtPlusformGen">
+        <label for="inputPlaceGenForm" class="control-label">Entrez l'indication de saisie de votre élément :</label>
+        <input id="inputPlaceGenForm" class="form-control" type="text"  placeholder="Votre question, le document demandé, le type de rendez-vous..."/>
+    </div>
+
+    <div class="form-group text-center">
+        <button id="ajouterElmtFormGen" class=" btn btn-default">Ajouter</button>
+    </div>
+
+
+    <fieldset>
+        <legend>
+            Aperçu du formulaire
+        </legend>
+        <div id="cadreApercuForm" class="form-group">
+
+            <h4 id="apercuForm" class="text-center"></h4>
+
+
+        </div>
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+</template>
