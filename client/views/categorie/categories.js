@@ -4,10 +4,6 @@ Template.categoriesHome.helpers({
    }
 });
 
-Template.categoriesHome.rendered = function() {
-    console.log(categories.find().fetch());
-};
-
 Template.categoriesHome.events({
     'click .modif_categorie': function() {
         Router.go(Utils.pathFor('updateCategorie',{_id: this._id}));

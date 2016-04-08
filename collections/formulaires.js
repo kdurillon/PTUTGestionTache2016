@@ -1,7 +1,3 @@
-/**
- * Created by lp on 06/04/2016.
- */
-
 formulaires = new Mongo.Collection("formulaires");
 
 Globals.schemas.Formulaire = new SimpleSchema({
@@ -11,16 +7,16 @@ Globals.schemas.Formulaire = new SimpleSchema({
         label: "Nom du formulaire"
     },
     elements_labels :{
-        type:[String],
-        label:"labels"
+        type: [String],
+        label: "labels"
     },
     elements_types :{
-        type:[String],
-        label:"types"
+        type: [String],
+        label: "types"
     },
     elements_caracteristiques :{
-        type:[String],
-        label:"caractéristiques"
+        type: [String],
+        label: "caractéristiques"
     }
 
 });
