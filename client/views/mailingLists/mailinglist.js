@@ -1,11 +1,29 @@
 /**
  * Initialisation des variables de session
  */
-Meteor.startup(function(){
-    Session.set("idMailingList", "");
-    Session.set("nameMailingList", "");
-    Session.set("emailsMailingList", []);
-});
+Template.mailingList.rendered = function() {
+  Session.set("idMailingList", "");
+  Session.set("nameMailingList", "");
+  Session.set("emailsMailingList", []);
+  var validatorOptions = {
+    custom: {
+      unique_email: function ($el) {
+        var email = $el.val();
+        return !doublonEmail(email);
+      },
+        unique_name: function ($el) {
+            var name = $el.val();
+            return !doublonName(name);
+        }
+    },
+    errors: {
+        unique_email: "L'adresse mail existe déjà!",
+        unique_name: "Le nom existe déjà!"
+    }
+  };
+  $('#formNameMailing').validator(validatorOptions);
+  $('#formEmailMailing').validator(validatorOptions);
+};
 
 /**
  * Helper
@@ -19,54 +37,39 @@ Template.mailingList.helpers({
     var _id = emailsBd ? emailsBd._id : Session.get('idMailingList');
     var name = Session.get('nameMailingList');
     var emails = _.uniq(Session.get('emailsMailingList'));
-
     return {
       _id: _id,
       name: name,
       emails: emails
     }
   }
-
 });
 
 /**
- * Event
+ * Events
  */
 Template.mailingList.events({
-  "click #btValiderNomML":function(){
-    var nom = $("#inputNomML").val();
-    if(nom){
+  "submit #formNameMailing":function(event){
+    if (!event.isDefaultPrevented()) {
+      event.preventDefault();
+
+      var nom = $("#inputNomML").val();
       Session.set('nameMailingList', nom);
       $("#inputNomML").val("");
     }
   },
 
-  "click #btAjouterMailML":function(){
-    var email = ($("#inputTextMail").val());
+  "submit #formEmailMailing":function(event){
+    if (!event.isDefaultPrevented()) {
+      event.preventDefault();
 
-    if(validationMail(email) && !doublonEmail(email)) {
-
-      $("#mailError").empty();
-
-      var emailsBd = MailingList.findOne({_id : Session.get('idMailingList')});
+      var email = ($("#inputTextMail").val());
       var emails = Session.get('emailsMailingList');
-      if(emailsBd){
-        emails = emails.concat(emailsBd.emails);
-      }
       emails.push(email);
       Session.set('emailsMailingList', emails);
-      $("#inputTextMail").val('');
-    }
-    else {
-      if(doublonEmail(email)){
-        $("#mailError").html("l'adresse Email existe déjà");
-      }
-      else{
-        $("#mailError").html("Adresse Email erronée");
-      }
-    }
 
-    $("#inputTextMail").focus();
+      $("#inputTextMail").val('').focus();
+    }
   },
 
   "click .deleteMail": function(event) {
@@ -77,15 +80,31 @@ Template.mailingList.events({
   },
 
   "click .saveMailing": function() {
-    var emailsBd = MailingList.findOne({_id : Session.get('idMailingList')});
-    if(!emailsBd) {
-      MailingList.insert({"name": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
-      swal("Création","Mailing list créé", "success");
+    var error = false;
+    var emails = $('.modifyMail').map(
+        function(){
+          var email = $(this).val();
+          if (validationMail(email)) {
+            return email;
+          }else {
+            error = true;
+          }
+        }).get();
+    if(!error) {
+      Session.set('emailsMailingList', emails);
+      var emailsBd = MailingList.findOne({_id : Session.get('idMailingList')});
+      if(!emailsBd) {
+        MailingList.insert({"name": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
+        swal("Création","Mailing list créé", "success");
+      }else {
+        MailingList.update(Session.get('idMailingList'), {$set: { name: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
+        swal("Modification","Mailing list modifié", "success");
+      }
+      resetApercu();
     }else {
-      MailingList.update(Session.get('idMailingList'), {$set: { name: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
-      swal("Création","Mailing list modifié", "success");
+      swal("Erreur!","Un des emails est invalide!", "error");
     }
-    resetApercu();
+
   },
 
   "click .deleteMailing":function(event) {
@@ -99,45 +118,48 @@ Template.mailingList.events({
           closeOnConfirm: false
         },
         function(){
+          resetApercu();
           MailingList.remove(id);
-          $("#selectListe").val("Ajouter une liste de mails");
-          $(".buttonMod").hide();
           swal("Suppression!", "La mailing list à été supprimé.", "success");
         });
-    resetApercu();
+
   },
 
   "change #selectListe":function(){
-    resetApercu();
-    var id= $('#selectListe').val();
+    var id = $('#selectListe').val();
     if(id) {
       var mailsBd = MailingList.findOne({_id : id});
       Session.set("idMailingList", id);
       Session.set("nameMailingList", mailsBd.name);
       Session.set("emailsMailingList", mailsBd.emails);
     }
-
   }
 
 });
 
-  /******************************************************************* Fonctions************/
+/**
+ * Fonctions
+ */
+validationMail = function (email) {
+  return SimpleSchema.RegEx.Email.test(email);
+};
 
-  validationMail = function (email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-  };
+doublonEmail = function (email) {
+  var emailExist = (_.findWhere(Session.get('emailsMailingList'), email));
+  return !!emailExist;
+};
 
-  doublonEmail = function (email) {
-    var emails = (_.findWhere(Session.get('emailsMailingList'), email));
-    return !!emails;
-  };
+doublonName = function (name) {
+    var nameExist = (_.findWhere(MailingList.find().fetch(), {name: name}));
+    return !!nameExist;
+}
 
-  resetApercu = function(){
-    Session.set("idMailingList", "");
-    Session.set("nameMailingList", "");
-    Session.set("emailsMailingList", []);
-  };
+resetApercu = function(){
+  $('#selectListe').prop('selectedIndex',0);
+  Session.set("idMailingList", "");
+  Session.set("nameMailingList", "");
+  Session.set("emailsMailingList", []);
+};
 
 
 
