@@ -27,8 +27,14 @@ Template.updateCategorie.rendered = function() {
 AutoForm.addHooks('updateCategorie', {
     after: {
         update: function() {
-                sweetAlert({   title: "Réussi !",   text: "La catégorie à bien été mise à jour",   type: "success", confirmButtonText: "OK"}, function(){ Router.go(Utils.pathFor('categoriesHome')) });
-
+            sweetAlert({
+                title: "Réussi !",
+                text: "La catégorie à bien été mise à jour",
+                type: "success",
+                confirmButtonText: "OK"
+            }, function(){
+                Router.go(Utils.pathFor('categoriesHome'))
+            });
         }
     }
 },true);

@@ -30,10 +30,10 @@ Template.mailingList.rendered = function() {
  */
 Template.mailingList.helpers({
   'mailingList': function(){
-    return MailingList.find().fetch();
+    return mailingList.find().fetch();
   },
   'Mails': function() {
-    var emailsBd = MailingList.findOne({_id : Session.get('idMailingList')});
+    var emailsBd = mailingList.findOne({_id : Session.get('idMailingList')});
     var _id = emailsBd ? emailsBd._id : Session.get('idMailingList');
     var name = Session.get('nameMailingList');
     var emails = _.uniq(Session.get('emailsMailingList'));
@@ -53,7 +53,7 @@ Template.mailingList.events({
     if (!event.isDefaultPrevented()) {
       event.preventDefault();
 
-      var nom = $("#inputNomML").val();
+      var nom = $("#inputNomML").val().toLowerCase();
       Session.set('nameMailingList', nom);
       $("#inputNomML").val("");
     }
@@ -63,7 +63,7 @@ Template.mailingList.events({
     if (!event.isDefaultPrevented()) {
       event.preventDefault();
 
-      var email = ($("#inputTextMail").val());
+      var email = $("#inputTextMail").val().toLowerCase();
       var emails = Session.get('emailsMailingList');
       emails.push(email);
       Session.set('emailsMailingList', emails);
@@ -83,7 +83,7 @@ Template.mailingList.events({
     var error = false;
     var emails = $('.modifyMail').map(
         function(){
-          var email = $(this).val();
+          var email = $(this).val().toLowerCase();
           if (validationMail(email)) {
             return email;
           }else {
@@ -92,12 +92,12 @@ Template.mailingList.events({
         }).get();
     if(!error) {
       Session.set('emailsMailingList', emails);
-      var emailsBd = MailingList.findOne({_id : Session.get('idMailingList')});
+      var emailsBd = mailingList.findOne({_id : Session.get('idMailingList')});
       if(!emailsBd) {
-        MailingList.insert({"name": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
+        mailingList.insert({"name": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
         swal("Création","Mailing list créé", "success");
       }else {
-        MailingList.update(Session.get('idMailingList'), {$set: { name: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
+        mailingList.update(Session.get('idMailingList'), {$set: { name: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
         swal("Modification","Mailing list modifié", "success");
       }
       resetApercu();
@@ -119,7 +119,7 @@ Template.mailingList.events({
         },
         function(){
           resetApercu();
-          MailingList.remove(id);
+          mailingList.remove(id);
           swal("Suppression!", "La mailing list à été supprimé.", "success");
         });
 
@@ -128,7 +128,7 @@ Template.mailingList.events({
   "change #selectListe":function(){
     var id = $('#selectListe').val();
     if(id) {
-      var mailsBd = MailingList.findOne({_id : id});
+      var mailsBd = mailingList.findOne({_id : id});
       Session.set("idMailingList", id);
       Session.set("nameMailingList", mailsBd.name);
       Session.set("emailsMailingList", mailsBd.emails);
@@ -150,7 +150,7 @@ doublonEmail = function (email) {
 };
 
 doublonName = function (name) {
-    var nameExist = (_.findWhere(MailingList.find().fetch(), {name: name}));
+    var nameExist = (_.findWhere(mailingList.find().fetch(), {name: name}));
     return !!nameExist;
 }
 

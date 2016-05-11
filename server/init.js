@@ -1,5 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-
 Meteor.startup(function () {
     UploadServer.init({
         tmpDir: process.cwd() + '/../../../../../uploads/tmp',

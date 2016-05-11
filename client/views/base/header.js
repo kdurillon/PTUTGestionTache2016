@@ -3,4 +3,5 @@ Template.header.helpers({
         if(Router.current().route._path === path){
             return "active";
         }
-}});
+    }
+});

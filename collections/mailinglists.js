@@ -1,6 +1,6 @@
-MailingList = new Mongo.Collection("mailinglists");
+mailingList = new Mongo.Collection("mailinglists");
 
-MailingList.allow({
+mailingList.allow({
 
     insert: function () {
         // the user must be logged in, and the document must be owned by the user

@@ -1,4 +1,4 @@
-Template.tacheMailingList.rendered = function() {
+Template.tacheMail.rendered = function() {
     $("#insertTag").tagsinput();
     $('.bootstrap-tagsinput').addClass('form-control');
     $('.datepicker').datetimepicker({
@@ -11,7 +11,7 @@ Template.tacheMailingList.rendered = function() {
     });
 };
 
-Template.tacheMailingList.helpers({
+Template.tacheMail.helpers({
     categorieOptions: function() {
         return categories.find().map(function (c) {
             return {label: c.nom, value: c._id};
@@ -24,7 +24,7 @@ Template.tacheMailingList.helpers({
     }
 });
 
-Template.tacheMailingList.events({
+Template.tacheMail.events({
     "change .select_categorie":function(event){
         var id = $(event.target).val();
         if(!_.isEmpty(id)) {
@@ -34,7 +34,7 @@ Template.tacheMailingList.events({
     }
 });
 
-AutoForm.addHooks('tacheMailingList', {
+AutoForm.addHooks('tacheMail', {
     after: {
         insert: function() {
             sweetAlert({
