@@ -3,6 +3,7 @@ SimpleSchema.messages({
     "passwordMismatch": "Les mots de passes ne correspondent pas",
     maxNumber: "[label] ne peut excéder [max]",
     regEx: [
+        {msg: "[label] ne correspond pas à ce qui est attendu"},
         {exp: SimpleSchema.RegEx.Email, msg: "[label] doit être une adresse mail valide"}
     ],
     alreadyExist: "[label] existe déjà"

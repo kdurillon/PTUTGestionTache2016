@@ -12,8 +12,8 @@ Template.mailingList.rendered = function() {
         return !doublonEmail(email);
       },
         unique_name: function ($el) {
-            var name = $el.val();
-            return !doublonName(name);
+            var nom = $el.val();
+            return !doublonName(nom);
         }
     },
     errors: {
@@ -35,11 +35,11 @@ Template.mailingList.helpers({
   'Mails': function() {
     var emailsBd = mailingList.findOne({_id : Session.get('idMailingList')});
     var _id = emailsBd ? emailsBd._id : Session.get('idMailingList');
-    var name = Session.get('nameMailingList');
+    var nom = Session.get('nameMailingList');
     var emails = _.uniq(Session.get('emailsMailingList'));
     return {
       _id: _id,
-      name: name,
+      nom: nom,
       emails: emails
     }
   }
@@ -94,10 +94,10 @@ Template.mailingList.events({
       Session.set('emailsMailingList', emails);
       var emailsBd = mailingList.findOne({_id : Session.get('idMailingList')});
       if(!emailsBd) {
-        mailingList.insert({"name": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
+        mailingList.insert({"nom": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
         swal("Création","Mailing list créé", "success");
       }else {
-        mailingList.update(Session.get('idMailingList'), {$set: { name: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
+        mailingList.update(Session.get('idMailingList'), {$set: { nom: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
         swal("Modification","Mailing list modifié", "success");
       }
       resetApercu();
@@ -130,7 +130,7 @@ Template.mailingList.events({
     if(id) {
       var mailsBd = mailingList.findOne({_id : id});
       Session.set("idMailingList", id);
-      Session.set("nameMailingList", mailsBd.name);
+      Session.set("nameMailingList", mailsBd.nom);
       Session.set("emailsMailingList", mailsBd.emails);
     }
   }
@@ -149,8 +149,8 @@ doublonEmail = function (email) {
   return !!emailExist;
 };
 
-doublonName = function (name) {
-    var nameExist = (_.findWhere(mailingList.find().fetch(), {name: name}));
+doublonName = function (nom) {
+    var nameExist = (_.findWhere(mailingList.find().fetch(), {nom: nom}));
     return !!nameExist;
 }
 

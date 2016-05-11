@@ -6,10 +6,9 @@ Globals.schemas.Categorie = new SimpleSchema({
         max: 50,
         label: "Nom de la catégorie",
         custom: function(){
-                if(categories.findOne({nom: this.value})){
-                    console.log(this.value);
-                    return "alreadyExist";
-                }
+            if(categories.findOne({nom: this.value})){
+                return "alreadyExist";
+            }
         }
     },
     couleur: {

@@ -1,6 +1,10 @@
 taches = new Mongo.Collection("taches");
 
 Globals.schemas.Taches = new SimpleSchema({
+    nom: {
+        type: String,
+        max: 100
+    },
     tag: {
         type: String,
         max: 100,
@@ -12,7 +16,14 @@ Globals.schemas.Taches = new SimpleSchema({
     },
     mailingList: {
         type: String,
-        label: 'Mailing List'
+        label: 'Mailing List',
+        optional: true
+    },
+    emails: {
+        type: [String],
+        label: 'Emails',
+        optional: true,
+        regEx: SimpleSchema.RegEx.Email
     },
     date: {
         type: String
@@ -29,6 +40,30 @@ Globals.schemas.Taches = new SimpleSchema({
                 type: "textarea",
                 rows: 8
             }
+        }
+    },
+    typeTache: {
+        type: String,
+        autoform: {
+           type: 'hidden'
+        }
+    },
+    createdAt: {
+        type: String,
+        denyUpdate: true,
+        autoValue: function(){
+            if(this.isInsert){
+                return moment().format('L - LT');
+            }
+            else if(this.isUpsert){
+                return {$setOnInsert: moment().format('L - LT')};
+            }
+            else{
+                this.unset();
+            }
+        },
+        autoform: {
+            omit: true
         }
     }
 });
