@@ -1,0 +1,54 @@
+<template name="tacheMailingList">
+    {{setTitle 'Tâches mailing list'}}
+    <h1 class="text-center" >Tâches Mailing List</h1>
+
+    <hr>
+
+    {{#autoForm collection="taches" type="insert" id="newTache"}}
+        {{> afQuickField id="insertTag" name="tag" data-role="tagsinput"}}
+        <div class="row">
+            <div class="col-sm-6">
+                {{> afQuickField name="mailingList" options=mailingListOptions firstOption="Mailing List"}}
+            </div>
+            <div class="col-sm-5">
+                {{> afQuickField class="select_categorie" name="categorie" options=categorieOptions firstOption="Catégorie"}}
+            </div>
+            <div class="col-sm-1">
+                <label>Couleur</label>
+                <div id="selectedColor"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group{{#if afFieldIsInvalid name='date'}} has-error{{/if}}">
+                    <label class="control-label">Date</label>
+                    <div class="input-group datepicker">
+                        {{> afFieldInput name="date"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='date'}}
+                        <span class="help-block">{{afFieldMessage name='date'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group{{#if afFieldIsInvalid name='heure'}} has-error{{/if}}">
+                    <label class="control-label">Heure</label>
+                    <div class="input-group timepicker">
+                        {{> afFieldInput name="heure"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='heure'}}
+                        <span class="help-block">{{afFieldMessage name='heure'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {{> afQuickField name="description"}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    {{/autoForm}}
+</template>
