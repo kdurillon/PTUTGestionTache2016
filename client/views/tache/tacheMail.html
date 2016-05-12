@@ -11,7 +11,7 @@
         {{> afQuickField name="emails"}}
         <div class="row">
             <div class="col-sm-6">
-                {{> afQuickField name="mailingList" options=getMailingList firstOption="Mailing List"}}
+                {{> afQuickField name="mailingList" options=getMailingListOption firstOption="Mailing List"}}
             </div>
             <div class="col-sm-5">
                 {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
-                    <label class="control-label">Date</label>
+                    <label class="control-label">Date programmée</label>
                     <div class="input-group datetimepicker">
                         {{> afFieldInput name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>

@@ -1,3 +1,11 @@
+Template.tacheHome.helpers({
+    optionsReactiveTable: function() {
+        return {
+            fields: ['titre', 'type', 'categorie', 'dateDebut', 'dateFin']
+        };
+    }
+});
+
 Template.tacheHome.events({
     "click .delete_tache": function() {
         var id = this._id;

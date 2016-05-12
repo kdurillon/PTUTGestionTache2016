@@ -45,7 +45,7 @@ Globals.schemas.Taches = new SimpleSchema({
            type: 'hidden'
         }
     },
-    createdAt: {
+    dateDebut: {
         type: String,
         denyUpdate: true,
         autoValue: function(){

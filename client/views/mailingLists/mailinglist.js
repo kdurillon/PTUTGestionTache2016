@@ -29,9 +29,6 @@ Template.mailingList.rendered = function() {
  * Helper
  */
 Template.mailingList.helpers({
-  'mailingList': function(){
-    return mailingList.find().fetch();
-  },
   'Mails': function() {
     var emailsBd = mailingList.findOne({_id : Session.get('idMailingList')});
     var _id = emailsBd ? emailsBd._id : Session.get('idMailingList');

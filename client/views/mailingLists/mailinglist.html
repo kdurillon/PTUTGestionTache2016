@@ -7,8 +7,8 @@
     <div class="row">
         <select id="selectListe" class="form-control col-md-12">
             <option value="">Ajouter une liste de mails</option>
-            {{#each mailingList}}
-                <option value={{_id}}>{{name}}</option>
+            {{#each getMailingList}}
+                <option value={{_id}}>{{nom}}</option>
             {{/each}}
         </select>
     </div>
