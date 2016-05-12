@@ -64,7 +64,7 @@
                     <td>{{titre}}</td>
                     <td>{{typeTache}}</td>
                     <td>{{categorie}}</td>
-                    <td>{{createdAt}}</td>
+                    <td>{{dateCreation}}</td>
                     <td>{{dateFin}}</td>
                     <td>
                         <button class="btn btn-xs btn-info info_tache">
@@ -80,7 +80,7 @@
         </table>
     </div>
 
-    {{> reactiveTable collection=getTache settings=optionsReactiveTable}}
+    {{> reactiveTable class="table table-striped table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
 </template>
 

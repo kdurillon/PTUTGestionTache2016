@@ -1,7 +1,7 @@
 Template.tacheHome.helpers({
     optionsReactiveTable: function() {
         return {
-            fields: ['titre', 'type', 'categorie', 'dateDebut', 'dateFin']
+            fields: ['titre', 'type', 'categorie', 'dateCreation', 'dateFin']
         };
     }
 });

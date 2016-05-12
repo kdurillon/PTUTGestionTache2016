@@ -5,7 +5,7 @@ Template.tacheMail.rendered = function() {
     $('.datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY - LT',
         locale: 'fr',
-        minDate: moment()
+        minDate: moment().add(10, 'm')
     });
     tinymce.init({
         selector: 'textarea',
