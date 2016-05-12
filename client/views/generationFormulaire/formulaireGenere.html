@@ -1,13 +1,17 @@
 <template name="formulaireGenere">
 
-    {{setTitle 'Formulaire'}}
+    {{setTitle 'Formulaires'}}
     <h1 class="text-center">Formulaires</h1>
+
+
+    <form id="formRegister" method="post" role="form">
     <div class="form-group">
         <label for="inputTitreGenForm" class="control-label">Titre de votre formulaire </label>
-        <input id="inputTitreGenForm" class="form-control" type="text"  placeholder="Entrez le titre..."/>
+        <input id="inputTitreGenForm" class="form-control" type="text"  placeholder="Entrez le titre..."  data-error="Donnez un titre à votre formulaire" required />
+        <div class="help-block with-errors"></div>
     </div>
     <div class="form-group text-center">
-        <button id="ajouterTitreFormGen" class=" btn btn-default">Ajouter</button>
+        <input id="ajouterTitreFormGen" class=" btn btn-default" value="Ajouter" type="button">
     </div>
 
     <div class="form-group">
@@ -21,20 +25,19 @@
             <option value="1">Une réponse simple</option>
             <option value="2">Un message</option>
             <option value="3">Une date et heure </option>
-            <option value="4">Un choix binaire</option>
-            <option value="5">Un choix multiple</option>
-            <option value="6">Une check list</option>
+            <option value="4">Un choix oui / non</option>
+            <option value="5">Un choix multiple à réponse unique</option>
+            <option value="6">Un choix multiple à réponses multiples</option>
             <option value="7">Upload de fichier</option>
         </select>
     </div>
 
-    <div id="elemtPlusformGen" class="form-group">
-        <label for="inputPlaceGenForm" class="control-label">Entrez l'indication de saisie de votre élément :</label>
-        <input id="inputPlaceGenForm" class="form-control" type="text"  placeholder="Votre question, le document demandé, le type de rendez-vous..."/>
+    <div id="repFormGen" class="form-group ">
+        <label id="repsGenForm" for="" class="control-label">Réponses :</label><br><br>
     </div>
 
     <div class="form-group text-center">
-        <button id="ajouterElmtFormGen" class=" btn btn-default">Ajouter</button>
+        <input id="ajouterElmtFormGen" class=" btn btn-default" value="Ajouter" type="button">
     </div>
 
 
@@ -44,10 +47,16 @@
         </legend>
         <div id="cadreApercuForm" class="form-group">
 
-            <h4 id="apercuForm" class="text-center"></h4>
+            <h3 id="apercuForm" class="text-center">Titre du formulaire</h3><br>
 
-
+            <div class="form-group text-center">
+            <input value="Envoyer" type="button" class="btn btn-success " >
+            <input value="Effacer" type="button"  class="btn btn-danger "></div>
         </div>
     </fieldset>
 
+        <input value="Enregistrer le formulaire" type="submit" class="btn btn-success pull-left">
+        <input value="Vider" type="reset"  class="btn btn-danger pull-right">
+
+    </form>
 </template>

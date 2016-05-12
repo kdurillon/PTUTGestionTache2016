@@ -1,13 +1,6 @@
-/**
- * Created by lp on 06/04/2016.
- */
-
-//************************************************************ chargement
-/*Template.formulaireGe
-
-$('.datepicker').datepicker();
-*/
-//************************************************************ événements
+Template.register.rendered = function() {
+    $('#formRegister').validator();
+};
 
 
 Template.formulaireGenere.events({
@@ -22,18 +15,22 @@ Template.formulaireGenere.events({
     "click #ajouterTitreFormGen" :function() {
     $("#apercuForm").html($("#inputTitreGenForm").val());
     },
+
     "change #inputSelectGenForm" : function(){
         switch($("#inputSelectGenForm").val()){
 
-            case "1":{
-                $("#elemtPlusformGen").html(" <label for='inputPlaceGenForm' class='control-label'>Entrez l\'indication de saisie de votre élément :</label>"+
-               " <input id='inputPlaceGenForm' class='form-control' type='text'  placeholder='Votre question, le document demandé, le type de rendez-vous...'/>");
+            case "5":{
+                $("#repFormGen").show();
                 break;
             }
-            case "2":{
-                $("#elemtPlusformGen").html("");
+            case "6":{
+               $("#repFormGen").show();
                 break;
             }
+            default:{
+                $("#repFormGen").hide();
+            }
+                
 
         }
 
@@ -62,12 +59,30 @@ div =function(label,elmt,plus){
         case "3":{
             ctrl="<input type='text' class='form-control datepicker' placeholder='"+plus+"' >";
             break;
-        }
+        //une date et une heure
         case "4":{
 
 
             break;
         }
+            //une date et une heure
+        case "5":{
+
+
+                break;
+            }
+            //une date et une heure
+        case "6":{
+
+
+                break;
+            }
+            //une date et une heure
+        case "7":{
+
+
+                break;
+            }
     }
     var html="<div class='form-group '><label for='' class='control-label'>"+label+"</label>"+ctrl+"</div>";
 
