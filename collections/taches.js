@@ -1,7 +1,7 @@
 taches = new Mongo.Collection("taches");
 
 Globals.schemas.Taches = new SimpleSchema({
-    nom: {
+    titre: {
         type: String,
         max: 100
     },
@@ -25,14 +25,11 @@ Globals.schemas.Taches = new SimpleSchema({
         optional: true,
         regEx: SimpleSchema.RegEx.Email
     },
-    date: {
-        type: String
+    dateFin: {
+        type: String,
+        optional: true
     },
-
-    heure: {
-        type: String
-    },
-    description: {
+    contenu: {
         type: String,
         max: 1000,
         autoform: {

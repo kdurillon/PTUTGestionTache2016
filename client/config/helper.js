@@ -12,26 +12,14 @@ UI.registerHelper('setTitle', function(title){
     document.title = title;
 });
 
-Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+UI.registerHelper('getCategorieOption', function() {
+    return categories.find().map(function (c) {
+        return {label: c.nom, value: c.nom};
+    });
+});
 
-    switch (operator) {
-        case '==':
-            return (v1 == v2) ? options.fn(this) : options.inverse(this);
-        case '===':
-            return (v1 === v2) ? options.fn(this) : options.inverse(this);
-        case '<':
-            return (v1 < v2) ? options.fn(this) : options.inverse(this);
-        case '<=':
-            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-        case '>':
-            return (v1 > v2) ? options.fn(this) : options.inverse(this);
-        case '>=':
-            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-        case '&&':
-            return (v1 && v2) ? options.fn(this) : options.inverse(this);
-        case '||':
-            return (v1 || v2) ? options.fn(this) : options.inverse(this);
-        default:
-            return options.inverse(this);
-    }
+UI.registerHelper('getMailingListOption', function() {
+    return mailingList.find().map(function (c) {
+        return {label: c.nom, value: c.nom};
+    });
 });

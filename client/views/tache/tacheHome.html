@@ -8,7 +8,7 @@
         <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Mailing List</h3>
+                    <h3 class="panel-title">Mail</h3>
                 </div>
                 <div class="panel-body">
                     <a href="{{pathFor route='tacheMail'}}" class="btn btn-success">Accéder</a>
@@ -61,11 +61,11 @@
             <tbody>
             {{#each taches}}
                 <tr>
-                    <td>{{nom}}</td>
+                    <td>{{titre}}</td>
                     <td>{{typeTache}}</td>
                     <td>{{categorie}}</td>
                     <td>{{createdAt}}</td>
-                    <td>{{date}} - {{heure}}</td>
+                    <td>{{dateFin}}</td>
                     <td>
                         <button class="btn btn-xs btn-info info_tache">
                             <span class="glyphicon glyphicon-info-sign"></span>
@@ -88,16 +88,18 @@
             <div class="modal-content">
 
                 <div class="modal-header text-center">
-                    <h4 class="modal-title">{{nom}}</h4>
+                    <h4 class="modal-title">{{titre}}</h4>
                 </div>
 
                 <div class="modal-body">
                     <ul>
-                        <li>Type : {{typeTache}}</li>
-                        <li>Catégorie : {{categorie}}</li>
-                        <li>Description : {{{description}}}</li>
-                        <li>Date de création : {{createdAt}}</li>
-                        <li>Date de fin : {{date}} - {{heure}}</li>
+                        <li><b>Type : </b>{{typeTache}}</li>
+                        <li><b>Catégorie : </b>{{categorie}}</li>
+                        <li><b>Contenu : </b>
+                            <div class="well">{{{contenu}}}</div>
+                        </li>
+                        <li><b>Date de création : </b>{{createdAt}}</li>
+                        <li><b>Date de fin : </b>{{dateFin}}</li>
                     </ul>
                 </div>
 

@@ -1,5 +1,6 @@
 Template.tacheHome.events({
     "click .delete_tache": function() {
+        var id = this._id;
         swal({
                 title: "Etes vous sûr?",
                 text: "La tâche sera définitivement supprimé!",
@@ -11,7 +12,7 @@ Template.tacheHome.events({
                 closeOnConfirm: false
             },
             function(){
-                taches.remove(this._id);
+                taches.remove(id);
                 swal("Suppression!", "La tâche à été supprimé.", "success");
             });
     },
@@ -23,3 +24,22 @@ Template.tacheHome.events({
         });
     }
 });
+
+AutoForm.addHooks('addTache', {
+    after: {
+        insert: function(error) {
+            if (error) {
+                swal("Erreur", "Erreur a l'insertion!", "error");
+            } else {
+                sweetAlert({
+                    title: "Réussi !",
+                    text: "La tâche à été créé correctement",
+                    type: "success",
+                    confirmButtonText: "OK"
+                }, function(){
+                    Router.go(Utils.pathFor('tacheHome'))
+                });
+            }
+        }
+    }
+},true);

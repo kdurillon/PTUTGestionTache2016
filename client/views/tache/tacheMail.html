@@ -4,17 +4,17 @@
 
     <hr>
 
-    {{#autoForm collection="taches" type="insert" id="tacheMail"}}
+    {{#autoForm collection="taches" type="insert" id="addTache"}}
         {{> afQuickField id="typeTache" name="typeTache"}}
-        {{> afQuickField name="nom"}}
+        {{> afQuickField name="titre"}}
         {{> afQuickField id="insertTag" name="tag" data-role="tagsinput"}}
         {{> afQuickField name="emails"}}
         <div class="row">
             <div class="col-sm-6">
-                {{> afQuickField name="mailingList" options=mailingListOptions firstOption="Mailing List"}}
+                {{> afQuickField name="mailingList" options=getMailingList firstOption="Mailing List"}}
             </div>
             <div class="col-sm-5">
-                {{> afQuickField class="select_categorie" name="categorie" options=categorieOptions firstOption="Catégorie"}}
+                {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
             </div>
             <div class="col-sm-1">
                 <label>Couleur</label>
@@ -22,34 +22,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group{{#if afFieldIsInvalid name='date'}} has-error{{/if}}">
+            <div class="col-sm-12">
+                <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
                     <label class="control-label">Date</label>
-                    <div class="input-group datepicker">
-                        {{> afFieldInput name="date"}}
+                    <div class="input-group datetimepicker">
+                        {{> afFieldInput name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
-                    {{#if afFieldIsInvalid name='date'}}
-                        <span class="help-block">{{afFieldMessage name='date'}}</span>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group{{#if afFieldIsInvalid name='heure'}} has-error{{/if}}">
-                    <label class="control-label">Heure</label>
-                    <div class="input-group timepicker">
-                        {{> afFieldInput name="heure"}}
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                    </div>
-                    {{#if afFieldIsInvalid name='heure'}}
-                        <span class="help-block">{{afFieldMessage name='heure'}}</span>
+                    {{#if afFieldIsInvalid name='dateFin'}}
+                        <span class="help-block">{{afFieldMessage name='dateFin'}}</span>
                     {{/if}}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                {{> afQuickField name="description"}}
+                {{> afQuickField name="contenu"}}
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>
