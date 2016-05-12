@@ -11,9 +11,10 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
-                    <label class="control-label">Date du rappel</label>
+                    <label class="control-label">Date du rappel : </label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Rappel activé
                     <div class="input-group datetimepicker">
-                        {{> afFieldInput name="dateFin"}}
+                        {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                     {{#if afFieldIsInvalid name='dateFin'}}

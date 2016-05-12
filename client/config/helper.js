@@ -20,14 +20,14 @@ UI.registerHelper('getCategorie', function() {
     return categories.find().fetch();
 });
 
+UI.registerHelper('getMailingList', function() {
+    return mailingList.find().fetch();
+});
+
 UI.registerHelper('getCategorieOption', function() {
     return categories.find().map(function (c) {
         return {label: c.nom, value: c.nom};
     });
-});
-
-UI.registerHelper('getMailingList', function() {
-    return mailingList.find().fetch();
 });
 
 UI.registerHelper('getMailingListOption', function() {

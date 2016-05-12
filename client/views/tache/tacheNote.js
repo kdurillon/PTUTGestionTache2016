@@ -5,7 +5,7 @@ Template.tacheNote.rendered = function() {
     $('.datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY - LT',
         locale: 'fr',
-        minDate: moment()
+        minDate: moment().add(10, 'm')
     });
     tinymce.init({
         selector: 'textarea',
@@ -16,11 +16,19 @@ Template.tacheNote.rendered = function() {
 };
 
 Template.tacheNote.events({
-    "change .select_categorie":function(event){
+    "change .select_categorie": function(event) {
         var nom = $(event.target).val();
         if(!_.isEmpty(nom)) {
             var couleur = categories.findOne({nom : nom}).couleur;
             $('#selectedColor').css('background-color', couleur);
+        }
+    },
+    "click #dateEnable": function(event) {
+        if($(event.target).is(':checked')) {
+            $(".dateFin").removeAttr('disabled');
+        }else{
+            $(".dateFin").val('');
+            $(".dateFin").attr('disabled', true);
         }
     }
 });

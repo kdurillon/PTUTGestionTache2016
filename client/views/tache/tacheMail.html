@@ -25,8 +25,9 @@
             <div class="col-sm-12">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
                     <label class="control-label">Date programmée</label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
                     <div class="input-group datetimepicker">
-                        {{> afFieldInput name="dateFin"}}
+                        {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                     {{#if afFieldIsInvalid name='dateFin'}}
@@ -38,6 +39,11 @@
         <div class="row">
             <div class="col-sm-12">
                 {{> afQuickField name="contenu"}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <a href="#" class="btn-upload btn btn-warning"><i class="glyphicon glyphicon-upload"></i> Upload</a>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>

@@ -1,8 +1,16 @@
+i18n.setLanguage('fr');
+
 Template.tacheHome.helpers({
     optionsReactiveTable: function() {
-        return {
-            fields: ['titre', 'type', 'categorie', 'dateCreation', 'dateFin']
-        };
+        return { fields: [
+            { key: 'titre', label: 'Titre' },
+            { key: 'typeTache', label: 'Type' },
+            { key: 'categorie', label: 'Catégorie' },
+            { key: 'tag', label: 'Tag' },
+            { key: 'dateCreation', label: 'Date de création' },
+            { key: 'dateFin', label: 'Date de fin' },
+            { label: 'Action', tmpl: Template.actionTableTache }
+        ] }
     }
 });
 

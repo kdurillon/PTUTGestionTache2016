@@ -46,42 +46,18 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <table class="table table-striped table-hover table-bordered text-center">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Type</th>
-                    <th>Catégorie</th>
-                    <th>Date de création</th>
-                    <th>Date de fin</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            {{#each taches}}
-                <tr>
-                    <td>{{titre}}</td>
-                    <td>{{typeTache}}</td>
-                    <td>{{categorie}}</td>
-                    <td>{{dateCreation}}</td>
-                    <td>{{dateFin}}</td>
-                    <td>
-                        <button class="btn btn-xs btn-info info_tache">
-                            <span class="glyphicon glyphicon-info-sign"></span>
-                        </button>
-                        <button class="btn btn-xs btn-warning delete_tache">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    </div>
 
     {{> reactiveTable class="table table-striped table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
+</template>
+
+<template name="actionTableTache">
+    <button class="btn btn-xs btn-info info_tache">
+        <span class="glyphicon glyphicon-info-sign"></span>
+    </button>
+    <button class="btn btn-xs btn-warning delete_tache">
+        <span class="glyphicon glyphicon-trash"></span>
+    </button>
 </template>
 
 <template name="modalInfoTache">
@@ -97,10 +73,11 @@
                     <ul>
                         <li><b>Type : </b>{{typeTache}}</li>
                         <li><b>Catégorie : </b>{{categorie}}</li>
+                        <li><b>Destinataire</b></li>
                         <li><b>Contenu : </b>
                             <div class="well">{{{contenu}}}</div>
                         </li>
-                        <li><b>Date de création : </b>{{createdAt}}</li>
+                        <li><b>Date de création : </b>{{dateCreation}}</li>
                         <li><b>Date de fin : </b>{{dateFin}}</li>
                     </ul>
                 </div>

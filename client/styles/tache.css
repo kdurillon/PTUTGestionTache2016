@@ -3,3 +3,7 @@
     height: 40px;
     border: 1px solid black;
 }
+
+.reactive-table-navigation .form-inline input {
+    width: 60px;
+}

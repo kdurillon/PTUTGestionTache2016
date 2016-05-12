@@ -22,5 +22,17 @@ Template.tacheMail.events({
             var couleur = categories.findOne({nom : nom}).couleur;
             $('#selectedColor').css('background-color', couleur);
         }
+    },
+    "click #dateEnable": function(event) {
+        if($(event.target).is(':checked')) {
+            $(".dateFin").removeAttr('disabled');
+        }else{
+            $(".dateFin").val('');
+            $(".dateFin").attr('disabled', true);
+        }
+    },
+
+    "click .btn-upload": function(event) {
+        console.log(this._id);
     }
 });
