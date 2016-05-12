@@ -32,5 +32,12 @@ insecure
 kevohagan:sweetalert
 risul:bootstrap-colorpicker
 aldeed:simple-schema
-rajit:bootstrap3-datepicker
 matb33:bootstrap-glyphicons
+ajduke:bootstrap-tagsinput
+tsega:bootstrap3-datetimepicker
+rzymek:moment-locale-fr
+tomi:upload-server
+tomi:upload-jquery
+teamon:tinymce
+peppelg:bootstrap-3-modal
+aslagle:reactive-table
