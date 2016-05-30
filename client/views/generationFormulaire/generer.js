@@ -58,7 +58,7 @@ div =function(label,elmt,plus){
         //une date et une heure
         case "3":{
             ctrl="<input type='text' class='form-control datepicker' placeholder='"+plus+"' >";
-            break;
+            break;}
         //une date et une heure
         case "4":{
 

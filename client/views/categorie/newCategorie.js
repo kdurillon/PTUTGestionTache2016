@@ -1,4 +1,5 @@
 Template.newCategorie.rendered = function() {
+    Session.set('typeCategorie','insert');
     $('#colorpicker1').colorpicker({
         customClass: 'colorpicker-2x',
         sliders: {
@@ -25,6 +26,7 @@ Template.newCategorie.rendered = function() {
 };
 
 AutoForm.addHooks('newCategorie', {
+
     after: {
         insert: function(error) {
             if (error) {
