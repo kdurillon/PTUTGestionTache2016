@@ -1,7 +1,8 @@
-Template.tacheMail.rendered = function() {
+Template.newTacheMail.rendered = function() {
     $("#insertTag").tagsinput();
     $('.bootstrap-tagsinput').addClass('form-control');
     $('.bootstrap-tagsinput input').removeAttr('style');
+    $('.bootstrap-tagsinput input').removeAttr('size');
     $('.datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY - LT',
         locale: 'fr',
@@ -15,7 +16,9 @@ Template.tacheMail.rendered = function() {
     $("#typeTache").val('mail');
 };
 
-Template.tacheMail.events({
+Template.updateTacheMail.rendered = Template.newTacheMail.rendered;
+
+var eventMail = {
     "change .select_categorie":function(event){
         var nom = $(event.target).val();
         if(!_.isEmpty(nom)) {
@@ -32,7 +35,10 @@ Template.tacheMail.events({
         }
     },
 
-    "click .btn-upload": function(event) {
+    "click .btn-upload": function() {
         console.log(this._id);
     }
-});
+};
+
+Template.newTacheMail.events(eventMail);
+Template.updateTacheMail.events(eventMail);

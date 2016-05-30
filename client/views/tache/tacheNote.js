@@ -1,7 +1,8 @@
-Template.tacheNote.rendered = function() {
+Template.newTacheNote.rendered = function() {
     $("#insertTag").tagsinput();
     $('.bootstrap-tagsinput').addClass('form-control');
     $('.bootstrap-tagsinput input').removeAttr('style');
+    $('.bootstrap-tagsinput input').removeAttr('size');
     $('.datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY - LT',
         locale: 'fr',
@@ -15,15 +16,17 @@ Template.tacheNote.rendered = function() {
     $("#typeTache").val('note');
 };
 
-Template.tacheNote.events({
-    "change .select_categorie": function(event) {
+Template.updateTacheNote.rendered = Template.newTacheNote.rendered;
+
+var eventNote = {
+        "change .select_categorie": function(event) {
         var nom = $(event.target).val();
         if(!_.isEmpty(nom)) {
             var couleur = categories.findOne({nom : nom}).couleur;
             $('#selectedColor').css('background-color', couleur);
         }
     },
-    "click #dateEnable": function(event) {
+        "click #dateEnable": function(event) {
         if($(event.target).is(':checked')) {
             $(".dateFin").removeAttr('disabled');
         }else{
@@ -31,4 +34,6 @@ Template.tacheNote.events({
             $(".dateFin").attr('disabled', true);
         }
     }
-});
+};
+Template.newTacheNote.events(eventNote);
+Template.updateTacheNote.events(eventNote);

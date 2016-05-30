@@ -11,7 +11,7 @@
                     <h3 class="panel-title">Mail</h3>
                 </div>
                 <div class="panel-body">
-                    <a href="{{pathFor route='tacheMail'}}" class="btn btn-success">Accéder</a>
+                    <a href="{{pathFor route='newTacheMail'}}" class="btn btn-success">Accéder</a>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                     <h3 class="panel-title">Note</h3>
                 </div>
                 <div class="panel-body">
-                    <a href="{{pathFor route='tacheNote'}}" class="btn btn-success">Accéder</a>
+                    <a href="{{pathFor route='newTacheNote'}}" class="btn btn-success">Accéder</a>
                 </div>
             </div>
         </div>
@@ -55,9 +55,14 @@
     <button class="btn btn-xs btn-info info_tache">
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
-    <button class="btn btn-xs btn-warning delete_tache">
-        <span class="glyphicon glyphicon-trash"></span>
-    </button>
+
+        <a class="btn btn-xs btn-warning edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+        <button class="btn btn-xs btn-danger delete_tache">
+            <span class="glyphicon glyphicon-trash"></span>
+        </button>
+
 </template>
 
 <template name="modalInfoTache">
@@ -73,7 +78,16 @@
                     <ul>
                         <li><b>Type : </b>{{typeTache}}</li>
                         <li><b>Catégorie : </b>{{categorie}}</li>
-                        <li><b>Destinataire</b></li>
+                        {{#if emails}}
+                        <li>
+                            <b>Destinataire :</b>
+                            <ul>
+                            {{#each emails}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                            </ul>
+                        </li>
+                        {{/if}}
                         <li><b>Contenu : </b>
                             <div class="well">{{{contenu}}}</div>
                         </li>

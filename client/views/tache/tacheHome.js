@@ -6,15 +6,29 @@ Template.tacheHome.helpers({
             { key: 'titre', label: 'Titre' },
             { key: 'typeTache', label: 'Type' },
             { key: 'categorie', label: 'Catégorie' },
-            { key: 'tag', label: 'Tag' },
+            { key: 'tags', label: 'Tags' },
             { key: 'dateCreation', label: 'Date de création' },
             { key: 'dateFin', label: 'Date de fin' },
-            { label: 'Action', tmpl: Template.actionTableTache }
+            { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
         ] }
     }
 });
 
 Template.tacheHome.events({
+    "click .info_tache": function() {
+        var tache = taches.findOne({_id: this._id});
+        var mailinglist = mailingList.findOne({nom: tache.mailingList});
+        if(!_.isUndefined(mailinglist)) {
+            if(_.isUndefined(tache.emails)) {
+                tache.emails = mailinglist.emails;
+            }else {
+                tache.emails.push(mailinglist.emails);
+            }
+        }
+        Modal.show('modalInfoTache', function () {
+            return tache;
+        });
+    },
     "click .delete_tache": function() {
         var id = this._id;
         swal({
@@ -31,25 +45,35 @@ Template.tacheHome.events({
                 taches.remove(id);
                 swal("Suppression!", "La tâche à été supprimé.", "success");
             });
-    },
-
-    "click .info_tache": function() {
-        var tache = taches.findOne({_id: this._id});
-        Modal.show('modalInfoTache', function () {
-            return tache;
-        });
     }
 });
 
-AutoForm.addHooks('addTache', {
+AutoForm.addHooks('tache', {
     after: {
         insert: function(error) {
             if (error) {
+                console.log(error);
                 swal("Erreur", "Erreur a l'insertion!", "error");
             } else {
                 sweetAlert({
                     title: "Réussi !",
                     text: "La tâche à été créé correctement",
+                    type: "success",
+                    confirmButtonText: "OK"
+                }, function(){
+                    Router.go(Utils.pathFor('tacheHome'))
+                });
+            }
+        },
+
+        update: function(error) {
+            if (error) {
+                console.log(error);
+                swal("Erreur", "Erreur a la mise à jour!", "error");
+            } else {
+                sweetAlert({
+                    title: "Réussi !",
+                    text: "La tâche à été modifié correctement",
                     type: "success",
                     confirmButtonText: "OK"
                 }, function(){

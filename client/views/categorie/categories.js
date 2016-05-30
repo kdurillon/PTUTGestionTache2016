@@ -9,7 +9,21 @@ Template.categoriesHome.events({
         Router.go(Utils.pathFor('updateCategorie',{_id: this._id}));
     },
     'click .delete_categorie': function() {
-        categories.remove(this._id);
+        var id = this._id;
+        swal({
+                title: "Etes vous sûr?",
+                text: "La catégorie sera définitivement supprimé!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Oui",
+                cancelButtonText: "Annuler",
+                closeOnConfirm: false
+            },
+            function(){
+                categories.remove(id);
+                swal("Suppression!", "La catégorie à été supprimé.", "success");
+            });
     }
 });
 
