@@ -21,7 +21,7 @@ Template.tacheHome.helpers({
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
         var tache = taches.findOne({_id: _id});
-        if(_.isUndefined(tache.emails)) {
+        if(_.isUndefined(tache.emails) && _.isUndefined(tache.mailingList)) {
             return false;
         }
         return true;
