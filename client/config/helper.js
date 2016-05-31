@@ -43,6 +43,10 @@ UI.registerHelper('getTache', function() {
     return taches.find().fetch();
 });
 
+UI.registerHelper('getFile', function() {
+    return uploads.find().fetch();
+});
+
 UI.registerHelper('getCategorie', function() {
     return categories.find().fetch();
 });
