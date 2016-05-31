@@ -1,5 +1,5 @@
 Uploader.localisation = {
-    browse: "Choisir un fichier",
+    browse: "Choisir un/des fichier(s)",
     cancelled: "Annulé",
     remove: "Supprimer",
     upload: "Envoyer",
@@ -13,3 +13,4 @@ Template['uploadModal'].helpers({
         return {  currentUserId: Meteor.userId(), currentDate: date }
     }
 });
+

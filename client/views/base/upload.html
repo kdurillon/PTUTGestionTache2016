@@ -12,11 +12,11 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Envoyer un fichier</h4>
+                    <h4 class="modal-title">Envoyer des fichier</h4>
                 </div>
 
                 <div class="modal-body">
-                    {{> upload_bootstrap formData=cuserId }}
+                    {{> upload_bootstrap multiple=true formData=cuserId }}
                 </div>
 
                 <div class="modal-footer">

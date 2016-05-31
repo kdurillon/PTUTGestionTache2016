@@ -20,7 +20,14 @@ Template.gestionDocuments.helpers({
 
 });
 
+/*Meteor._reload.onMigrate(function() {
+    return [false];
+});*/
+
 Template.gestionDocuments.events({
+    'click .btn-upload': function() {
+        Modal.show('uploadModal');
+    },
     'click .delete_doc': function() {
         var id = this._id;
         swal({
