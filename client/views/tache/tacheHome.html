@@ -11,7 +11,7 @@
                     <h3 class="panel-title">Mail</h3>
                 </div>
                 <div class="panel-body">
-                    <a href="{{pathFor route='newTacheMail'}}" class="btn btn-success">Accéder</a>
+                    <a href="{{pathFor route='newTacheMail'}}" class="btn btn-success">Créer</a>
                 </div>
             </div>
         </div>
@@ -21,17 +21,17 @@
                     <h3 class="panel-title">Note</h3>
                 </div>
                 <div class="panel-body">
-                    <a href="{{pathFor route='newTacheNote'}}" class="btn btn-success">Accéder</a>
+                    <a href="{{pathFor route='newTacheNote'}}" class="btn btn-success">Créer</a>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Panel primary</h3>
+                    <h3 class="panel-title">Document</h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <a href="{{pathFor route='newTacheDocument'}}" class="btn btn-success">Créer</a>
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
                             <div class="well">{{{contenu}}}</div>
                         </li>
                         <li><b>Date de création : </b>{{dateCreation}}</li>
-                        <li><b>Date de fin/programmée : </b>{{dateFin}}</li>
+                        <li><b>Date de fin/rappel : </b>{{dateFin}}</li>
                     </ul>
                 </div>
 

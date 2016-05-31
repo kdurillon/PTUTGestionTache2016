@@ -34,10 +34,6 @@ var eventMail = {
             $(".dateFin").attr('disabled', true);
         }
     },
-
-    "click .btn-upload": function() {
-        console.log(this._id);
-    }
 };
 
 Template.newTacheMail.events(eventMail);

@@ -12,7 +12,7 @@ Template.tacheHome.helpers({
             { key: 'categorie', label: 'Catégorie' },
             { key: 'tags', label: 'Tags' },
             { key: 'dateCreation', label: 'Date de création' },
-            { key: 'dateFin', label: 'Date de fin/programmée' },
+            { key: 'dateFin', label: 'Date de fin/rappel' },
             { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
         ] }
     }
@@ -45,12 +45,23 @@ function getAllEmailsTache(_id) {
 
 Template.tacheHome.events({
     "click .mail_tache": function() {
-        console.log(this);
-        /*Meteor.call('sendEmail',
-            'alice@example.com',
-            'bob@example.com',
-            'Hello from Meteor!',
-            'This is a test of Email.send.');*/
+        var emails = getAllEmailsTache(this._id).emails;
+        Meteor.call('sendEmail',
+            'fakedeviut@gmail.com',
+            emails.toString(),
+            'Envoie de mail!',
+            "Ceci est un test de l'envoi de mail");
+        var html = '<ul>';
+        _.each(emails, function(email) {
+            html+= '<li>'+email+'</li>';
+        });
+        html+='</ul>';
+        swal({
+            title: "Envoi de mail",
+            text: "Email envoyé à "+html,
+            html: true,
+            type: "success"
+        });
     },
     "click .info_tache": function() {
         var _id = this._id;

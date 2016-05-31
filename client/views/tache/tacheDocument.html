@@ -1,0 +1,16 @@
+<template name="newTacheDocument">
+    {{setTitle 'Tâches document'}}
+    <h1 class="text-center" >Tâches document</h1>
+
+    <hr>{{#autoForm collection="taches" type="insert" id="tache"}}
+        {{> afQuickField id="typeTache" name="typeTache"}}
+        {{> afQuickField name="titre"}}
+        <div class="row">
+            <div class="col-sm-12">
+                {{> afQuickField name="contenu"}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    {{/autoForm}}
+
+</template>

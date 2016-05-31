@@ -12,21 +12,12 @@ Globals.schemas.Taches = new SimpleSchema({
     },
     categorie: {
         type: String,
-        label: 'Catégorie',
-        autoform: {
-            type: "select2",
-            afFieldInput: {
-                multiple: true
-            }
-        }
+        label: 'Catégorie'
     },
     mailingList: {
         type: String,
         label: 'Mailing List',
-        optional: true,
-        autoform: {
-            type: "select2"
-        }
+        optional: true
     },
     emails: {
         type: [String],

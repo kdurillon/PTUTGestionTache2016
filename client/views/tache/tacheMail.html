@@ -11,10 +11,10 @@
         {{> afQuickField name="emails"}}
         <div class="row">
             <div class="col-sm-6">
-                {{> afQuickField name="mailingList" options=getMailingListOption}}
+                {{> afQuickField name="mailingList" options=getMailingListOption firstOption="Mailing list"}}
             </div>
             <div class="col-sm-5">
-                {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption}}
+                {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
             </div>
             <div class="col-sm-1">
                 <label>Couleur</label>
@@ -39,11 +39,6 @@
         <div class="row">
             <div class="col-sm-12">
                 {{> afQuickField name="contenu"}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-12">
-                <a href="#" class="btn-upload btn btn-warning"><i class="glyphicon glyphicon-upload"></i> Upload</a>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>
@@ -91,11 +86,6 @@
         <div class="row">
             <div class="col-sm-12">
                 {{> afQuickField name="contenu"}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-12">
-                <a href="#" class="btn-upload btn btn-warning"><i class="glyphicon glyphicon-upload"></i> Upload</a>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>
