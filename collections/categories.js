@@ -5,11 +5,8 @@ Globals.schemas.Categorie = new SimpleSchema({
         type: String,
         max: 50,
         label: "Nom de la catégorie",
-        custom: function(){
-            if(categories.findOne({nom: this.value})){
-                return "alreadyExist";
-            }
-        }
+        unique: true
+
     },
     couleur: {
         type: String,
@@ -23,6 +20,10 @@ Globals.schemas.Categorie = new SimpleSchema({
             placeholder: "Description ... (optionnelle)"
         }
     }
+});
+
+Globals.schemas.Categorie.messages({
+    notUnique: '[label] existe déjà.'
 });
 
 categories.attachSchema(Globals.schemas.Categorie);

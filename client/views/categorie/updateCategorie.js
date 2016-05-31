@@ -1,4 +1,5 @@
 Template.updateCategorie.rendered = function() {
+    Session.set('typeCategorie','update');
     $('#colorpicker1').colorpicker({
         customClass: 'colorpicker-2x',
         sliders: {

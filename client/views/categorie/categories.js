@@ -24,6 +24,11 @@ Template.categoriesHome.events({
                 categories.remove(id);
                 swal("Suppression!", "La catégorie à été supprimé.", "success");
             });
-    }
+    },
+    'click .upload_button': function() {
+        Modal.show('uploadModal');
+    },
+
 });
+
 
