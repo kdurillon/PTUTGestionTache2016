@@ -11,3 +11,11 @@ Meteor.startup(function () {
         }
     })
 });
+
+Meteor.methods({
+    deleteUploads: function(toBeDeleted) {
+            var upload = uploads.findOne({_id: toBeDeleted});
+            UploadServer.delete(upload.userId+'/'+upload.file);
+            uploads.remove({_id: toBeDeleted});
+    }
+});
