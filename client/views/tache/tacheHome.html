@@ -52,17 +52,20 @@
 </template>
 
 <template name="actionTableTache">
-    <button class="btn btn-xs btn-info info_tache">
+    {{#if mailExist _id}}
+    <button data-toggle="tooltip" title="Envoyer le mail" class="btn btn-xs btn-success mail_tache">
+        <span class="glyphicon glyphicon-send"></span>
+    </button>
+    {{/if}}
+    <button data-toggle="tooltip" title="Voir informations" class="btn btn-xs btn-info info_tache">
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
-
-        <a class="btn btn-xs btn-warning edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
-            <span class="glyphicon glyphicon-pencil"></span>
-        </a>
-        <button class="btn btn-xs btn-danger delete_tache">
-            <span class="glyphicon glyphicon-trash"></span>
-        </button>
-
+    <a data-toggle="tooltip" title="Editer la tâche" class="btn btn-xs btn-warning edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
+        <span class="glyphicon glyphicon-pencil"></span>
+    </a>
+    <button data-toggle="tooltip" title="Supprimer la tâche" class="btn btn-xs btn-danger delete_tache">
+        <span class="glyphicon glyphicon-trash"></span>
+    </button>
 </template>
 
 <template name="modalInfoTache">
@@ -92,7 +95,7 @@
                             <div class="well">{{{contenu}}}</div>
                         </li>
                         <li><b>Date de création : </b>{{dateCreation}}</li>
-                        <li><b>Date de fin : </b>{{dateFin}}</li>
+                        <li><b>Date de fin/programmée : </b>{{dateFin}}</li>
                     </ul>
                 </div>
 

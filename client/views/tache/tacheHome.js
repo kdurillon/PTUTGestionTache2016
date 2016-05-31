@@ -1,5 +1,9 @@
 i18n.setLanguage('fr');
 
+Template.actionTableTache.rendered = function() {
+    $('[data-toggle="tooltip"]').tooltip();
+};
+
 Template.tacheHome.helpers({
     optionsReactiveTable: function() {
         return { fields: [
@@ -8,25 +12,50 @@ Template.tacheHome.helpers({
             { key: 'categorie', label: 'Catégorie' },
             { key: 'tags', label: 'Tags' },
             { key: 'dateCreation', label: 'Date de création' },
-            { key: 'dateFin', label: 'Date de fin' },
+            { key: 'dateFin', label: 'Date de fin/programmée' },
             { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
         ] }
     }
 });
 
-Template.tacheHome.events({
-    "click .info_tache": function() {
-        var tache = taches.findOne({_id: this._id});
-        var mailinglist = mailingList.findOne({nom: tache.mailingList});
-        if(!_.isUndefined(mailinglist)) {
-            if(_.isUndefined(tache.emails)) {
-                tache.emails = mailinglist.emails;
-            }else {
-                tache.emails.push(mailinglist.emails);
-            }
+Template.actionTableTache.helpers({
+    mailExist: function (_id) {
+        var tache = taches.findOne({_id: _id});
+        if(_.isUndefined(tache.emails)) {
+            return false;
         }
+        return true;
+    }
+});
+
+function getAllEmailsTache(_id) {
+    var tache = taches.findOne({_id: _id});
+    var mailinglist = mailingList.findOne({nom: tache.mailingList});
+
+    if(!_.isUndefined(mailinglist)) {
+        if(_.isUndefined(tache.emails)) {
+            tache.emails = mailinglist.emails;
+        }else {
+            tache.emails = _.uniq(tache.emails.concat(mailinglist.emails));
+        }
+    }
+
+    return tache;
+}
+
+Template.tacheHome.events({
+    "click .mail_tache": function() {
+        console.log(this);
+        /*Meteor.call('sendEmail',
+            'alice@example.com',
+            'bob@example.com',
+            'Hello from Meteor!',
+            'This is a test of Email.send.');*/
+    },
+    "click .info_tache": function() {
+        var _id = this._id;
         Modal.show('modalInfoTache', function () {
-            return tache;
+            return getAllEmailsTache(_id);
         });
     },
     "click .delete_tache": function() {

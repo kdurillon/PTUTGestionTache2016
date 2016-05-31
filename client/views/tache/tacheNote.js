@@ -4,7 +4,7 @@ Template.newTacheNote.rendered = function() {
     $('.bootstrap-tagsinput input').removeAttr('style');
     $('.bootstrap-tagsinput input').removeAttr('size');
     $('.datetimepicker').datetimepicker({
-        format: 'DD/MM/YYYY - LT',
+        format: 'L - LT',
         locale: 'fr',
         minDate: moment().add(10, 'm')
     });

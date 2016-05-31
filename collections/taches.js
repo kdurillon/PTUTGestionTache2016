@@ -14,7 +14,10 @@ Globals.schemas.Taches = new SimpleSchema({
         type: String,
         label: 'Catégorie',
         autoform: {
-            type: "select2"
+            type: "select2",
+            afFieldInput: {
+                multiple: true
+            }
         }
     },
     mailingList: {
@@ -52,7 +55,7 @@ Globals.schemas.Taches = new SimpleSchema({
         }
     },
     dateCreation: {
-        type: Date,
+        type: String,
         denyUpdate: true,
         autoValue: function(){
             if(this.isInsert){
