@@ -12,7 +12,8 @@ Globals.schemas.Taches = new SimpleSchema({
     },
     categorie: {
         type: String,
-        label: 'Catégorie'
+        label: 'Catégorie',
+        optional: true
     },
     mailingList: {
         type: String,
@@ -44,6 +45,10 @@ Globals.schemas.Taches = new SimpleSchema({
         autoform: {
            type: 'hidden'
         }
+    },
+    document: {
+        type: String,
+        optional: true
     },
     dateCreation: {
         type: String,

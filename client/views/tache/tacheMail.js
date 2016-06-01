@@ -19,7 +19,7 @@ Template.newTacheMail.rendered = function() {
 Template.updateTacheMail.rendered = Template.newTacheMail.rendered;
 
 var eventMail = {
-    "change .select_categorie":function(event){
+    "change .select_categorie": function(event){
         var nom = $(event.target).val();
         if(!_.isEmpty(nom)) {
             var couleur = categories.findOne({nom : nom}).couleur;
