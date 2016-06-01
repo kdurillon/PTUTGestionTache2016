@@ -1,62 +1,119 @@
 <template name="formulaireGenere">
-
-    {{setTitle 'Formulaires'}}
-    <h1 class="text-center">Formulaires</h1>
-
-
+    <section id="corpsForm">
+    {{setTitle 'Formulaire'}}
     <form id="formRegister" method="post" role="form">
-    <div class="form-group">
-        <label for="inputTitreGenForm" class="control-label">Titre de votre formulaire </label>
-        <input id="inputTitreGenForm" class="form-control" type="text"  placeholder="Entrez le titre..."  data-error="Donnez un titre à votre formulaire" required />
-        <div class="help-block with-errors"></div>
-    </div>
-    <div class="form-group text-center">
-        <input id="ajouterTitreFormGen" class=" btn btn-default" value="Ajouter" type="button">
-    </div>
-
-    <div class="form-group">
-        <label for="inputTextGenForm" class="control-label">Libellé de votre élément :</label>
-        <input id="inputTextGenForm" class="form-control" type="text"  placeholder="Votre question, le document demandé, le type de rendez-vous..."/>
-    </div>
-
-    <div class="form-group">
-        <label for="inputSelectGenForm" class="control-label ">L'élément :</label>
-        <select name="" id="inputSelectGenForm" class="form-control">
-            <option value="1">Une réponse simple</option>
-            <option value="2">Un message</option>
-            <option value="3">Une date et heure </option>
-            <option value="4">Un choix oui / non</option>
-            <option value="5">Un choix multiple à réponse unique</option>
-            <option value="6">Un choix multiple à réponses multiples</option>
-            <option value="7">Upload de fichier</option>
-        </select>
-    </div>
-
-    <div id="repFormGen" class="form-group ">
-        <label id="repsGenForm" for="" class="control-label">Réponses :</label><br><br>
-    </div>
-
-    <div class="form-group text-center">
-        <input id="ajouterElmtFormGen" class=" btn btn-default" value="Ajouter" type="button">
-    </div>
+    {{#each Form}}
 
 
-    <fieldset>
-        <legend>
-            Aperçu du formulaire
-        </legend>
-        <div id="cadreApercuForm" class="form-group">
+    <h1 class="text-center" id="titreGenere">{{titre}}</h1>
 
-            <h3 id="apercuForm" class="text-center">Titre du formulaire</h3><br>
 
-            <div class="form-group text-center">
-            <input value="Envoyer" type="button" class="btn btn-success " >
-            <input value="Effacer" type="button"  class="btn btn-danger "></div>
+
+        {{#each controls}}
+
+
+
+
+            {{#each control}}
+
+
+                {{#if isInputText typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                        <input id="inputText{{numero}}" name="inputText{{numero}}"  class='form-control'  type='text'   placeholder='Entrez votre texte ici.' required/>
+                    </div>
+
+                {{/if}}
+
+                {{#if isTextArea typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                        <textarea id="textArea{{numero}}" name="textArea{{numero}}" rows='10'  class='form-control'   placeholder='Entrez votre texte ici.' required></textarea>
+                    </div>
+
+                {{/if}}
+
+                {{#if isInputDate typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                        <input id='date{{numero}}' name='date{{numero}}' class='form-control'  type='date'    />
+                        <!--
+                        <div class='input-group datetimepicker'>
+                            <span class='input-group-addon'><i class='glyphicon glyphicon-calendar'></i></span>
+                        </div>-->
+                    </div>
+
+                {{/if}}
+
+                {{#if isInputChoixBinaire typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                        <div><label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' value="oui">Oui</label>
+                        <label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder=''  value="non">Non</label></div>
+                    </div>
+
+                {{/if}}
+
+                {{#if isInputRadios typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='control-label'>{{label}}</label>
+
+                        {{#each reponse in reponses}}
+                        <div class='radio'><label for=''><input id='radio{{numero}}-{{rep}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' >{{reponse}}</label></div>
+                        {{/each}}
+
+
+                    </div>
+
+                {{/if}}
+
+                {{#if isInputCheckboxs typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='control-label'>{{label}}</label>
+                        {{#each reponse in reponses}}
+                        <div class='checkbox'><label for=''><input id='checkboxname{{numero}}-{{rep}}'  type='checkbox' class=' ' placeholder='' >{{reponse}}</label></div>
+                        {{/each}}
+                    </div>
+
+                {{/if}}
+
+                {{#if isInputUpload typeControl}}
+
+                    <div class='text-center form-group ctrlsApercu '>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                       <div> <button class='btn btn-info upload_button'><span class='glyphicon glyphicon-upload'></span> Envoyer un fichier </button></div>
+                    </div>
+
+                {{/if}}
+
+            {{/each}}
+
+
+        {{/each}}
+
+
+    {{/each}}
+
+
+
+        <br><br>
+
+        <div class="form-group text-center">
+            <input id="EnvoyerFormGenere" value="Envoyer" type="submit" class="btn btn-success " >
+            <input  value="Effacer" type="reset"  class="btn btn-danger ">
         </div>
-    </fieldset>
 
-        <input value="Enregistrer le formulaire" type="submit" class="btn btn-success pull-left">
-        <input value="Vider" type="reset"  class="btn btn-danger pull-right">
 
     </form>
+    </section>
+
+
+    <h1 id="retour" class="text-center">  Merci pour votre retour </h1>
+
 </template>

@@ -1,0 +1,29 @@
+<template name="reponses">
+    {{setTitle 'Réponses des formulaires'}}
+
+
+    <h1 class="text-center">Visualisation des réponses d'un formulaire</h1>
+
+    <br><br>
+    <div class="row">
+        <div class="text-center">
+            <select name="" id="selectLeForm">
+            <option>Sélectionnez un formulaire</option>
+        {{#each Reponses }}
+
+          <option value="{{_id}}"> {{titre}} </option>
+
+        {{/each}}
+
+        </select></div>
+    </div>
+<h2 id="tableauReponses">Réponses</h2>
+<div>
+
+
+</div>
+
+
+
+
+</template>

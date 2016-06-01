@@ -1,0 +1,85 @@
+<template name="formulaireCree">
+
+    {{setTitle 'Formulaires'}}
+    <h1 class="text-center">Créez votre Formulaire</h1>
+
+
+    <form id="formRegister" method="post" role="form">
+    <div class="form-group">
+        <label for="inputTitreGenForm" class="control-label">Titre de votre formulaire :</label>
+        <input id="inputTitreGenForm" class="form-control" type="text"  placeholder="Entrez le titre..."  data-error="Donnez un titre à votre formulaire" required />
+        <div class="help-block with-errors"></div>
+    </div>
+
+
+    <div class="form-group text-center">
+        <input id="ajouterTitreFormGen" class=" btn btn-default" value="Changer" type="button">
+    </div>
+
+    <div class="form-group">
+        <label for="inputTextGenForm" class="control-label">Libellé de votre élément :</label>
+        <input id="inputTextGenForm" class="form-control" type="text"  placeholder="Votre question, le document demandé, le type de rendez-vous..."/>
+    </div>
+
+    <div class="form-group">
+        <label for="inputSelectGenForm" class="control-label ">L'élément :</label>
+        <select name="" id="inputSelectGenForm" class="form-control">
+            <option value="1">Une réponse simple</option>
+            <option value="2">Un message</option>
+            <option value="3">Une date et heure </option>
+            <option value="4">Un choix oui / non</option>
+            <option value="5">Un choix multiple à réponse unique</option>
+            <option value="6">Un choix multiple à réponses multiples</option>
+            <option value="7">Upload de fichier</option>
+        </select>
+    </div>
+
+     <div class="repFormGen">
+
+
+        <div class="form-group row">
+            <div class="col-md-2 col-md-offset-1">
+                <label for="inputTextGenForm" class="control-label ">Texte de la réponse :</label>
+            </div>
+
+            <div class="col-md-4 ">
+            <input id="inputLabelRepGenForm" class="form-control " type="text"  placeholder="Un réponse à faire apparaître"/>
+            </div>
+            <div class="col-md-3 ">
+            <input id="ajouterRepFormGen" class=" col-md-offset-1 btn btn-default" value="Ajouter une réponse possible" type="button">
+            </div>
+        </div>
+
+
+
+    <div id="repsGenForm" class="form-group ">
+        <label  for="" class="control-label rep1">Réponses :</label><br><br>
+
+    </div>
+
+    </div>
+
+     <div class="form-group text-center">
+        <input id="ajouterElmtFormGen" class=" btn btn-default" value="Ajouter l'élément" type="button">
+    </div>
+
+
+    <fieldset>
+        <legend>
+            Aperçu du formulaire
+        </legend>
+        <div id="cadreApercuForm" class="form-group">
+
+            <h3 id="apercuForm" class="text-center formApercu0">Titre du formulaire</h3><br>
+
+            <div class="form-group text-center">
+            <input value="Envoyer" type="button" class="btn btn-success " >
+            <input  value="Effacer" type="button"  class="btn btn-danger "></div>
+        </div>
+    </fieldset>
+
+        <input id="EnrForm" value="Enregistrer le formulaire" type="button" class="btn btn-success pull-left" >
+        <input id="effacerApercu" value="Vider" type="reset"  class="btn btn-danger pull-right">
+
+    </form>
+</template>
