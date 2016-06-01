@@ -55,7 +55,7 @@ Globals.schemas.Taches = new SimpleSchema({
            type: 'hidden'
         }
     },
-    document: {
+    documentId: {
         type: String,
         optional: true
     },

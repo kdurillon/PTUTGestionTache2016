@@ -6,7 +6,7 @@ Template.newTacheNote.rendered = function() {
     $('.datetimepicker').datetimepicker({
         format: 'L - LT',
         locale: 'fr',
-        minDate: moment().add(10, 'm')
+        minDate: moment().add(1, 'd')
     });
     tinymce.init({
         selector: 'textarea',

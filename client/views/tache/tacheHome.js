@@ -28,9 +28,14 @@ Template.actionTableTache.helpers({
     }
 });
 
-function getAllEmailsTache(_id) {
+function getTache(_id) {
     var tache = taches.findOne({_id: _id});
     var mailinglist = mailingList.findOne({nom: tache.mailingList});
+    var document = uploads.findOne({_id: tache.document});
+
+    if(!_.isUndefined(document)) {
+        tache.document = document;
+    }
 
     if(!_.isUndefined(mailinglist)) {
         if(_.isUndefined(tache.emails)) {
@@ -45,7 +50,7 @@ function getAllEmailsTache(_id) {
 
 Template.tacheHome.events({
     "click .mail_tache": function() {
-        var emails = getAllEmailsTache(this._id).emails;
+        var emails = getTache(this._id).emails;
         Meteor.call('sendEmail',
             'fakedeviut@gmail.com',
             emails.toString(),
@@ -65,8 +70,9 @@ Template.tacheHome.events({
     },
     "click .info_tache": function() {
         var _id = this._id;
+        console.log(getTache(_id));
         Modal.show('modalInfoTache', function () {
-            return getAllEmailsTache(_id);
+            return getTache(_id);
         });
     },
     "click .delete_tache": function() {

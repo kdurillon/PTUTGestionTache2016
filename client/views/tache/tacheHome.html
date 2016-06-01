@@ -80,22 +80,43 @@
                 <div class="modal-body">
                     <ul>
                         <li><b>Type : </b>{{typeTache}}</li>
-                        <li><b>Catégorie : </b>{{categorie}}</li>
-                        {{#if emails}}
-                        <li>
-                            <b>Destinataire :</b>
-                            <ul>
-                            {{#each emails}}
-                                <li>{{this}}</li>
-                            {{/each}}
-                            </ul>
-                        </li>
+                        {{#if categorie}}
+                            <li>
+                                <b>Catégorie : </b>
+                                {{categorie}}
+                            </li>
                         {{/if}}
-                        <li><b>Contenu : </b>
-                            <div class="well">{{{contenu}}}</div>
-                        </li>
-                        <li><b>Date de création : </b>{{dateCreation}}</li>
-                        <li><b>Date de fin/rappel : </b>{{dateFin}}</li>
+                        {{#if emails}}
+                            <li>
+                                <b>Destinataire :</b>
+                                <ul>
+                                {{#each emails}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                                </ul>
+                            </li>
+                        {{/if}}
+                        {{#if contenu}}
+                            <li>
+                                <b>Contenu : </b>
+                                <div class="well">{{{contenu}}}</div>
+                            </li>
+                        {{/if}}
+                        {{#if document}}
+                            <li>
+                                <b>Image : </b>
+                                <img class="img-responsive img-thumbnail" src="/uploads/{{document.userId}}/{{document.file}}" alt="{{document.file}}">
+                            </li>
+                        {{/if}}
+                        {{#if dateCreation}}
+                            <li>
+                                <b>Date de création : </b>
+                                {{dateCreation}}
+                            </li>
+                        {{/if}}
+                         {{#if dateFin}}
+                            <li><b>Date de fin/rappel : </b>{{dateFin}}</li>
+                         {{/if}}
                     </ul>
                 </div>
 

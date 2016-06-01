@@ -2,6 +2,7 @@
  * Initialisation des variables de session
  */
 Template.mailingList.rendered = function() {
+  $('#apercuMailingList').hide();
   Session.set("idMailingList", "");
   Session.set("nameMailingList", "");
   Session.set("emailsMailingList", []);
@@ -54,9 +55,9 @@ Template.mailingList.events({
       Session.set('nameMailingList', nom);
       $("#inputNomML").val("");
 
-      $('#apercuMail').slimScroll({
-        height: '250px'
-      });
+      if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
+        $('#apercuMailingList').show();
+      }
     }
   },
 
@@ -70,6 +71,10 @@ Template.mailingList.events({
       Session.set('emailsMailingList', emails);
 
       $("#inputTextMail").val('').focus();
+
+      if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
+        $('#apercuMailingList').show();
+      }
     }
   },
 
@@ -150,11 +155,16 @@ Template.mailingList.events({
             if(!_.isEmpty(email)) {
               if(validationMail(email)) {
                 data.push(email);
+                $('#apercuMailingList').show();
               }
             }
           })
         });
         Session.set("emailsMailingList", _.uniq(Session.get("emailsMailingList").concat(data)));
+
+        $('#apercuMail').slimScroll({
+          height: '250px'
+        });
       }
     });
 
