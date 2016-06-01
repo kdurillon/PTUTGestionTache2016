@@ -42,3 +42,5 @@ teamon:tinymce
 peppelg:bootstrap-3-modal
 aslagle:reactive-table
 anti:i18n
+dhtmlx:gantt
+dhtmlx:gantt-data

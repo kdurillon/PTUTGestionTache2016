@@ -5,18 +5,7 @@ Template.gestionDocuments.helpers({
     },
 
 
-    isImg: function (file) {
-        var re = /(?:\.([^.]+))?$/;
-        var ext = re.exec(file)[1];
-        var img = ['jpg','jpeg','png','gif','bmp'];
-        if($.inArray(ext,img) != -1){
-            return true;
-        }
-        else{
-            return false;
-        }
 
-    }
 
 });
 
