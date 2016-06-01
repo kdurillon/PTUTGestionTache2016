@@ -1,6 +1,15 @@
 taches = new Mongo.Collection("taches");
 
 Globals.schemas.Taches = new SimpleSchema({
+    userId: {
+        type: String,
+        autoValue: function(){
+            return Meteor.userId();
+        },
+        autoform: {
+            omit: true
+        }
+    },
     titre: {
         type: String,
         max: 100

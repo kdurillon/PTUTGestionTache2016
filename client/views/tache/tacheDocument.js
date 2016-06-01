@@ -13,6 +13,7 @@ Template.newTacheDocument.events({
         if(!_.isEmpty(_id)) {
             var file = uploads.findOne({_id: _id});
             $('#previewDocument').attr("src", "/uploads/"+file.userId+"/"+file.file);
+            $('#previewDocument').attr("alt", file.file);
         }
     }
 });

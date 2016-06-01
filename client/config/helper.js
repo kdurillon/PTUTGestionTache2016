@@ -22,7 +22,6 @@ UI.registerHelper('isImg', function (file) {
     else{
         return false;
     }
-
 });
 
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
