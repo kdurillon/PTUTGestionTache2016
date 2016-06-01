@@ -53,6 +53,10 @@ Template.mailingList.events({
       var nom = $("#inputNomML").val().toLowerCase();
       Session.set('nameMailingList', nom);
       $("#inputNomML").val("");
+
+      $('#apercuMail').slimScroll({
+        height: '250px'
+      });
     }
   },
 
@@ -104,7 +108,7 @@ Template.mailingList.events({
 
   },
 
-  "click .deleteMailing":function(event) {
+  "click .deleteMailing": function(event) {
     var id = $(event.target).attr('id');
     swal({
           title: "Suppression mailing list?",
@@ -122,7 +126,7 @@ Template.mailingList.events({
 
   },
 
-  "change #selectListe":function(){
+  "change #selectListe": function(){
     var id = $('#selectListe').val();
     if(id) {
       var mailsBd = mailingList.findOne({_id : id});
@@ -130,6 +134,30 @@ Template.mailingList.events({
       Session.set("nameMailingList", mailsBd.nom);
       Session.set("emailsMailingList", mailsBd.emails);
     }
+  },
+
+  "change #importMail": function(event) {
+    var file = event.target.files[0];
+
+    var data = [];
+
+    Papa.parse(file, {
+      header: true,
+      dynamicTyping: true,
+      complete: function(results) {
+        _.each(results.data, function(result) {
+          _.each(result, function(email) {
+            if(!_.isEmpty(email)) {
+              if(validationMail(email)) {
+                data.push(email);
+              }
+            }
+          })
+        });
+        Session.set("emailsMailingList", _.uniq(Session.get("emailsMailingList").concat(data)));
+      }
+    });
+
   }
 
 });

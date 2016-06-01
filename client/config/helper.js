@@ -24,6 +24,10 @@ UI.registerHelper('isImg', function (file) {
     }
 });
 
+UI.registerHelper('displayExtension', function (file) {
+    return file.substr(file.length - 3);
+});
+
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
     switch (operator) {
@@ -52,15 +56,15 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
  * Permet de récupérer les données de la collection
  */
 UI.registerHelper('getTache', function() {
-    return taches.find().fetch();
+    return taches.find({userId: Meteor.userId()}).fetch();
 });
 
 UI.registerHelper('getUpload', function() {
-    return uploads.find().fetch();
+    return uploads.find({userId: Meteor.userId()}).fetch();
 });
 
 UI.registerHelper('getUploadOption', function() {
-    return uploads.find().map(function (c) {
+    return uploads.find({userId: Meteor.userId()}).map(function (c) {
         return {label: c.file, value: c._id};
     });
 });

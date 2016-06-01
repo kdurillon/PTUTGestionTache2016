@@ -1,23 +1,28 @@
 <template name="gestionDocuments">
     <h1>Gestion des documents <button class="btn-upload btn btn-warning pull-right btn-upload"><i class="glyphicon glyphicon-upload"></i> Uploader un fichier</button></h1>
 
-            {{#each List}}
-                <div class="panel panel-default col-md-3 col-xs-3">
-                    <div class="panel-body">
-                        {{#if isImg file}}
-                            <img class="img-thumbnail" src="/uploads/{{userId}}/{{file}}">
-                        {{else}}
-                            <img class="img-thumbnail" src="/image/file.png">
-                        {{/if}}
-                    </div>
-                    <div class="panel-footer col-md-12">{{file}}
-
-                        <button class="btn btn-xs btn-danger pull-right delete_doc">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                        <a href="/uploads/{{userId}}/{{file}}" target="_blank" class="btn btn-xs btn-success pull-right download_doc">
-                            <span class="glyphicon glyphicon-download"></span>
-                        </a>
+            {{#each getUpload}}
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{file}}</div>
+                        <div class="panel-body">
+                            {{#if isImg file}}
+                                <img class="img-thumbnail" src="/uploads/{{userId}}/{{file}}">
+                            {{else}}
+                                <img class="img-thumbnail" src="/image/file.png">
+                            {{/if}}
+                        </div>
+                        <div class="panel-footer clearfix">
+                            Fichier {{displayExtension file}}
+                            <span class="pull-right">
+                                <a href="/uploads/{{userId}}/{{file}}" download="{{file}}" target="_parent" class="btn btn-xs btn-success">
+                                    <span class="glyphicon glyphicon-download"></span>
+                                </a>
+                                <button class="btn btn-xs btn-danger delete_doc">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             {{/each}}

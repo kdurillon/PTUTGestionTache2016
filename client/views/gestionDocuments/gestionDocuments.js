@@ -1,18 +1,3 @@
-
-Template.gestionDocuments.helpers({
-    'List': function(){
-        return uploads.find({userId: Meteor.userId()}).fetch();
-    },
-
-
-
-
-});
-
-/*Meteor._reload.onMigrate(function() {
-    return [false];
-});*/
-
 Template.gestionDocuments.events({
     'click .btn-upload': function() {
         Modal.show('uploadModal');

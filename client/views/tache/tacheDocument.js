@@ -1,4 +1,7 @@
 Template.newTacheDocument.rendered = function() {
+    $("#insertTag").tagsinput();
+    $('.bootstrap-tagsinput').addClass('form-control');
+    $('.bootstrap-tagsinput input').removeAttr('style');
     tinymce.init({
         selector: 'textarea',
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
