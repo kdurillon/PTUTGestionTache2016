@@ -10,4 +10,12 @@ Meteor.startup(function () {
             uploads.insert({userId: formFields.currentUserId, file: file.name, date: formFields.currentDate});
         }
     })
+
+
+Meteor.methods({deleteUploads: function(_id){
+            var upload = uploads.findOne({_id: _id});
+            UploadServer.delete(upload.userId+'/'+upload.file);
+            uploads.remove({_id: _id});
+}});
+
 });
