@@ -17,6 +17,10 @@ Template.newTacheDocument.events({
             var file = uploads.findOne({_id: _id});
             $('#previewDocument').attr("src", "/uploads/"+file.userId+"/"+file.file);
             $('#previewDocument').attr("alt", file.file);
+
+            $("#previewDocument").error(function () {
+                $(this).unbind("error").attr("src", "http://fakeimg.pl/350x200/?text=aucun%20aper%C3%A7u");
+            });
         }
     }
 });
