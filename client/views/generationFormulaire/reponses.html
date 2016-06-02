@@ -5,10 +5,10 @@
     <h1 class="text-center">Visualisation des réponses d'un formulaire</h1>
 
     <br><br>
-    <div class="row">
-        <div class="text-center">
-            <select name="" id="selectLeForm">
-            <option>Sélectionnez un formulaire</option>
+    <div class="row ">
+        <div class="text-center col-md-8 col">
+            <select name="" id="selectLeForm" class="form-control">
+            <option >Sélectionnez un formulaire</option>
         {{#each Reponses }}
 
           <option value="{{_id}}"> {{titre}} </option>
@@ -18,10 +18,6 @@
         </select></div>
     </div>
     <hr id="tableauReponses">
-<div>
-
-
-</div>
 
 
 

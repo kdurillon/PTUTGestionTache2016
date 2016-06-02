@@ -206,7 +206,7 @@ apercuDiv =function(label,elmt){
             //une date et une heure
         case "7":{
 
-            ctrl="<div><button class='btn btn-info'><span class='glyphicon glyphicon-upload'></span> Envoyer un fichier </button></div>";
+            ctrl="<div><button type='button' class='btn btn-info'><span class='glyphicon glyphicon-upload'></span> Envoyer un fichier </button></div>";
             break;
             }
     }

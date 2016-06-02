@@ -1,35 +1,32 @@
+
+Template.reponses.onDestroyed(function () {
+    $(".fieldsetFormulaire").remove();
+});
+
 Template.reponses.helpers({
 
     'Reponses': function(){
 
         var titres=[];
 
-        data = reponsesForm.find();
+        data = reponsesForm.find().fetch();
 
-        //console.log
+        console.log(data);
 
         data.forEach(function(row) {
 
-            titres.push( tempFormulaire.findOne({"_id":row.idForm}));
-            /*titres.forEach(function(titre){
-                console.log(row.idForm);
-                if(tempFormulaire.findOne({"_id":row.idForm})==titre){
-                    console.log(titre);
-                   titre.next();
-                }
-                else{
-                    titres.push( tempFormulaire.findOne({"_id":row.idForm}));
-                }*/
+            //console.log(row);
 
-
-
+            //titres.push( "_id" :tempFormulaire.findOne({"_id":row.idForm}));
 
         });
 
+       //console.log(titres);
 
-        console.log(titres);
+        var uniqueList = _.uniq(titres,titres["_id"]);
+       // console.log(uniqueList);
 
-        return titres;
+        return uniqueList;
 
     }
 
@@ -70,8 +67,6 @@ Template.reponses.events({
 
     });
 
-
-
     //console.log(reps);
 
     $("#tableauReponses").after(affichage);
@@ -82,4 +77,7 @@ Template.reponses.events({
 });
 
 
+
+
 //************************************************************ fonctions
+

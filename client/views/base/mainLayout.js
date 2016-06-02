@@ -5,3 +5,5 @@ Template.mainLayout.events({
         Router.go(Utils.pathFor('home'));
     }
 });
+
+
