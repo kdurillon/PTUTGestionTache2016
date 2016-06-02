@@ -7,7 +7,7 @@ Meteor.startup(function () {
             return formData.currentUserId + "/";
         },
         finished: function(file, formFields) {
-            uploads.insert({userId: formFields.currentUserId, file: file.name, date: formFields.currentDate});
+            uploads.insert({userId: formFields.currentUserId, file: file.name});
         }
     })
 

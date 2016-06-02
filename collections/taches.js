@@ -25,9 +25,15 @@ Globals.schemas.Taches = new SimpleSchema({
         optional: true
     },
     mailingList: {
-        type: String,
+        type: [String],
         label: 'Mailing List',
-        optional: true
+        optional: true,
+        autoform: {
+            type: "select2",
+            afFieldInput: {
+                multiple: true
+            }
+        }
     },
     emails: {
         type: [String],
@@ -55,7 +61,7 @@ Globals.schemas.Taches = new SimpleSchema({
            type: 'hidden'
         }
     },
-    documentId: {
+    document: {
         type: String,
         optional: true
     },

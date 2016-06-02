@@ -10,7 +10,9 @@ Template.newTacheDocument.rendered = function() {
     $("#typeTache").val('document');
 };
 
-Template.newTacheDocument.events({
+Template.updateTacheDocument.rendered = Template.newTacheDocument.rendered;
+
+var eventDocument = {
     "change .select_document": function(event){
         var _id = $(event.target).val();
         if(!_.isEmpty(_id)) {
@@ -23,4 +25,7 @@ Template.newTacheDocument.events({
             });
         }
     }
-});
+}
+
+Template.newTacheDocument.events(eventDocument);
+Template.updateTacheDocument.events(eventDocument);

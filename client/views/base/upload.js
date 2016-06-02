@@ -9,8 +9,7 @@ Uploader.localisation = {
 
 Template['uploadModal'].helpers({
     cuserId: function() {
-        var date = moment().format("DD/MM/YYYY HH:mm");
-        return {  currentUserId: Meteor.userId(), currentDate: date }
+        return {  currentUserId: Meteor.userId() }
     }
 });
 

@@ -88,12 +88,26 @@
                         {{/if}}
                         {{#if emails}}
                             <li>
-                                <b>Destinataire :</b>
-                                <ul>
-                                {{#each emails}}
-                                    <li>{{this}}</li>
-                                {{/each}}
-                                </ul>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <b>
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Destinataires (cliquez pour afficher la liste complète)
+                                                </a>
+                                            </b>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <ul>
+                                            {{#each emails}}
+                                                <li>{{this}}</li>
+                                            {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         {{/if}}
                         {{#if contenu}}
