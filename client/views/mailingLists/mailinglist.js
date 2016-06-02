@@ -55,9 +55,7 @@ Template.mailingList.events({
       Session.set('nameMailingList', nom);
       $("#inputNomML").val("");
 
-      if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
-        $('#apercuMailingList').show();
-      }
+      showApercuMail();
     }
   },
 
@@ -72,9 +70,7 @@ Template.mailingList.events({
 
       $("#inputTextMail").val('').focus();
 
-      if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
-        $('#apercuMailingList').show();
-      }
+      showApercuMail();
     }
   },
 
@@ -100,10 +96,10 @@ Template.mailingList.events({
       Session.set('emailsMailingList', emails);
       var emailsBd = mailingList.findOne({_id : Session.get('idMailingList')});
       if(!emailsBd) {
-        mailingList.insert({"nom": Session.get('nameMailingList'), "emails": Session.get('emailsMailingList')});
+        mailingList.insert({"nom": Session.get('nameMailingList'), "emails": _.uniq(Session.get('emailsMailingList'))});
         swal("Création","Mailing list créé", "success");
       }else {
-        mailingList.update(Session.get('idMailingList'), {$set: { nom: Session.get('nameMailingList'), emails: Session.get('emailsMailingList') }});
+        mailingList.update(Session.get('idMailingList'), {$set: { nom: Session.get('nameMailingList'), emails: _.uniq(Session.get('emailsMailingList')) }});
         swal("Modification","Mailing list modifié", "success");
       }
       resetApercu();
@@ -138,6 +134,8 @@ Template.mailingList.events({
       Session.set("idMailingList", id);
       Session.set("nameMailingList", mailsBd.nom);
       Session.set("emailsMailingList", mailsBd.emails);
+
+      showApercuMail();
     }
   },
 
@@ -162,9 +160,7 @@ Template.mailingList.events({
         });
         Session.set("emailsMailingList", _.uniq(Session.get("emailsMailingList").concat(data)));
 
-        $('#apercuMail').slimScroll({
-          height: '250px'
-        });
+        showApercuMail();
       }
     });
 
@@ -189,13 +185,21 @@ doublonName = function (nom) {
     return !!nameExist;
 }
 
-resetApercu = function(){
+resetApercu = function () {
   $('#selectListe').prop('selectedIndex',0);
   Session.set("idMailingList", "");
   Session.set("nameMailingList", "");
   Session.set("emailsMailingList", []);
 };
 
+showApercuMail = function () {
+  if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
+    $('#apercuMailingList').show();
+    $('#apercuMail').slimScroll({
+      height: '250px'
+    });
+  }
+};
 
 
 

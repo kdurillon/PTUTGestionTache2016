@@ -30,20 +30,23 @@ Template.actionTableTache.helpers({
 
 function getTache(_id) {
     var tache = taches.findOne({_id: _id});
-    var mailinglist = mailingList.findOne({nom: tache.mailingList});
+
+    if(_.isUndefined(tache.emails)) {
+        tache.emails = [];
+    }
+
+    _.each(tache.mailingList, function(nom) {
+        var emails = mailingList.findOne({nom: nom}).emails;
+        tache.emails = tache.emails.concat(emails);
+    });
+
     var document = uploads.findOne({_id: tache.document});
 
     if(!_.isUndefined(document)) {
         tache.document = document;
     }
 
-    if(!_.isUndefined(mailinglist)) {
-        if(_.isUndefined(tache.emails)) {
-            tache.emails = mailinglist.emails;
-        }else {
-            tache.emails = _.uniq(tache.emails.concat(mailinglist.emails));
-        }
-    }
+    tache.emails = _.uniq(tache.emails);
 
     return tache;
 }
@@ -56,21 +59,15 @@ Template.tacheHome.events({
             emails.toString(),
             'Envoie de mail!',
             "Ceci est un test de l'envoi de mail");
-        var html = '<ul>';
-        _.each(emails, function(email) {
-            html+= '<li>'+email+'</li>';
-        });
-        html+='</ul>';
         swal({
             title: "Envoi de mail",
-            text: "Email envoyé à "+html,
+            text: "Email envoyé aux emails de la tâche.",
             html: true,
             type: "success"
         });
     },
     "click .info_tache": function() {
         var _id = this._id;
-        console.log(getTache(_id));
         Modal.show('modalInfoTache', function () {
             return getTache(_id);
         });

@@ -54,12 +54,7 @@
                 <div class="panel-heading">Aperçu de la mailing list</div>
                 <div class="panel-body">
                     <div class="text-center">
-                        <h3>
-                        {{Mails.nom}}
-                        {{#if Mails._id}}
-                        <button id="{{Mails._id}}" class='deleteMailing btn btn-default'>Supprimer</button>
-                        {{/if}}
-                        </h3>
+                        <h3>{{Mails.nom}}</h3>
                     </div>
                     <hr>
                     <div id="apercuMail">
@@ -77,6 +72,9 @@
                     <hr>
                     <div>
                         {{#if Mails.nom}}
+                            {{#if Mails._id}}
+                                <button id="{{Mails._id}}" class='deleteMailing btn btn-danger'>Supprimer</button>
+                            {{/if}}
                             {{#if Mails.emails}}
                                 <button class='saveMailing btn btn-default pull-right'>Enregistrer</button>
                             {{/if}}
