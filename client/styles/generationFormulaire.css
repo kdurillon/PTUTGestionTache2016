@@ -8,8 +8,7 @@
     padding: 10px;
     border-radius: 10px;
 }
-#apercuForm,#titreGenere{
-    text-decoration: underline;
+#titreapercuForm,#titreGenere{
     font-weight: bold;
     margin-bottom: 60px;
 }
@@ -23,4 +22,17 @@
 }
 .ctrlsApercu{
     margin-bottom: 25px;
+}
+.double{
+    font-size:1.5em;
+
+}
+#tableauReponses{
+    margin-bottom: 35px;
+    display: inline-block;
+}
+.white{
+    background: white;
+    color:black;
+    margin: 5px;
 }
