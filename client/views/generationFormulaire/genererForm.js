@@ -9,7 +9,7 @@ Template.formulaireGenere.rendered = function(data) {
     Session.set("nbElement",0);
     Session.set("reps",0);
 
-
+    $(".navbar").hide();
 };
 
 

@@ -1,24 +1,19 @@
-formulaires = new Mongo.Collection("formulaires");
+tempFormulaire = new Mongo.Collection("tempFormulaires");
 
-Globals.schemas.Formulaire = new SimpleSchema({
-    nom: {
-        type: String,
-        max: 50,
-        label: "Nom du formulaire"
+tempFormulaire.allow({
+
+    insert: function () {
+        // the user must be logged in, and the document must be owned by the user
+        return true;
     },
-    elements_labels :{
-        type: [String],
-        label: "labels"
+    update: function () {
+        // can only change your own documents
+        return true;
     },
-    elements_types :{
-        type: [String],
-        label: "types"
+    remove: function () {
+        // can only remove your own documents
+        return true;
     },
-    elements_caracteristiques :{
-        type: [String],
-        label: "caractéristiques"
-    }
+    fetch: ['owner']
 
 });
-
-formulaires.attachSchema(Globals.schemas.Formulaire);

@@ -119,13 +119,14 @@ Template.formulaireCree.events({
         if($("#inputTitreGenForm").val()==""){
             swal("Titre ?","Vous devez donner un titre à votre document !", "error");
         }
+
         else{
+
             if(plus==0){
                 swal("Elément ?","Vous devez entrer au moins élément !", "error");
             }
             else{
                 var idForm= tempFormulaire.insert({"titre": $("#inputTitreGenForm").val(), "controls": controls});
-                alert(idForm);
                 console.log(controls);
                 $("#inputTitreGenForm").val("");
                 $("#apercuForm").html("Titre du formulaire");
