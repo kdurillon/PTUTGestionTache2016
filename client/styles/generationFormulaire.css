@@ -1,4 +1,4 @@
-#repFormGen
+.repFormGen,#retour
 {
     display: none;
 }
@@ -8,7 +8,19 @@
     padding: 10px;
     border-radius: 10px;
 }
-#apercuForm{
+#apercuForm,#titreGenere{
     text-decoration: underline;
     font-weight: bold;
+    margin-bottom: 60px;
+}
+/*
+.radioGen{
+    margin-right: 10px;
+}*/
+
+.labelApercu{
+    margin-right: 15px;
+}
+.ctrlsApercu{
+    margin-bottom: 25px;
 }
