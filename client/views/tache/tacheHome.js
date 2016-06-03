@@ -28,36 +28,23 @@ Template.actionTableTache.helpers({
     }
 });
 
-function getTache(_id) {
-    var tache = taches.findOne({_id: _id});
 
-    if(_.isUndefined(tache.emails)) {
-        tache.emails = [];
-    }
-
-    _.each(tache.mailingList, function(nom) {
-        var emails = mailingList.findOne({nom: nom}).emails;
-        tache.emails = tache.emails.concat(emails);
-    });
-
-    var document = uploads.findOne({_id: tache.document});
-
-    if(!_.isUndefined(document)) {
-        tache.document = document;
-    }
-
-    tache.emails = _.uniq(tache.emails);
-
-    return tache;
-}
 
 Template.tacheHome.events({
     "click .mail_tache": function() {
-        var emails = getTache(this._id).emails;
+        var tache = getTache(this._id);
+
+        var html = '';
+        if(tache.typeTache === "document") {
+            html = tache.contenu;
+            html+= "<br>Voici le lien du document : "+window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
+        } else {
+            html = tache.contenu;
+        }
         Meteor.call('sendEmail',
             'fakedeviut@gmail.com',
-            emails.toString(),
-            'Envoie de mail!',
+            tache.emails.toString(),
+            tache.titre,
             "Ceci est un test de l'envoi de mail");
         swal({
             title: "Envoi de mail",

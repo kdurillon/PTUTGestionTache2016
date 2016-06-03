@@ -6,9 +6,9 @@ Template.formulaireCree.rendered = function() {
     Session.set("typeControls",[]);
     $('#formRegister').validator();
     $('.datetimepicker').datetimepicker({
-        format: 'DD/MM/YYYY - LT',
+        format: 'L - LT',
         locale: 'fr',
-        minDate: moment().add(10, 'm')
+        minDate: moment().add(1, 'd')
     });
     tinymce.init({
         selector: 'textarea',
