@@ -5,8 +5,9 @@
     {{#each Form}}
 
 
-    <h1 class="text-center" id="titreGenere">{{titre}}</h1>
 
+
+        <h1 id="titreGenere" class="text-center"><span class="label label-default">{{titre}}</span></h1>
 
 
         {{#each controls}}
@@ -39,7 +40,7 @@
 
                     <div class='text-center form-group ctrlsApercu '>
                         <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <input id='date{{numero}}' name='date{{numero}}' class='form-control'  type='date'    />
+                        <input id='date{{numero}}' name='date{{numero}}' class='form-control'  type='date'   required />
                         <!--
                         <div class='input-group datetimepicker'>
                             <span class='input-group-addon'><i class='glyphicon glyphicon-calendar'></i></span>
@@ -52,33 +53,36 @@
 
                     <div class='text-center form-group ctrlsApercu '>
                         <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <div><label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' value="oui">Oui</label>
+                        <div class="form-control">
+                        <div><label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' value="oui" required >Oui</label>
                         <label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder=''  value="non">Non</label></div>
-                    </div>
+                    </div></div>
 
                 {{/if}}
 
                 {{#if isInputRadios typeControl}}
 
                     <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='control-label'>{{label}}</label>
-
+                        <label for='' class='control-label'>{{label}}</label><br>
+                        <div class="form-control">
                         {{#each reponse in reponses}}
-                        <div class='radio'><label for=''><input id='radio{{numero}}-{{rep}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' >{{reponse}}</label></div>
+                        <div class='radio-inline'><label for=''><input id='radio{{numero}}-{{rep}}' name='radio{{numero}}' type='radio' class=' ' placeholder=''  required>{{reponse}}</label></div>
                         {{/each}}
 
-
+                    </div>
                     </div>
 
                 {{/if}}
 
                 {{#if isInputCheckboxs typeControl}}
 
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='control-label'>{{label}}</label>
+                    <div class='text-center form-group ctrlsApercu required'>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                        <div class="form-control">
                         {{#each reponse in reponses}}
-                        <div class='checkbox'><label for=''><input id='checkboxname{{numero}}-{{rep}}'  type='checkbox' class=' ' placeholder='' >{{reponse}}</label></div>
+                        <div class='checkbox-inline '><label for=''><input id='checkboxname{{numero}}-{{rep}}'  type='checkbox' class=' ' placeholder='' >{{reponse}}</label></div>
                         {{/each}}
+                        </div>
                     </div>
 
                 {{/if}}

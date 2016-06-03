@@ -166,7 +166,7 @@ tableauReponses= function(idForm,idUser){
             for(var j=0; j<reponses.length;j++){
                 var numero=j+1;
                 if($("#checkboxname"+num+"-"+numero).is(":checked")) {
-                    rep.push({" numero " :numero,"reponse":reponses[j]});
+                    rep.push({"numero":numero,"reponse":reponses[j]});
                 }
             }
             reps.push({"type":type,"label":form.controls[i].control[0].label,"reponse":rep});
