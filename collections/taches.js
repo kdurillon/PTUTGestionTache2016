@@ -64,7 +64,7 @@ Globals.schemas.Taches = new SimpleSchema({
     typeTache: {
         type: String,
         autoform: {
-           type: 'hidden'
+           omit: true
         }
     },
     document: {
@@ -95,9 +95,6 @@ Globals.schemas.Taches = new SimpleSchema({
     },
     fini: {
         type: Boolean,
-        autoValue: function() {
-            return false;
-        },
         autoform: {
             omit: true
         }

@@ -65,19 +65,25 @@
 </template>
 
 <template name="actionTableTache">
-    {{#if mailExist _id}}
-    <button data-toggle="tooltip" title="Envoyer le mail" class="btn btn-xs btn-success mail_tache">
-        <span class="glyphicon glyphicon-send"></span>
-    </button>
+    {{#if tacheEnCours _id}}
+        {{#if mailExist _id}}
+        <button data-toggle="tooltip" title="Envoyer le mail" class="btn btn-xs btn-success mail_tache">
+            <span class="glyphicon glyphicon-send"></span>
+        </button>
+        {{/if}}
+        <a data-toggle="tooltip" title="Editer la tâche" class="btn btn-xs btn-warning edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
     {{/if}}
     <button data-toggle="tooltip" title="Voir informations" class="btn btn-xs btn-info info_tache">
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
-    <a data-toggle="tooltip" title="Editer la tâche" class="btn btn-xs btn-warning edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
-        <span class="glyphicon glyphicon-pencil"></span>
-    </a>
-    <button data-toggle="tooltip" title="Supprimer la tâche" class="btn btn-xs btn-danger delete_tache">
-        <span class="glyphicon glyphicon-trash"></span>
+    <button data-toggle="tooltip" title="Archiver la tâche" class="btn btn-xs btn-primary archive_tache">
+        {{# if fini}}
+            <span class="glyphicon glyphicon glyphicon-upload"></span>
+        {{else}}
+            <span class="glyphicon glyphicon glyphicon-download"></span>
+        {{/if}}
     </button>
 </template>
 
@@ -148,9 +154,9 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning archive_tache" data-dismiss="modal">
-                        <span class="glyphicon-class glyphicon glyphicon-download-alt"></span>
-                        Archiver
+                    <button type="button" class="btn btn-danger delete_tache" data-dismiss="modal">
+                        <span class="glyphicon-class glyphicon trash"></span>
+                        Supprimer
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                 </div>

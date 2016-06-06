@@ -24,9 +24,9 @@ Template.tacheHome.helpers({
                 { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
             ],
             rowClass: function(item) {
-                if(item.typeTache === "parent") {
+                /*if(item.typeTache === "parent") {
                     return 'text-bold';
-                }
+                }*/
 
                 var now = moment();
                 var dateFin = moment(item.dateFin ,'MM/DD/YYYY - h:mm');
@@ -41,7 +41,7 @@ Template.tacheHome.helpers({
 
 function displayValueTable(value) {
     if(_.isEmpty(value)) {
-        return new Spacebars.SafeString("Aucune valeur défini");
+        return new Spacebars.SafeString("");
     }else {
         return value;
     }
@@ -50,7 +50,18 @@ function displayValueTable(value) {
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
         var tache = taches.findOne({_id: _id});
+        if(_.isUndefined(tache)) {
+            return false;
+        }
         return !(_.isUndefined(tache.emails) && _.isUndefined(tache.mailingList));
+    },
+
+    tacheEnCours: function(_id) {
+        var tache = taches.findOne({_id: _id});
+        if(_.isUndefined(tache)) {
+            return false;
+        }
+        return tache.fini === false;
     }
 });
 
@@ -86,6 +97,25 @@ Template.tacheHome.events({
             return getTache(_id);
         });
     },
+    "click .archive_tache": function() {
+        var fini = null;
+        var text = "";
+        if(this.fini === true) {
+            fini = false;
+            text = "la tâche n'est plus archivé";
+
+        }else {
+            fini = true;
+            text = "La tâche à été archivé avec succès.";
+        }
+
+        taches.update(this._id, {$set: { fini: fini }});
+        swal("Archivage!", text, "success");
+    }
+
+});
+
+Template.modalInfoTache.events({
     "click .delete_tache": function() {
         var id = this._id;
         swal({
@@ -105,17 +135,17 @@ Template.tacheHome.events({
     }
 });
 
-Template.modalInfoTache.events({
-    "click .archive_tache": function() {
-        taches.update(this._id, {$set: { fini: true }});
-        swal("Archivage!", "La tâche à été archivé avec succès.", "success");
-    }
-});
-
 /**
  * Hooks
  */
 AutoForm.addHooks('tache', {
+    before: {
+        insert: function(data){
+            data.fini = false;
+            data.typeTache = Session.get('typeTache');
+            return data;
+        }
+    },
     after: {
         insert: function(error) {
             if (error) {

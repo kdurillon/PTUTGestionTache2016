@@ -13,7 +13,7 @@ Template.newTacheNote.rendered = function() {
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
-    $("#typeTache").val('note');
+    Session.set('typeTache', 'note');
 };
 
 Template.updateTacheNote.rendered = Template.newTacheNote.rendered;

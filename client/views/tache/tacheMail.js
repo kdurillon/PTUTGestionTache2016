@@ -12,7 +12,7 @@ Template.newTacheMail.rendered = function() {
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
-    $("#typeTache").val('mail');
+    Session.set('typeTache', 'mail');
 };
 
 Template.updateTacheMail.rendered = Template.newTacheMail.rendered;
