@@ -1,5 +1,12 @@
 Meteor.startup(function () {
-    process.env.MAIL_URL = "smtp://fakedeviut@gmail.com:azerty39,@smtp.gmail.com:465/";
+    smtp = {
+        username: 'noreply-ptuttask@iutinfobourg.fr',
+        password: 'METINET02',
+        server:   'smtp.iutinfobourg.fr',
+        port: 587
+    };
+
+    process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
     Meteor.methods({
         'sendEmail': function (to, from, subject, text) {

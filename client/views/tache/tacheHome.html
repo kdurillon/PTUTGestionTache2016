@@ -62,6 +62,7 @@
 
     {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
+    <span class="lightgrey"></span>
 </template>
 
 <template name="actionTableTache">
@@ -79,7 +80,7 @@
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
     {{# if fini}}
-        <button data-toggle="tooltip" title="Désarchiver la tâche" class="btn btn-xs btn-primary archive_tache">
+        <button data-toggle="tooltip" title="Désarchiver la tâche" class="btn btn-xs btn-primary desarchive_tache">
             <span class="glyphicon glyphicon glyphicon-upload"></span>
         </button>
     {{else}}

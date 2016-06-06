@@ -14,20 +14,24 @@ Template.tacheHome.helpers({
     optionsReactiveTable: function() {
         return {
             fields: [
-                { key: 'titre', label: 'Titre', fn: function(value) { return displayValueTable(value) } },
-                { key: 'typeTache', label: 'Type', fn: function(value) { return displayValueTable(value) } },
-                { key: 'tacheParent', label: 'Parent', fn: function(value) { return displayValueTable(value) } },
-                { key: 'categorie', label: 'Catégorie', fn: function(value) { return displayValueTable(value) } },
-                { key: 'tags', label: 'Tags', fn: function(value) { return displayValueTable(value) } },
-                { key: 'dateCreation', label: 'Date de création', fn: function(value) { return displayValueTable(value) } },
-                { key: 'dateFin', label: 'Date de fin/rappel', fn: function(value) { return displayValueTable(value) } },
+                { key: 'titre', label: 'Titre' },
+                { key: 'typeTache', label: 'Type' },
+                { key: 'tacheParent', label: 'Parent',
+                    fn:
+                        function(value) {
+                            if(_.isNull(value)) {
+                                return false;
+                            }
+                            return taches.findOne({_id: value}).titre;
+                        }
+                },
+                { key: 'categorie', label: 'Catégorie' },
+                { key: 'tags', label: 'Tags' },
+                { key: 'dateCreation', label: 'Date de création' },
+                { key: 'dateFin', label: 'Date de fin/rappel' },
                 { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
             ],
             rowClass: function(item) {
-                /*if(item.typeTache === "parent") {
-                    return 'text-bold';
-                }*/
-
                 var now = moment();
                 var dateFin = moment(item.dateFin ,'MM/DD/YYYY - h:mm');
 
@@ -39,13 +43,13 @@ Template.tacheHome.helpers({
     }
 });
 
-function displayValueTable(value) {
+/*function displayValueTable(value) {
     if(_.isEmpty(value)) {
         return new Spacebars.SafeString("");
     }else {
         return value;
     }
-}
+}*/
 
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
@@ -76,14 +80,31 @@ Template.tacheHome.events({
         if(tache.typeTache === "document") {
             html = tache.contenu;
             html+= "<br>Voici le lien du document : "+window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
-        } else {
+        } else if(tache.typeTache === "formulaire") {
+            _.each(tache.emails, function(email) {
+                html = tache.contenu;
+                html+= "<br>Voici le lien du formulaire : "+window.location.origin+"/formulaire/"+tache.formulaire+"/"+utf8_to_b64(tache.emails[0]);
+                Meteor.call('sendEmail',
+                    'fakedeviut@gmail.com',
+                    email,
+                    tache.titre,
+                    html);
+            });
+            swal({
+                title: "Envoi de mail",
+                text: "Formulaire envoyé aux emails de la tâche.",
+                html: true,
+                type: "success"
+            });
+            return true;
+        }else {
             html = tache.contenu;
         }
         Meteor.call('sendEmail',
             'fakedeviut@gmail.com',
             tache.emails.toString(),
             tache.titre,
-            "Ceci est un test de l'envoi de mail");
+            html);
         swal({
             title: "Envoi de mail",
             text: "Email envoyé aux emails de la tâche.",
@@ -98,19 +119,25 @@ Template.tacheHome.events({
         });
     },
     "click .archive_tache": function() {
-        var fini = null;
-        var text = "";
-        if(this.fini === true) {
-            fini = false;
-            text = "la tâche n'est plus archivé";
-
-        }else {
-            fini = true;
-            text = "La tâche à été archivé avec succès.";
+        if(this.typeTache === "parent") {
+            var listTaches = taches.find({tacheParent: this._id}).fetch();
+            _.each(listTaches, function(tache) {
+                taches.update(tache._id, {$set: { fini: true }});
+            });
         }
+        taches.update(this._id, {$set: { fini: true }});
+        swal("Archivage!", "La tâche à été archivé avec succès.", "success");
+    },
 
-        taches.update(this._id, {$set: { fini: fini }});
-        swal("Archivage!", text, "success");
+    "click .desarchive_tache": function() {
+        if(this.typeTache === "parent") {
+            var listTaches = taches.find({tacheParent: this._id}).fetch();
+            _.each(listTaches, function(tache) {
+                taches.update(tache._id, {$set: { fini: false }});
+            });
+        }
+        taches.update(this._id, {$set: { fini: false }});
+        swal("Archivage!", "La tâche à été enlevé de l'archive.", "success");
     }
 
 });
