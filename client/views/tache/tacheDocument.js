@@ -7,7 +7,7 @@ Template.newTacheDocument.rendered = function() {
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
-    $("#typeTache").val('document');
+    Session.set('typeTache', 'document');
 };
 
 Template.updateTacheDocument.rendered = Template.newTacheDocument.rendered;

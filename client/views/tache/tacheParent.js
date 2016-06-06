@@ -12,7 +12,7 @@ Template.newTacheParent.rendered = function() {
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
-    $("#typeTache").val('parent');
+    Session.set('typeTache', 'parent');
 };
 
 Template.updateTacheParent.rendered = Template.newTacheParent.rendered;

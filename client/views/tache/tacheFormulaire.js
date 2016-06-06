@@ -12,7 +12,7 @@ Template.newTacheFormulaire.rendered = function() {
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
-    $("#typeTache").val('formulaire');
+    Session.set('typeTache', 'formulaire');
 };
 
 Template.updateTacheFormulaire.rendered = Template.newTacheFormulaire.rendered;

@@ -1,0 +1,30 @@
+<template name="gantt">
+    <div class="row">
+        <h1>Votre calendrier</h1>
+    </div>
+    <span class="divider"></span>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <button class="btn btn-success form-control" id="hideArchive">Afficher les tâches archivées</button>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control">
+                <option>Catégorie</option>
+                {{#each getCategorie}}
+                    <option>
+                        {{nom}}
+                    </option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Nom de la tâche"/>
+        </div>
+    </div>
+    <span class="divider"></span>
+    {{initTasks}}
+
+    <div class="row">
+        <div id="princ" style='width: 100%; height: 500px;'></div>
+    </div>
+</template>
