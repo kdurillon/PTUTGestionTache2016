@@ -1,3 +1,5 @@
+
+
 Template.formulaireGenere.rendered = function(data) {
 
     tinymce.init({
@@ -8,14 +10,10 @@ Template.formulaireGenere.rendered = function(data) {
 
     Session.set("nbElementForm",0);
     Session.set("ckboxgroup",[]);
+    Session.set("NumeroReps",0);
 
-    var idFormulaire =Router.current().params;
+   $(".navbar").hide();
 
-    var formulaire = tempFormulaire.find({_id:""+idFormulaire["_id"]}).fetch();
-
-    console.log(formulaire);
-
-    $(".navbar").hide();
 
 };
 
@@ -24,16 +22,19 @@ Template.formulaireGenere.rendered = function(data) {
 Template.formulaireGenere.helpers({
    
     'Form': function(){
-
         var idFormulaire =Router.current().params;
+        var reponse = reponsesForm.find({idForm:""+idFormulaire["_id"],idUser:""+idFormulaire["idUtilisateur"]}).fetch();
+        console.log(reponse);
+        if(reponse!=[]){
+            formulaireEnvoye();
+         }
 
-        console.log(tempFormulaire.find({_id:""+idFormulaire["_id"]}).fetch());
 
-        return tempFormulaire.find({_id:""+idFormulaire["_id"]}).fetch();
+
+        return tempFormulaire.find({_id:""+idFormulaire["_id"]});
     },
     'isInputText': function(display){
         if(display=="1"){
-
             return true;
         }
         return false;
@@ -86,9 +87,11 @@ Template.formulaireGenere.helpers({
 
 Template.formulaireGenere.events({
 
-    'click .upload_button': function () {
+    'click .upload_button': function (event) {
+        event.preventDefault();
         Modal.show('uploadModalExt');
     },
+    
     'submit form': function (event) {
 
         event.preventDefault();
@@ -101,6 +104,7 @@ Template.formulaireGenere.events({
         var reps=tableauReponses(idForm,idUser);
         var tabCkBox =Session.get("ckboxgroup");
         var verif = false;
+        var verif2 = [];
 
         console.log(tabCkBox);
 
@@ -109,33 +113,31 @@ Template.formulaireGenere.events({
             for(var b=1;b<=tabCkBox[a]["nbReponses"];b++){
                 if($("#checkboxname"+tabCkBox[a]["element"]+"-"+b).is(":checked")){
                 verif=true;
+                verif2.push("true");
+                $(".errorCkBox"+tabCkBox[a]["element"]).hide();
                 }
             if(!verif){
-                $(".errorCkBox"+b).show();
+                $(".errorCkBox"+tabCkBox[a]["element"]).show();
             }
             }
-
-
-         if(verif){
-
-             reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
-             swal("Réussite","Formulaire envoyé !","success");
-
-             $("#corpsForm").hide();
-             $("#retour").show();
-
-         }
-            else{
-             Session.set("ckboxgroup",[]);
-
-
-         }
-
-
 
 
         }
 
+
+        if(verif2.length>=tabCkBox.length){
+
+            console.log("envoi ok");
+             reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
+             swal("Réussite","Formulaire envoyé !","success");
+            formulaireEnvoye();
+
+        }
+        else{
+            Session.set("ckboxgroup",[]);
+
+
+        }
 
     }
 
@@ -216,4 +218,14 @@ tableauReponses= function(idForm,idUser){
 
 return reps;
 
+}
+
+formulaireEnvoye = function(){
+    $(".formBoutons").hide();
+    $("#corpsForm").hide();
+    $("#retour").show();
+}
+
+afficherForm =function(){
+    $(".formBoutons").show();
 }

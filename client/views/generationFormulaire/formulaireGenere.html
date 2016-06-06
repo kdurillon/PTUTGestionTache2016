@@ -18,7 +18,7 @@
                 {{#if isInputText typeControl}}
 
                     <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='labelApercu control-label'>{{num}}</label>
+                        <label for='' class='labelApercu control-label'>{{label}}</label>
                         <input id="inputText{{numero}}" name="inputText{{numero}}"  class='form-control'  type='text'   placeholder='Entrez votre texte ici.' required/>
                     </div>
 
@@ -102,7 +102,7 @@
 
         <br><br>
 
-        <div class="form-group text-center">
+        <div class="form-group text-center formBoutons" >
             <input id="EnvoyerFormGenere" value="Envoyer" type="submit" class="btn btn-success " >
             <input  value="Effacer" type="reset"  class="btn btn-danger ">
         </div>

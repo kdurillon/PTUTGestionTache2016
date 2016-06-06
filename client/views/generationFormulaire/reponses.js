@@ -87,19 +87,17 @@ Template.reponses.events({
 
             reponses.forEach(function (enr) {
                 console.log(enr.label);
+
                 if (enr.type == 3) {
                     var dateFormat = moment(enr.reponse, 'YYYY-MM-DD').format('DD-MM-YYYY');
                     reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>" + dateFormat + "</div></div>";
                 }
                 else if (enr.type == 6) {
 
-                //console.log("checkbox");
-
                 reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>";
                     divCheckbox="";
                     enr.reponse.forEach(function(checkbox){
                         divCheckbox+="<div><span> ("+checkbox.numero+") </span> "+checkbox.reponse+"</div>" ;
-                        //console.log(checkbox[" numero "]);
                     });
                  reps+=divCheckbox;
                  reps+="</div></div>";
@@ -115,7 +113,6 @@ Template.reponses.events({
 
         });
 
-        //console.log(reps);
 
         $("#tableauReponses").after(affichage);
 
