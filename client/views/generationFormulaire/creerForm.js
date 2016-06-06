@@ -1,9 +1,10 @@
 Template.formulaireCree.rendered = function() {
-    Session.set("plus","0");
+    Session.set("plus",0);
     Session.set("reponses",[]);
     Session.set("controls",[]);
     Session.set("labels",[]);
     Session.set("typeControls",[]);
+    Session.set("numReponse",0);
     $('#formRegister').validator();
     $('.datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY - LT',
@@ -26,18 +27,19 @@ Template.formulaireCree.events({
     "click #ajouterElmtFormGen" :function(){
 
         if($("#inputTextGenForm").val()!="") {
-
+            //Session.set("numReponse",0);
             var html = apercuDiv($("#inputTextGenForm").val(), $("#inputSelectGenForm").val());
 
             console.log(html);
 
 
             var plus = Session.get("plus");
-
+            Session.set("numReponse",0);
 
             if (plus == 1) {
 
                 if ($("#inputTextGenForm").val() != "" && $("#inputPlaceGenForm").val() != "") {
+                    console.log("debug");
                     $(".formApercu0").after(html);
 
                 }
@@ -61,8 +63,12 @@ Template.formulaireCree.events({
 
         if(rep!=""){
 
+           num=Session.get("numReponse");
+            num++;
+            Session.set("numReponse",num);
+
             var reponses=Session.get("reponses");
-            reponses.push(rep);
+            reponses.push({"num":num,"libelle":rep});
             Session.set("reponses",reponses);
 
             console.log(reponses);
@@ -149,8 +155,9 @@ apercuDiv =function(label,elmt){
     var plus =Session.get("plus");
     var controls =Session.get("controls");
     var reps=Session.get("reponses");
+    var nbElement=plus+1;
 
-    controls.push({"control":[{"label":label,"typeControl":elmt,"reponses":reps}]});
+    controls.push({"control":[{"numero":nbElement,"label":label,"typeControl":elmt,"reponses":reps}]});
 
     console.log(controls);
     Session.set("controls",controls);
@@ -190,22 +197,20 @@ apercuDiv =function(label,elmt){
 
             var ctrl="<br>";
             for(i=0;i<reps.length;i++){
-                ctrl += "<div class='radio'><label for=''><input name='radio"+plus+"' type='radio' class=' '  >"+reps[i]+"</label></div>";
+                ctrl += "<div class='radio '><label for=''><input name='radio"+plus+"' type='radio' class=' '  >"+reps[i]["libelle"]+"</label></div>";
             }
             break;
             }
-            //un choix à réponse unique
+            //un choix à réponse multiple
         case "6":{
             var ctrl="";
             for(i=0;i<reps.length;i++){
-                ctrl += "<div class='checkbox'><label for=''><input name='checkbox' type='checkbox' class=' ' >"+reps[i]+"</label></div>";
+                ctrl += "<div class='checkbox '><label for=''><input name='checkbox' type='checkbox' class=' ' >"+reps[i]["libelle"]+"</label></div>";
             }
-
-                break;
+            break;
             }
             //une date et une heure
         case "7":{
-
             ctrl="<div><button type='button' class='btn btn-info'><span class='glyphicon glyphicon-upload'></span> Envoyer un fichier </button></div>";
             break;
             }

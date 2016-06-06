@@ -5,6 +5,7 @@ Template.reponses.onDestroyed(function () {
 
 Template.reponses.onRendered(function () {
     $("#tableauReponses").hide();
+
 });
 
 Template.reponses.helpers({
@@ -49,7 +50,10 @@ Template.reponses.helpers({
 
 Template.reponses.events({
 
+   
+
 "change #selectLeForm ":function(){
+
 
     $(".fieldsetFormulaire").remove();
     if($("#selectLeForm").val()==0){

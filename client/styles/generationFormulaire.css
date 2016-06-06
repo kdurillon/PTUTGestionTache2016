@@ -36,3 +36,12 @@
     color:black;
     margin: 5px;
 }
+.marge50{
+    margin-left:150px;
+    margin-bottom: 8px;
+}
+.errorCkBox
+{
+    display:none;
+    color:red;
+}
