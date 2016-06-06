@@ -5,6 +5,19 @@
     <hr>
 
     <div class="row text-center">
+        <div class="col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tâche parent</h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{{pathFor route='newTacheParent'}}" class="btn btn-success">Créer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
         <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -38,16 +51,16 @@
         <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Panel primary</h3>
+                    <h3 class="panel-title">Formulaire</h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <a href="{{pathFor route='newTacheFormulaire'}}" class="btn btn-success">Créer</a>
                 </div>
             </div>
         </div>
     </div>
 
-    {{> reactiveTable class="table table-striped table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
+    {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
 </template>
 
@@ -93,7 +106,7 @@
                                         <h4 class="panel-title">
                                             <b>
                                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Destinataires (cliquez pour afficher la liste complète)
+                                                    {{emails.length}} Destinataires (cliquez pour afficher la liste complète)
                                                 </a>
                                             </b>
                                         </h4>
@@ -135,7 +148,11 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning archive_tache" data-dismiss="modal">
+                        <span class="glyphicon-class glyphicon glyphicon-download-alt"></span>
+                        Archiver
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                 </div>
 
             </div>

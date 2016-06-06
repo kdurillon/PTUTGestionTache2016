@@ -1,0 +1,35 @@
+<template name="newTacheParent">
+    {{setTitle 'Tâches parent'}}
+    <h1 class="text-center" >Tâche Parent</h1>
+
+    <hr>
+
+    {{#autoForm collection="taches" type="insert" id="tache"}}
+        {{> afQuickField id="typeTache" name="typeTache"}}
+        {{> afQuickField name="titre"}}
+        <div class="row">
+            <div class="col-sm-12">
+                {{> afQuickField name="contenu"}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    {{/autoForm}}
+</template>
+
+<template name="updateTacheParent">
+    {{setTitle 'Tâches parent'}}
+    <h1 class="text-center" >Tâche Parent</h1>
+
+    <hr>
+
+    {{#autoForm collection="taches" type="update" doc=this id="tache"}}
+        {{> afQuickField id="typeTache" name="typeTache"}}
+        {{> afQuickField name="titre"}}
+        <div class="row">
+            <div class="col-sm-12">
+                {{> afQuickField name="contenu"}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    {{/autoForm}}
+</template>

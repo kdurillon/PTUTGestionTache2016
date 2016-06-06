@@ -7,3 +7,11 @@
 .reactive-table-navigation .form-inline input {
     width: 60px;
 }
+
+.text-bold {
+    font-weight: bold;
+}
+
+.lightgrey {
+    background-color: lightgrey !important;
+}

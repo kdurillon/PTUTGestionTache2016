@@ -10,6 +10,11 @@ Globals.schemas.Taches = new SimpleSchema({
             omit: true
         }
     },
+    tacheParent: {
+        type: String,
+        label: "Tâche Parent",
+        optional: true
+    },
     titre: {
         type: String,
         max: 100
@@ -17,7 +22,8 @@ Globals.schemas.Taches = new SimpleSchema({
     tags: {
         type: String,
         max: 100,
-        label: 'Tags'
+        label: 'Tags',
+        optional: true
     },
     categorie: {
         type: String,
@@ -65,6 +71,10 @@ Globals.schemas.Taches = new SimpleSchema({
         type: String,
         optional: true
     },
+    formulaire: {
+        type: String,
+        optional :true
+    },
     dateCreation: {
         type: String,
         denyUpdate: true,
@@ -78,6 +88,15 @@ Globals.schemas.Taches = new SimpleSchema({
             else{
                 this.unset();
             }
+        },
+        autoform: {
+            omit: true
+        }
+    },
+    fini: {
+        type: Boolean,
+        autoValue: function() {
+            return false;
         },
         autoform: {
             omit: true

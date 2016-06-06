@@ -190,6 +190,7 @@ resetApercu = function () {
   Session.set("idMailingList", "");
   Session.set("nameMailingList", "");
   Session.set("emailsMailingList", []);
+  showApercuMail();
 };
 
 showApercuMail = function () {
@@ -198,6 +199,8 @@ showApercuMail = function () {
     $('#apercuMail').slimScroll({
       height: '250px'
     });
+  }else{
+    $('#apercuMailingList').hide();
   }
 };
 

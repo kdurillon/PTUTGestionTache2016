@@ -1,63 +1,77 @@
 i18n.setLanguage('fr');
 
+/**
+ * rendered
+ */
 Template.actionTableTache.rendered = function() {
     $('[data-toggle="tooltip"]').tooltip();
 };
 
+/**
+ * helpers
+ */
 Template.tacheHome.helpers({
     optionsReactiveTable: function() {
-        return { fields: [
-            { key: 'titre', label: 'Titre' },
-            { key: 'typeTache', label: 'Type' },
-            { key: 'categorie', label: 'Catégorie' },
-            { key: 'tags', label: 'Tags' },
-            { key: 'dateCreation', label: 'Date de création' },
-            { key: 'dateFin', label: 'Date de fin/rappel' },
-            { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
-        ] }
+        return {
+            fields: [
+                { key: 'titre', label: 'Titre', fn: function(value) { return displayValueTable(value) } },
+                { key: 'typeTache', label: 'Type', fn: function(value) { return displayValueTable(value) } },
+                { key: 'tacheParent', label: 'Parent', fn: function(value) { return displayValueTable(value) } },
+                { key: 'categorie', label: 'Catégorie', fn: function(value) { return displayValueTable(value) } },
+                { key: 'tags', label: 'Tags', fn: function(value) { return displayValueTable(value) } },
+                { key: 'dateCreation', label: 'Date de création', fn: function(value) { return displayValueTable(value) } },
+                { key: 'dateFin', label: 'Date de fin/rappel', fn: function(value) { return displayValueTable(value) } },
+                { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
+            ],
+            rowClass: function(item) {
+                if(item.typeTache === "parent") {
+                    return 'text-bold';
+                }
+
+                var now = moment();
+                var dateFin = moment(item.dateFin ,'MM/DD/YYYY - h:mm');
+
+                if((now > dateFin) || item.fini === true) {
+                    return 'lightgrey';
+                }
+            }
+        }
     }
 });
+
+function displayValueTable(value) {
+    if(_.isEmpty(value)) {
+        return new Spacebars.SafeString("Aucune valeur défini");
+    }else {
+        return value;
+    }
+}
 
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
         var tache = taches.findOne({_id: _id});
-        if(_.isUndefined(tache.emails) && _.isUndefined(tache.mailingList)) {
-            return false;
-        }
-        return true;
+        return !(_.isUndefined(tache.emails) && _.isUndefined(tache.mailingList));
     }
 });
 
-function getTache(_id) {
-    var tache = taches.findOne({_id: _id});
-
-    if(_.isUndefined(tache.emails)) {
-        tache.emails = [];
-    }
-
-    _.each(tache.mailingList, function(nom) {
-        var emails = mailingList.findOne({nom: nom}).emails;
-        tache.emails = tache.emails.concat(emails);
-    });
-
-    var document = uploads.findOne({_id: tache.document});
-
-    if(!_.isUndefined(document)) {
-        tache.document = document;
-    }
-
-    tache.emails = _.uniq(tache.emails);
-
-    return tache;
-}
-
+/**
+ * Events
+ */
 Template.tacheHome.events({
     "click .mail_tache": function() {
-        var emails = getTache(this._id).emails;
+        var tache = getTache(this._id);
+
+        var html = '';
+        if(tache.typeTache === "document") {
+            html = tache.contenu;
+            html+= "<br>Voici le lien du document : "+window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
+        } else {
+            html = tache.contenu;
+        }
         Meteor.call('sendEmail',
             'fakedeviut@gmail.com',
-            emails.toString(),
-            'Envoie de mail!',
+            tache.emails.toString(),
+            tache.titre,
             "Ceci est un test de l'envoi de mail");
         swal({
             title: "Envoi de mail",
@@ -86,11 +100,21 @@ Template.tacheHome.events({
             },
             function(){
                 taches.remove(id);
-                swal("Suppression!", "La tâche à été supprimé.", "success");
+                swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
             });
     }
 });
 
+Template.modalInfoTache.events({
+    "click .archive_tache": function() {
+        taches.update(this._id, {$set: { fini: true }});
+        swal("Archivage!", "La tâche à été archivé avec succès.", "success");
+    }
+});
+
+/**
+ * Hooks
+ */
 AutoForm.addHooks('tache', {
     after: {
         insert: function(error) {
