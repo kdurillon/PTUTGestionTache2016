@@ -78,13 +78,16 @@
     <button data-toggle="tooltip" title="Voir informations" class="btn btn-xs btn-info info_tache">
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
-    <button data-toggle="tooltip" title="Archiver la tâche" class="btn btn-xs btn-primary archive_tache">
-        {{# if fini}}
+    {{# if fini}}
+        <button data-toggle="tooltip" title="Désarchiver la tâche" class="btn btn-xs btn-primary archive_tache">
             <span class="glyphicon glyphicon glyphicon-upload"></span>
-        {{else}}
+        </button>
+    {{else}}
+        <button data-toggle="tooltip" title="Archiver la tâche" class="btn btn-xs btn-primary archive_tache">
             <span class="glyphicon glyphicon glyphicon-download"></span>
-        {{/if}}
-    </button>
+        </button>
+    {{/if}}
+
 </template>
 
 <template name="modalInfoTache">

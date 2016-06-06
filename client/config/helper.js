@@ -65,7 +65,7 @@ UI.registerHelper('getTacheParent', function() {
 
 UI.registerHelper('getTacheParentOption', function() {
     return taches.find({userId: Meteor.userId(), typeTache: "parent"}).map(function (c) {
-        return {label: c.titre, value: c.titre};
+        return {label: c.titre, value: c._id};
     });
 });
 

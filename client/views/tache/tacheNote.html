@@ -5,7 +5,14 @@
     <hr>
 
     {{#autoForm collection="taches" type="insert" id="tache"}}
-        {{> afQuickField name="titre"}}
+        <div class="row">
+            <div class="col-sm-6">
+                {{> afQuickField name="titre"}}
+            </div>
+            <div class="col-sm-6">
+                {{> afQuickField name="tacheParent" options=getTacheParentOption firstOption="tache Parent" }}
+            </div>
+        </div>
         {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
         <div class="row">
             <div class="col-sm-6">
