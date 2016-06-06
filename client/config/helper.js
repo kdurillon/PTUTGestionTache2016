@@ -59,6 +59,16 @@ UI.registerHelper('getTache', function() {
     return taches.find({userId: Meteor.userId()}).fetch();
 });
 
+UI.registerHelper('getTacheParent', function() {
+    return taches.find({userId: Meteor.userId(), typeTache: "parent"}).fetch();
+});
+
+UI.registerHelper('getTacheParentOption', function() {
+    return taches.find({userId: Meteor.userId(), typeTache: "parent"}).map(function (c) {
+        return {label: c.titre, value: c.titre};
+    });
+});
+
 UI.registerHelper('getUpload', function() {
     return uploads.find({userId: Meteor.userId()}).fetch();
 });
@@ -86,6 +96,16 @@ UI.registerHelper('getMailingList', function() {
 UI.registerHelper('getMailingListOption', function() {
     return mailingList.find().map(function (c) {
         return {'label': c.nom, 'value': c.nom};
+    });
+});
+
+UI.registerHelper('getFormulaire', function() {
+    return tempFormulaire.find().fetch();
+});
+
+UI.registerHelper('getFormulaireOption', function() {
+    return tempFormulaire.find().map(function (c) {
+        return {'label': c.titre, 'value': c._id};
     });
 });
 

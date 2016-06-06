@@ -1,6 +1,6 @@
-<template name="newTacheMail">
-    {{setTitle 'Tâches mailing list'}}
-    <h1 class="text-center" >Tâches Mail</h1>
+<template name="newTacheFormulaire">
+    {{setTitle 'Tâches formulaire'}}
+    <h1 class="text-center" >Formulaire</h1>
 
     <hr>
 
@@ -8,24 +8,14 @@
         {{> afQuickField id="typeTache" name="typeTache"}}
         {{> afQuickField name="titre"}}
         {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
-        {{> afQuickField name="emails"}}
         <div class="row">
             <div class="col-sm-6">
-                {{> afQuickField name="mailingList" options=getMailingListOption}}
+                {{> afQuickField class="select_formulaire" name="formulaire" options=getFormulaireOption firstOption="Formulaire"}}
             </div>
-            <div class="col-sm-5">
-                {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
-            </div>
-            <div class="col-sm-1">
-                <label>Couleur</label>
-                <div id="selectedColor"></div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
-                    <label class="control-label">Date programmée</label>
-                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
+                    <label class="control-label">Date du rappel : </label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Rappel activé
                     <div class="input-group datetimepicker">
                         {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -35,29 +25,7 @@
                     {{/if}}
                 </div>
             </div>
-            <div class="col-sm-6">
-                {{> afQuickField name="tacheParent" options=getTacheParentOption firstOption="tache Parent" }}
-            </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                {{> afQuickField name="contenu"}}
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Valider</button>
-    {{/autoForm}}
-</template>
-
-<template name="updateTacheMail">
-    {{setTitle 'Tâches mailing list'}}
-    <h1 class="text-center" >Tâches Mail</h1>
-
-    <hr>
-
-    {{#autoForm collection="taches" doc=this type="update" id="tache"}}
-        {{> afQuickField id="typeTache" name="typeTache"}}
-        {{> afQuickField name="titre"}}
-        {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
         {{> afQuickField name="emails"}}
         <div class="row">
             <div class="col-sm-6">
@@ -72,10 +40,32 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-12">
+                {{> afQuickField name="contenu"}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Valider</button>
+    {{/autoForm}}
+</template>
+
+<template name="updateTacheFormulaire">
+    {{setTitle 'Tâches formulaire'}}
+    <h1 class="text-center" >Formulaire</h1>
+
+    <hr>
+
+    {{#autoForm collection="taches" doc=this type="update" id="tache"}}
+        {{> afQuickField id="typeTache" name="typeTache"}}
+        {{> afQuickField name="titre"}}
+        {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
+        <div class="row">
+            <div class="col-sm-6">
+                {{> afQuickField class="select_formulaire" name="formulaire" options=getFormulaireOption firstOption="Formulaire"}}
+            </div>
             <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
-                    <label class="control-label">Date programmée</label>
-                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
+                    <label class="control-label">Date du rappel : </label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Rappel activé
                     <div class="input-group datetimepicker">
                         {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -85,8 +75,18 @@
                     {{/if}}
                 </div>
             </div>
+        </div>
+        {{> afQuickField name="emails"}}
+        <div class="row">
             <div class="col-sm-6">
-                {{> afQuickField name="tacheParent" options=getTacheParentOption firstOption="tache Parent" }}
+                {{> afQuickField name="mailingList" options=getMailingListOption placeholder="mailing list"}}
+            </div>
+            <div class="col-sm-5">
+                {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
+            </div>
+            <div class="col-sm-1">
+                <label>Couleur</label>
+                <div id="selectedColor"></div>
             </div>
         </div>
         <div class="row">
