@@ -116,6 +116,7 @@ Template.tacheHome.events({
             });
         }
         taches.update(this._id, {$set: { fini: true }});
+        gantt.deleteTask(id);
         swal("Archivage!", "La tâche à été archivé avec succès.", "success");
     },
 
@@ -147,6 +148,7 @@ Template.modalInfoTache.events({
             },
             function(){
                 taches.remove(id);
+                gantt.deleteTask(id);
                 swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
             });
     }

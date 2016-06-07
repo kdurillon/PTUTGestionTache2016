@@ -5,10 +5,10 @@
     <span class="divider"></span>
     <div class="row form-group">
         <div class="col-md-3">
-            <button class="btn btn-success form-control" id="hideArchive">Afficher les tâches archivées</button>
+            <button class="btn btn-success form-control" id="showArchive">Afficher les tâches archivées</button>
         </div>
         <div class="col-md-3">
-            <select class="form-control">
+            <select class="form-control" id="selectCategorie">
                 <option>Catégorie</option>
                 {{#each getCategorie}}
                     <option>
@@ -18,7 +18,10 @@
             </select>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Nom de la tâche"/>
+            <input type="text" class="form-control" placeholder="Nom de la tâche" id="searchText"/>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-success form-control" id="export">Exporter</button>
         </div>
     </div>
     <span class="divider"></span>

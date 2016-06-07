@@ -31,3 +31,35 @@
         <button type="submit" class="btn btn-primary">Valider</button>
     {{/autoForm}}
 </template>
+
+
+<template name="newTacheParentModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="text-center" >Tâche Parent</h1>
+                </div>
+
+                <div class="modal-body">
+
+                    {{#autoForm collection="taches" type="insert" id="tache"}}
+                        {{> afQuickField name="titre"}}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {{> afQuickField name="contenu"}}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    {{/autoForm}}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
