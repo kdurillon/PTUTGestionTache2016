@@ -16,20 +16,12 @@ Template.tacheHome.helpers({
             fields: [
                 { key: 'titre', label: 'Titre' },
                 { key: 'typeTache', label: 'Type' },
-                { key: 'tacheParent', label: 'Parent',
-                    fn:
-                        function(value) {
-                            if(_.isNull(value)) {
-                                return false;
-                            }
-                            return taches.findOne({_id: value}).titre;
-                        }
-                },
+                { key: 'tacheParent.titre', label: 'Parent' },
                 { key: 'categorie', label: 'Catégorie' },
                 { key: 'tags', label: 'Tags' },
                 { key: 'dateCreation', label: 'Date de création' },
                 { key: 'dateFin', label: 'Date de fin/rappel' },
-                { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
+                { label: 'Action', tmpl: Template.actionTableTache, sortable: false, cellClass: 'text-right' }
             ],
             rowClass: function(item) {
                 var now = moment();
@@ -158,8 +150,15 @@ Template.modalInfoTache.events({
 AutoForm.addHooks('tache', {
     before: {
         insert: function(data){
-            data.fini = false;
             data.typeTache = Session.get('typeTache');
+
+            if(!_.isUndefined(data.tacheParent)) {
+                var tacheParent = taches.findOne({_id: data.tacheParent});
+                data.tacheParent = {
+                    _id: tacheParent._id,
+                    titre: tacheParent.titre
+                };
+            }
             return data;
         }
     },

@@ -62,7 +62,6 @@
 
     {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
-    <span class="lightgrey"></span>
 </template>
 
 <template name="actionTableTache">
@@ -103,6 +102,12 @@
                 <div class="modal-body">
                     <ul>
                         <li><b>Type : </b>{{typeTache}}</li>
+                        {{#if tacheParent}}
+                            <li>
+                                <b>Tâche parent : </b>
+                                {{tacheParent.titre}}
+                            </li>
+                        {{/if}}
                         {{#if categorie}}
                             <li>
                                 <b>Catégorie : </b>
