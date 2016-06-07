@@ -26,32 +26,47 @@ Template.formulaireCree.events({
 
     "click #ajouterElmtFormGen" :function(){
 
-        if($("#inputTextGenForm").val()!="") {
-            //Session.set("numReponse",0);
-            var html = apercuDiv($("#inputTextGenForm").val(), $("#inputSelectGenForm").val());
-
-            console.log(html);
-
-
-            var plus = Session.get("plus");
-            Session.set("numReponse",0);
-
-            if (plus == 1) {
-
-                if ($("#inputTextGenForm").val() != "" && $("#inputPlaceGenForm").val() != "") {
-                    console.log("debug");
-                    $(".formApercu0").after(html);
-
-                }
-            }
-            else {
-                plus--;
-                if ($("#inputTextGenForm").val() != "" && $("#inputPlaceGenForm").val() != "") {
-                    $(".formApercu" + plus).after(html);
-                }
-            }
+        if($("#inputTextGenForm").val()==""){
+            swal("Label de l'élément","Vous devez saisir un libellé pour votre élément.","error");
         }
-        resetFormGenere();
+       if($("#inputTextGenForm").val()!="") {
+
+
+           var reponses=Session.get("reponses");
+           //alert($(".repFormGen").css("display"));
+           if(($(".repFormGen").css("display")!="none") &&  reponses.length==0 ){
+               swal("Réponses possibles pour l'élément","Vous devez créer des réponses pour votre élément.","error");
+           }
+           else {
+
+               var html = apercuDiv($("#inputTextGenForm").val(), $("#inputSelectGenForm").val());
+
+               console.log(html);
+
+
+               var plus = Session.get("plus");
+               Session.set("numReponse", 0);
+
+               if (plus == 1) {
+
+                   if ($("#inputTextGenForm").val() != "" && $("#inputPlaceGenForm").val() != "") {
+                       $(".formApercu0").after(html);
+
+                   }
+               }
+               else {
+                   plus--;
+                   if ($("#inputTextGenForm").val() != "" && $("#inputPlaceGenForm").val() != "") {
+                       $(".formApercu" + plus).after(html);
+                   }
+               }
+               resetFormGenere();
+           }
+        }
+
+
+
+
     },
     "click #ajouterTitreFormGen" :function() {
     $("#apercuForm").html($("#inputTitreGenForm").val());
@@ -81,6 +96,8 @@ Template.formulaireCree.events({
 
     },
     "click #effacerApercu" :function() {
+
+        $("#inputSelectGenForm").val(1);
         $(".ctrlsApercu").remove();
         Session.set("plus","0");
         $("#inputLabelRepGenForm").val("");

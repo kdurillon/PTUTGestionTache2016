@@ -16,8 +16,6 @@ Template['uploadModalExt'].helpers({
 
         var idForm=idFormulaire["_id"];
 
-
-
         return {  currentUserId: emailCrypt }
     }
 });
