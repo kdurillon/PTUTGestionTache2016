@@ -4,8 +4,7 @@ Template.newTacheFormulaire.rendered = function() {
     $('.bootstrap-tagsinput input').removeAttr('style');
     $('.datetimepicker').datetimepicker({
         format: 'L - LT',
-        locale: 'fr',
-        minDate: moment().add(1, 'd')
+        locale: 'fr'
     });
     tinymce.init({
         selector: 'textarea',

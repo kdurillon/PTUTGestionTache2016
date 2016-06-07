@@ -131,21 +131,20 @@ b64_to_utf8 = function( str ) {
 
 getTache = function (_id) {
     var tache = taches.findOne({_id: _id});
+    var document = uploads.findOne({_id: tache.document});
 
     if(_.isUndefined(tache.emails)) {
         tache.emails = [];
+    }
+
+    if(!_.isUndefined(tache.document)) {
+        tache.document = document;
     }
 
     _.each(tache.mailingList, function(nom) {
         var emails = mailingList.findOne({nom: nom}).emails;
         tache.emails = tache.emails.concat(emails);
     });
-
-    var document = uploads.findOne({_id: tache.document});
-
-    if(!_.isUndefined(document)) {
-        tache.document = document;
-    }
 
     tache.emails = _.uniq(tache.emails);
 

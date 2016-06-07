@@ -16,7 +16,11 @@ Meteor.startup(function () {
             var upload = uploads.findOne({_id: _id});
             UploadServer.delete(upload.userId+'/'+upload.file);
             uploads.remove({_id: _id});
-    }
+        },
+
+        'getUserId': function() {
+            return this.userId;
+        }
     });
 
 });

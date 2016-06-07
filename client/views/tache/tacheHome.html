@@ -96,7 +96,12 @@
             <div class="modal-content">
 
                 <div class="modal-header text-center">
-                    <h4 class="modal-title">{{titre}}</h4>
+                    <h4 class="modal-title">
+                        {{titre}}
+                        {{#if fini}}
+                            - Tache finalisée
+                        {{/if}}
+                    </h4>
                 </div>
 
                 <div class="modal-body">
@@ -147,7 +152,7 @@
                         {{#if document}}
                             <li>
                                 <b>Image : </b>
-                                <img class="img-responsive img-thumbnail" src="/uploads/{{document.userId}}/{{document.file}}" alt="{{document.file}}">
+                                <img class="img-responsive img-thumbnail" src="/uploads/{{document.userId}}/{{document.file}}" alt="{{document.file}}" onError="this.onerror=null;this.src='http://fakeimg.pl/350x200/?text=aucun%20aper%C3%A7u';">
                             </li>
                         {{/if}}
                         {{#if dateCreation}}

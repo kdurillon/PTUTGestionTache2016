@@ -3,8 +3,23 @@ taches = new Mongo.Collection("taches");
 Globals.schemas.Taches = new SimpleSchema({
     userId: {
         type: String,
+        denyUpdate: true,
         autoValue: function(){
-            return Meteor.userId();
+            var userId = null;
+            if(!_.isUndefined(Meteor.call('getUserId'))) {
+                userId = Meteor.call('getUserId');
+            }else{
+                userId = Meteor.userId();
+            }
+            if(this.isInsert){
+                return userId;
+            }
+            else if(this.isUpsert){
+                return {$setOnInsert: userId};
+            }
+            else{
+                this.unset();
+            }
         },
         autoform: {
             omit: true

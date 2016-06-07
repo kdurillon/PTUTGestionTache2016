@@ -25,7 +25,7 @@ Template.tacheHome.helpers({
             ],
             rowClass: function(item) {
                 var now = moment();
-                var dateFin = moment(item.dateFin ,'MM/DD/YYYY - h:mm');
+                var dateFin = moment(item.dateFin ,'DD/MM/YYYY - h:mm');
 
                 if((now > dateFin) || item.fini === true) {
                     return 'lightgrey';
