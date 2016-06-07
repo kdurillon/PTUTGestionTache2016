@@ -79,7 +79,7 @@
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
     {{# if fini}}
-        <button data-toggle="tooltip" title="Désarchiver la tâche" class="btn btn-xs btn-primary archive_tache">
+        <button data-toggle="tooltip" title="Désarchiver la tâche" class="btn btn-xs btn-primary desarchive_tache">
             <span class="glyphicon glyphicon glyphicon-upload"></span>
         </button>
     {{else}}
@@ -102,6 +102,12 @@
                 <div class="modal-body">
                     <ul>
                         <li><b>Type : </b>{{typeTache}}</li>
+                        {{#if tacheParent}}
+                            <li>
+                                <b>Tâche parent : </b>
+                                {{tacheParent.titre}}
+                            </li>
+                        {{/if}}
                         {{#if categorie}}
                             <li>
                                 <b>Catégorie : </b>

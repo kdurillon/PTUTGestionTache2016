@@ -22,11 +22,30 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
+                    <label class="control-label">Date programmée</label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
+                    <div class="input-group datetimepicker">
+                        {{> afFieldInput class="dateFin" name="dateFin"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='dateFin'}}
+                        <span class="help-block">{{afFieldMessage name='dateFin'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6">
                 {{> afQuickField name="mailingList" options=getMailingListOption firstOption="Mailing list"}}
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
+            </div>
+            <div class="col-sm-1">
+                <label>Couleur</label>
+                <div id="selectedColor"></div>
             </div>
         </div>
         {{> afQuickField name="emails"}}
@@ -45,34 +64,60 @@
     {{setTitle 'Tâches document'}}
     <h1 class="text-center" >Tâches document</h1>
 
-    <hr>{{#autoForm collection="taches" doc=this type="update" id="tache"}}
-    {{> afQuickField id="typeTache" name="typeTache"}}
-    {{> afQuickField name="titre"}}
-    {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
-    <div class="row">
-        <div class="col-sm-8">
-            {{> afQuickField class="select_document" name="document" options=getUploadOption firstOption="Document"}}
+    <hr>
+    {{#autoForm collection="taches" doc=this type="update" id="tache"}}
+        <div class="row">
+            <div class="col-sm-6">
+                {{> afQuickField name="titre"}}
+            </div>
+            <div class="col-sm-6">
+                {{> afQuickField name="tacheParent" options=getTacheParentOption firstOption="tache Parent" }}
+            </div>
         </div>
-        <div class="col-sm-4">
-            <img id="previewDocument" class="img-thumbnail img-responsive" src="http://fakeimg.pl/350x200/?text=futur%20image">
+        {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
+        <div class="row">
+            <div class="col-sm-8">
+                {{> afQuickField class="select_document" name="document" options=getUploadOption firstOption="Document"}}
+            </div>
+            <div class="col-sm-4">
+                <img id="previewDocument" class="img-thumbnail img-responsive" src="http://fakeimg.pl/350x200/?text=futur%20image">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            {{> afQuickField name="mailingList" options=getMailingListOption firstOption="Mailing list"}}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
+                    <label class="control-label">Date programmée</label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
+                    <div class="input-group datetimepicker">
+                        {{> afFieldInput class="dateFin" name="dateFin"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='dateFin'}}
+                        <span class="help-block">{{afFieldMessage name='dateFin'}}</span>
+                    {{/if}}
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6">
-            {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
+        <div class="row">
+            <div class="col-sm-6">
+                {{> afQuickField name="mailingList" options=getMailingListOption firstOption="Mailing list"}}
+            </div>
+            <div class="col-sm-5">
+                {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
+            </div>
+            <div class="col-sm-1">
+                <label>Couleur</label>
+                <div id="selectedColor"></div>
+            </div>
         </div>
-    </div>
-    {{> afQuickField name="emails"}}
-    <div class="row">
-        <div class="col-sm-12">
-            {{> afQuickField name="contenu"}}
+        {{> afQuickField name="emails"}}
+        <div class="row">
+            <div class="col-sm-12">
+                {{> afQuickField name="contenu"}}
+            </div>
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary">Valider</button>
+        <button type="submit" class="btn btn-primary">Valider</button>
 {{/autoForm}}
 
 </template>

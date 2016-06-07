@@ -14,20 +14,16 @@ Template.tacheHome.helpers({
     optionsReactiveTable: function() {
         return {
             fields: [
-                { key: 'titre', label: 'Titre', fn: function(value) { return displayValueTable(value) } },
-                { key: 'typeTache', label: 'Type', fn: function(value) { return displayValueTable(value) } },
-                { key: 'tacheParent', label: 'Parent', fn: function(value) { return displayValueTable(value) } },
-                { key: 'categorie', label: 'Catégorie', fn: function(value) { return displayValueTable(value) } },
-                { key: 'tags', label: 'Tags', fn: function(value) { return displayValueTable(value) } },
-                { key: 'dateCreation', label: 'Date de création', fn: function(value) { return displayValueTable(value) } },
-                { key: 'dateFin', label: 'Date de fin/rappel', fn: function(value) { return displayValueTable(value) } },
-                { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
+                { key: 'titre', label: 'Titre' },
+                { key: 'typeTache', label: 'Type' },
+                { key: 'tacheParent.titre', label: 'Parent' },
+                { key: 'categorie', label: 'Catégorie' },
+                { key: 'tags', label: 'Tags' },
+                { key: 'dateCreation', label: 'Date de création' },
+                { key: 'dateFin', label: 'Date de fin/rappel' },
+                { label: 'Action', tmpl: Template.actionTableTache, sortable: false, cellClass: 'text-right' }
             ],
             rowClass: function(item) {
-                /*if(item.typeTache === "parent") {
-                    return 'text-bold';
-                }*/
-
                 var now = moment();
                 var dateFin = moment(item.dateFin ,'MM/DD/YYYY - h:mm');
 
@@ -39,13 +35,13 @@ Template.tacheHome.helpers({
     }
 });
 
-function displayValueTable(value) {
+/*function displayValueTable(value) {
     if(_.isEmpty(value)) {
         return new Spacebars.SafeString("");
     }else {
         return value;
     }
-}
+}*/
 
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
@@ -72,23 +68,30 @@ Template.tacheHome.events({
     "click .mail_tache": function() {
         var tache = getTache(this._id);
 
-        var html = '';
-        if(tache.typeTache === "document") {
-            html = tache.contenu;
-            html+= "<br>Voici le lien du document : "+window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
-        } else {
-            html = tache.contenu;
-        }
-        Meteor.call('sendEmail',
-            'fakedeviut@gmail.com',
-            tache.emails.toString(),
-            tache.titre,
-            "Ceci est un test de l'envoi de mail");
         swal({
             title: "Envoi de mail",
             text: "Email envoyé aux emails de la tâche.",
             html: true,
             type: "success"
+        });
+
+        _.each(tache.emails, function(email) {
+            var lien = null;
+            if(tache.typeTache === "formulaire") {
+                lien = window.location.origin + "/formulaire/" + tache.formulaire + "/" + utf8_to_b64(email);
+            }else if(tache.typeTache === "document") {
+                lien = window.location.origin+"/uploads/"+tache.document.userId+"/"+tache.document.file;
+            }
+            var dataContext = {
+                contenu: tache.contenu,
+                lien: lien
+            };
+            var html=Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
+            Meteor.call('sendEmail',
+                'noreply-ptuttask@iutinfobourg.fr',
+                email,
+                tache.titre,
+                html);
         });
     },
     "click .info_tache": function() {
@@ -98,19 +101,25 @@ Template.tacheHome.events({
         });
     },
     "click .archive_tache": function() {
-        var fini = null;
-        var text = "";
-        if(this.fini === true) {
-            fini = false;
-            text = "la tâche n'est plus archivé";
-
-        }else {
-            fini = true;
-            text = "La tâche à été archivé avec succès.";
+        if(this.typeTache === "parent") {
+            var listTaches = taches.find({tacheParent: this._id}).fetch();
+            _.each(listTaches, function(tache) {
+                taches.update(tache._id, {$set: { fini: true }});
+            });
         }
+        taches.update(this._id, {$set: { fini: true }});
+        swal("Archivage!", "La tâche à été archivé avec succès.", "success");
+    },
 
-        taches.update(this._id, {$set: { fini: fini }});
-        swal("Archivage!", text, "success");
+    "click .desarchive_tache": function() {
+        if(this.typeTache === "parent") {
+            var listTaches = taches.find({tacheParent: this._id}).fetch();
+            _.each(listTaches, function(tache) {
+                taches.update(tache._id, {$set: { fini: false }});
+            });
+        }
+        taches.update(this._id, {$set: { fini: false }});
+        swal("Archivage!", "La tâche à été enlevé de l'archive.", "success");
     }
 
 });
@@ -141,8 +150,15 @@ Template.modalInfoTache.events({
 AutoForm.addHooks('tache', {
     before: {
         insert: function(data){
-            data.fini = false;
             data.typeTache = Session.get('typeTache');
+
+            if(!_.isUndefined(data.tacheParent)) {
+                var tacheParent = taches.findOne({_id: data.tacheParent});
+                data.tacheParent = {
+                    _id: tacheParent._id,
+                    titre: tacheParent.titre
+                };
+            }
             return data;
         }
     },

@@ -1,9 +1,16 @@
 Meteor.startup(function () {
-    process.env.MAIL_URL = "smtp://fakedeviut@gmail.com:azerty39,@smtp.gmail.com:465/";
+    smtp = {
+        username: 'noreply-ptuttask@iutinfobourg.fr',
+        password: 'METINET02',
+        server:   'smtp.iutinfobourg.fr',
+        port: 587
+    };
+
+    process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
     Meteor.methods({
-        'sendEmail': function (to, from, subject, text) {
-            check([to, from, subject, text], [String]);
+        'sendEmail': function (to, from, subject, html) {
+            check([to, from, subject, html], [String]);
 
             // Let other method calls from the same client start running,
             // without waiting for the email sending to complete.
@@ -13,7 +20,7 @@ Meteor.startup(function () {
                 to: to,
                 from: from,
                 subject: subject,
-                text: text
+                html: html
             });
         }
     });

@@ -12,6 +12,10 @@
     font-weight: bold;
 }
 
+.text-italic {
+    font-style: italic;
+}
+
 .lightgrey {
     background-color: lightgrey !important;
 }

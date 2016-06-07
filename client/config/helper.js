@@ -109,6 +109,14 @@ UI.registerHelper('getFormulaireOption', function() {
     });
 });
 
+utf8_to_b64 = function( str ) {
+    return window.btoa(decodeURI(encodeURIComponent( str )));
+};
+
+b64_to_utf8 = function( str ) {
+    return decodeURIComponent(encodeURI(window.atob( str )));
+};
+
 getTache = function (_id) {
     var tache = taches.findOne({_id: _id});
 

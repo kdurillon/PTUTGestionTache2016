@@ -58,13 +58,19 @@
     <hr>
 
     {{#autoForm collection="taches" doc=this type="update" id="tache"}}
-        {{> afQuickField id="typeTache" name="typeTache"}}
-        {{> afQuickField name="titre"}}
+        <div class="row">
+            <div class="col-sm-6">
+                {{> afQuickField name="titre"}}
+            </div>
+            <div class="col-sm-6">
+                {{> afQuickField name="tacheParent" options=getTacheParentOption firstOption="tache Parent" }}
+            </div>
+        </div>
         {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
         {{> afQuickField name="emails"}}
         <div class="row">
             <div class="col-sm-6">
-                {{> afQuickField name="mailingList" options=getMailingListOption placeholder="mailing list"}}
+                {{> afQuickField name="mailingList" options=getMailingListOption}}
             </div>
             <div class="col-sm-5">
                 {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
@@ -75,7 +81,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
                     <label class="control-label">Date programmée</label>
                     <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
@@ -87,9 +93,6 @@
                         <span class="help-block">{{afFieldMessage name='dateFin'}}</span>
                     {{/if}}
                 </div>
-            </div>
-            <div class="col-sm-6">
-                {{> afQuickField name="tacheParent" options=getTacheParentOption firstOption="tache Parent" }}
             </div>
         </div>
         <div class="row">
