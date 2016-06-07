@@ -76,40 +76,30 @@ Template.tacheHome.events({
     "click .mail_tache": function() {
         var tache = getTache(this._id);
 
-        var html = '';
-        if(tache.typeTache === "document") {
-            html = tache.contenu;
-            html+= "<br>Voici le lien du document : "+window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
-        } else if(tache.typeTache === "formulaire") {
-            _.each(tache.emails, function(email) {
-                html = tache.contenu;
-                html+= "<br>Voici le lien du formulaire : "+window.location.origin+"/formulaire/"+tache.formulaire+"/"+utf8_to_b64(tache.emails[0]);
-                Meteor.call('sendEmail',
-                    'fakedeviut@gmail.com',
-                    email,
-                    tache.titre,
-                    html);
-            });
-            swal({
-                title: "Envoi de mail",
-                text: "Formulaire envoyé aux emails de la tâche.",
-                html: true,
-                type: "success"
-            });
-            return true;
-        }else {
-            html = tache.contenu;
-        }
-        Meteor.call('sendEmail',
-            'fakedeviut@gmail.com',
-            tache.emails.toString(),
-            tache.titre,
-            html);
         swal({
             title: "Envoi de mail",
             text: "Email envoyé aux emails de la tâche.",
             html: true,
             type: "success"
+        });
+
+        _.each(tache.emails, function(email) {
+            var lien = null;
+            if(tache.typeTache === "formulaire") {
+                lien = window.location.origin + "/formulaire/" + tache.formulaire + "/" + utf8_to_b64(email);
+            }else if(tache.typeTache === "document") {
+                lien = window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
+            }
+            var dataContext = {
+                contenu: tache.contenu,
+                lien: lien
+            };
+            var html=Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
+            Meteor.call('sendEmail',
+                'noreply-ptuttask@iutinfobourg.fr',
+                email,
+                tache.titre,
+                html);
         });
     },
     "click .info_tache": function() {

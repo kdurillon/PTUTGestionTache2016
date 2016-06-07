@@ -34,31 +34,18 @@ Template.formulaireGenere.helpers({
         return tempFormulaire.find({_id:""+idFormulaire["_id"]});
     },
     'isInputText': function(display){
-        if(display=="1"){
-            return true;
-        }
-        return false;
+        return display == "1";
     },
     'isTextArea': function(display){
-        if(display=="2"){
+        return display == "2";
 
-            return true;
-        }
-        return false;
     },
     'isInputDate': function(display){
-        if(display=="3"){
-
-            return true;
-        }
-        return false;
+        return display == "3";
     },
     'isInputChoixBinaire': function(display){
-        if(display=="4"){
+        return display == "4";
 
-            return true;
-        }
-        return false;
     },
     'isInputRadios': function(display){
         if(display=="5"){
@@ -69,19 +56,13 @@ Template.formulaireGenere.helpers({
     },
     'isInputCheckboxs': function(display){
         if(display=="6"){
-
             Session.set("NumeroReps",0);
-
             return true;
         }
         return false;
     },
     'isInputUpload': function(display){
-        if(display=="7"){
-            
-            return true;
-        }
-        return false;
+        return display == "7";
     }
 });
 
@@ -116,29 +97,22 @@ Template.formulaireGenere.events({
                 verif2.push("true");
                 $(".errorCkBox"+tabCkBox[a]["element"]).hide();
                 }
-            if(!verif){
-                $(".errorCkBox"+tabCkBox[a]["element"]).show();
+                if(!verif){
+                    $(".errorCkBox"+tabCkBox[a]["element"]).show();
+                }
             }
-            }
-
-
         }
 
 
-        if(verif2.length>=tabCkBox.length){
-
+        if(verif2.length >= tabCkBox.length){
             console.log("envoi ok");
-             reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
-             swal("Réussite","Formulaire envoyé !","success");
+            reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
+            swal("Réussite","Formulaire envoyé !","success");
             formulaireEnvoye();
-
         }
         else{
             Session.set("ckboxgroup",[]);
-
-
         }
-
     }
 
     

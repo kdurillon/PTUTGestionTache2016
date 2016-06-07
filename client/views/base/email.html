@@ -1,0 +1,13 @@
+<template name="emailTemplate">
+    Bonjour,
+    <br>
+    {{{contenu}}}
+
+    {{#if lien}}
+        <p>Pour accéder au formulaire, <a href="{{lien}}" target="_blank">Cliquez ici</a></p>
+    {{/if}}
+
+    <br>
+
+    <p style="font-weight: bold;">Ceci est un message automatique, merci de ne pas y répondre.</p>
+</template>
