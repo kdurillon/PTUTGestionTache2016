@@ -80,7 +80,7 @@ Template.tacheHome.events({
             if(tache.typeTache === "formulaire") {
                 lien = window.location.origin + "/formulaire/" + tache.formulaire + "/" + utf8_to_b64(email);
             }else if(tache.typeTache === "document") {
-                lien = window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
+                lien = window.location.origin+"/uploads/"+tache.document.userId+"/"+tache.document.file;
             }
             var dataContext = {
                 contenu: tache.contenu,
