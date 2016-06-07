@@ -20,29 +20,32 @@ Template.formulaireGenere.rendered = function(data) {
 
 
 Template.formulaireGenere.helpers({
-   
-    'Form': function(){
+
+       'Uploads': function(){
+
+           var params =Router.current().params;
+           var form=params["_id"];
+           alert(form);
+
+       },
+
+
+
+        'Form': function(){
 
         //on récupère les paramètres de la requête
 
         var params =Router.current().params;
 
 
-        // Objet de conversion base 64
-        
+       var encodedEmail = base64("toto@laposte.fr","encode");
 
-        
-        
-        var encodedEmail = base64("thomas@gmail.com","encode");
-
-        console.log(encodedEmail);
+       console.log(encodedEmail);
 
 
          //On decode l'email de l'envoi
         var decodedEmail = base64(params["mailEncode"],"decode");
-
-        //var decodeEmail =b64_to_utf8(encodedEmail);
-        console.log(decodedEmail);
+       // console.log(decodedEmail);
         //var decodeEmail =encodedEmail;
 
        // On vérifie que l'email encodé existe dans une mailinglist
@@ -55,9 +58,10 @@ Template.formulaireGenere.helpers({
                 }
             });
         });
-
+        idEmail=base64(params["mailEncode"],"decode");
         if(checkmail){
-            var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:""+params["idUtilisateur"]}).fetch();
+            var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:idEmail}).fetch();
+            console.log(reponse);
             if(reponse.length==0){
                 $(".formBoutons").show();
 
@@ -74,11 +78,9 @@ Template.formulaireGenere.helpers({
         }
 
         //Si le formulaire a déjà été rempli, on masque le formulaire
-        var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:""+params["idUtilisateur"]}).fetch();
+        var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:""+params["mailEncode"]}).fetch();
         console.log(reponse);
-      /*  if(reponse!=[]){
-            formulaireEnvoye();
-        }*/
+
 
 
     },
@@ -146,16 +148,16 @@ Template.formulaireGenere.events({
         event.preventDefault();
 
 
-        var idFormulaire =Router.current().params;
-        var idUser=idFormulaire["idUtilisateur"];
-        var idForm=idFormulaire["_id"];
+        var params =Router.current().params;
+        console.log(params);
+        var idUser=params["mailEncode"];
+        var idForm=params["_id"];
 
         var reps=tableauReponses(idForm,idUser);
         var tabCkBox =Session.get("ckboxgroup");
         var verif = false;
         var verif2 = [];
 
-        console.log(tabCkBox);
 
         for(var a=0;a<tabCkBox.length;a++){
             verif = false;
@@ -176,11 +178,10 @@ Template.formulaireGenere.events({
 
         if(verif2.length>=tabCkBox.length){
 
-           // console.log("envoi ok");
+             idUser=base64(idUser,"decode");
              reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
              swal("Réussite","Formulaire envoyé !","success");
             formulaireEnvoye();
-
         }
         else{
             Session.set("ckboxgroup",[]);
@@ -257,11 +258,8 @@ tableauReponses= function(idForm,idUser){
             Session.set("ckboxgroup",tabCkBox);
         }
         if(type==7){
-           reps.push({"num":numElmt,"label":form.controls[i].control[0].label,"reponse":"fichier.fichier"});
+           reps.push({"num":numElmt,"type":type,"label":form.controls[i].control[0].label,"reponse":"fichier joint"});
         }
-   // console.log(reps);
-
-
 
     }
 

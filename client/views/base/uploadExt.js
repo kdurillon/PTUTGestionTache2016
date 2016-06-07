@@ -12,11 +12,10 @@ Template['uploadModalExt'].helpers({
         cuserId: function() {
 
         var idFormulaire =Router.current().params;
-        var emailCrypt = idFormulaire["idUtilisateur"];
 
         var idForm=idFormulaire["_id"];
 
-        return {  currentUserId: emailCrypt }
+        return {  currentUserId: idForm }
     }
 });
 

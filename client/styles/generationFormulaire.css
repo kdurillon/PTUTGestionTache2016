@@ -1,6 +1,10 @@
-.repFormGen,#retour,#inconnu,.formBoutons
+.repFormGen,#retour,#inconnu,.formBoutons,.divFichiers
 {
     display: none;
+}
+#btDownload
+{
+    margin-bottom: 25px;
 }
 
 #cadreApercuForm{
@@ -27,9 +31,13 @@
     font-size:1.5em;
 
 }
-#tableauReponses{
-    margin-bottom: 35px;
+#tableauReponses,#spanFichiers{
+    margin-bottom: 25px;
     display: inline-block;
+    padding: 12px;
+}
+#selectFichier{
+    margin-bottom: 25px;
 }
 .white{
     background: white;

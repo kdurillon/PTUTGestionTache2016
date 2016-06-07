@@ -4,6 +4,7 @@ Template.reponses.onDestroyed(function () {
 });
 
 Template.reponses.onRendered(function () {
+    Session.set("nbFichiers",0);
     $("#tableauReponses").hide();
 
 });
@@ -13,13 +14,10 @@ Template.reponses.helpers({
     'Reponses': function(){
         
 
-        //var titres=[{"_id":"xxx","titre":"xxx"}];
         var titres=[];
 
         data = reponsesForm.find().fetch();
 
-       console.log(data);
-       // console.log(titres);
         data.forEach(function(row) {
 
             var trouve=false;
@@ -29,7 +27,6 @@ Template.reponses.helpers({
                 }
 
             }
-            console.log(trouve);
             if(trouve==false){
                 titres.push( {"_id" :row.idForm,"titre":tempFormulaire.findOne({"_id":row.idForm}).titre});
             }
@@ -44,33 +41,58 @@ Template.reponses.helpers({
     "nombre":function(){
         return Session.get("nbReponses");
 
-}
+},
+    "nombreFichiers":function(){
+        return Session.get("nbFichiers");
+
+    }
+
 
 });
 
 Template.reponses.events({
 
-   
+"click #btDownload ":function(){
+
+    var download = document.createElement('a');
+
+    download.setAttribute('href',"download");
+
+   // download.setAttribute('download',"/uploads/"+$("#selectLeForm").val()+"/"+$("#selectFichier").val());
+    download.setAttribute('download'," uploads/7725NNZzbCNwDgDzC/Lighthouse.jpg");
+    download.click();
+
+    console.log(download);
+
+
+
+//$("<a href='"+"/uploads/"+$("#selectLeForm").val()+"/"+$("#selectFichier").val()+"' download></a>").trigger("click");
+},
+
+"change #selectFichier ":function(){
+
+    window.location = "/uploads/"+$("#selectLeForm").val()+"/"+$("#selectFichier").val();
+},
 
 "change #selectLeForm ":function(){
 
-
+    $(".divFichiers").hide();
+    $(".optionFichiers").remove();
     $(".fieldsetFormulaire").remove();
     if($("#selectLeForm").val()==0){
         $("#tableauReponses").hide();
     }
     else {
 
-
-
         $("#tableauReponses").show();
 
         var affichage = "";
         var tabReponses = [];
+        var fichier = false;
 
         reponses = reponsesForm.find({"idForm": $("#selectLeForm").val()});
 
-        console.log("reponses :" + reponses);
+       // console.log("reponses :" + reponses);
 
         reponses.forEach(function (row) {
 
@@ -83,10 +105,9 @@ Template.reponses.events({
 
             var reps = "";
             var reponses = element.reponses;
-            console.log(element.reponses);
+
 
             reponses.forEach(function (enr) {
-                console.log(enr.label);
 
                 if (enr.type == 3) {
                     var dateFormat = moment(enr.reponse, 'YYYY-MM-DD').format('DD-MM-YYYY');
@@ -103,6 +124,14 @@ Template.reponses.events({
                  reps+="</div></div>";
 
                 }
+                else if (enr.type == 7) {
+
+                  fichier=true;
+
+                  reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>Envoyé</div></div>";
+
+
+                }
                 else {
                     reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>" + enr.reponse + "</div></div>";
                 }
@@ -112,6 +141,20 @@ Template.reponses.events({
             affichage += "<fieldset class='fieldsetFormulaire'><legend><span class='label label-info'>" + element.personne + "</span></legend></legend></legend>" + reps + "</fieldset><hr class='fieldsetFormulaire'>";
 
         });
+
+        if(fichier){
+            var selectFichiers="";
+            var idForm = $("#selectLeForm").val();
+            var documents = uploads.find({"userId":idForm}).fetch();
+            var nb=0;
+            documents.forEach(function(document){
+                nb++;
+                selectFichiers+="<option class='optionFichiers'>"+document.file+"</option>";
+            });
+            Session.set("nbFichiers",nb);
+            $(".divFichiers").show();
+            $("#selectFichier").html(selectFichiers);
+        }
 
 
         $("#tableauReponses").after(affichage);
