@@ -11,9 +11,10 @@ Globals.schemas.Taches = new SimpleSchema({
         }
     },
     tacheParent: {
-        type: String,
+        type: Object,
         label: "Tâche Parent",
-        optional: true
+        optional: true,
+        blackbox: true
     },
     titre: {
         type: String,
@@ -95,6 +96,7 @@ Globals.schemas.Taches = new SimpleSchema({
     },
     fini: {
         type: Boolean,
+        defaultValue: false,
         autoform: {
             omit: true
         }

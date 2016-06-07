@@ -22,30 +22,92 @@ Template.formulaireGenere.rendered = function(data) {
 Template.formulaireGenere.helpers({
    
     'Form': function(){
-        var idFormulaire =Router.current().params;
-        var reponse = reponsesForm.find({idForm:""+idFormulaire["_id"],idUser:""+idFormulaire["idUtilisateur"]}).fetch();
+
+        //on récupère les paramètres de la requête
+
+        var params =Router.current().params;
+
+
+        // Objet de conversion base 64
+        
+
+        
+        
+        var encodedEmail = base64("thomas@gmail.com","encode");
+
+        console.log(encodedEmail);
+
+
+         //On decode l'email de l'envoi
+        var decodedEmail = base64(params["mailEncode"],"decode");
+
+        //var decodeEmail =b64_to_utf8(encodedEmail);
+        console.log(decodedEmail);
+        //var decodeEmail =encodedEmail;
+
+       // On vérifie que l'email encodé existe dans une mailinglist
+        var checkmail=false;
+        var mailingslists = mailingList.find().fetch();
+        mailingslists.forEach(function(mailinglist){
+            mailinglist.emails.forEach(function(email){
+                if(email===decodedEmail){
+                    checkmail=true;
+                }
+            });
+        });
+
+        if(checkmail){
+            var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:""+params["idUtilisateur"]}).fetch();
+            if(reponse.length==0){
+                $(".formBoutons").show();
+
+                 return tempFormulaire.find({_id:""+params["_id"]});
+             }
+            else{
+                 formulaireEnvoye();
+             }
+
+
+        }
+        else{
+           personneInconnue();
+        }
+
+        //Si le formulaire a déjà été rempli, on masque le formulaire
+        var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:""+params["idUtilisateur"]}).fetch();
         console.log(reponse);
-        if(reponse!=[]){
+      /*  if(reponse!=[]){
             formulaireEnvoye();
-         }
+        }*/
 
 
-
-        return tempFormulaire.find({_id:""+idFormulaire["_id"]});
     },
     'isInputText': function(display){
-        return display == "1";
+        if(display=="1"){
+            return true;
+        }
+        return false;
     },
     'isTextArea': function(display){
-        return display == "2";
+        if(display=="2"){
 
+            return true;
+        }
+        return false;
     },
     'isInputDate': function(display){
-        return display == "3";
+        if(display=="3"){
+
+            return true;
+        }
+        return false;
     },
     'isInputChoixBinaire': function(display){
-        return display == "4";
+        if(display=="4"){
 
+            return true;
+        }
+        return false;
     },
     'isInputRadios': function(display){
         if(display=="5"){
@@ -56,13 +118,19 @@ Template.formulaireGenere.helpers({
     },
     'isInputCheckboxs': function(display){
         if(display=="6"){
+
             Session.set("NumeroReps",0);
+
             return true;
         }
         return false;
     },
     'isInputUpload': function(display){
-        return display == "7";
+        if(display=="7"){
+            
+            return true;
+        }
+        return false;
     }
 });
 
@@ -97,22 +165,29 @@ Template.formulaireGenere.events({
                 verif2.push("true");
                 $(".errorCkBox"+tabCkBox[a]["element"]).hide();
                 }
-                if(!verif){
-                    $(".errorCkBox"+tabCkBox[a]["element"]).show();
-                }
+            if(!verif){
+                $(".errorCkBox"+tabCkBox[a]["element"]).show();
             }
+            }
+
+
         }
 
 
-        if(verif2.length >= tabCkBox.length){
-            console.log("envoi ok");
-            reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
-            swal("Réussite","Formulaire envoyé !","success");
+        if(verif2.length>=tabCkBox.length){
+
+           // console.log("envoi ok");
+             reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
+             swal("Réussite","Formulaire envoyé !","success");
             formulaireEnvoye();
+
         }
         else{
             Session.set("ckboxgroup",[]);
+
+
         }
+
     }
 
     
@@ -198,6 +273,12 @@ formulaireEnvoye = function(){
     $(".formBoutons").hide();
     $("#corpsForm").hide();
     $("#retour").show();
+}
+
+personneInconnue=function(){
+    $(".formBoutons").hide();
+    $("#corpsForm").hide();
+    $("#inconnu").show();
 }
 
 afficherForm =function(){

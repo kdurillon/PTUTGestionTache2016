@@ -16,20 +16,12 @@ Template.tacheHome.helpers({
             fields: [
                 { key: 'titre', label: 'Titre' },
                 { key: 'typeTache', label: 'Type' },
-                { key: 'tacheParent', label: 'Parent',
-                    fn:
-                        function(value) {
-                            if(_.isNull(value)) {
-                                return false;
-                            }
-                            return taches.findOne({_id: value}).titre;
-                        }
-                },
+                { key: 'tacheParent.titre', label: 'Parent' },
                 { key: 'categorie', label: 'Catégorie' },
                 { key: 'tags', label: 'Tags' },
                 { key: 'dateCreation', label: 'Date de création' },
                 { key: 'dateFin', label: 'Date de fin/rappel' },
-                { label: 'Action', tmpl: Template.actionTableTache, sortable: false }
+                { label: 'Action', tmpl: Template.actionTableTache, sortable: false, cellClass: 'text-right' }
             ],
             rowClass: function(item) {
                 var now = moment();
@@ -88,7 +80,7 @@ Template.tacheHome.events({
             if(tache.typeTache === "formulaire") {
                 lien = window.location.origin + "/formulaire/" + tache.formulaire + "/" + utf8_to_b64(email);
             }else if(tache.typeTache === "document") {
-                lien = window.location.origin+"/"+uploads+"/"+document.userId+"/"+document.file;
+                lien = window.location.origin+"/uploads/"+tache.document.userId+"/"+tache.document.file;
             }
             var dataContext = {
                 contenu: tache.contenu,
@@ -160,8 +152,15 @@ Template.modalInfoTache.events({
 AutoForm.addHooks('tache', {
     before: {
         insert: function(data){
-            data.fini = false;
             data.typeTache = Session.get('typeTache');
+
+            if(!_.isUndefined(data.tacheParent)) {
+                var tacheParent = taches.findOne({_id: data.tacheParent});
+                data.tacheParent = {
+                    _id: tacheParent._id,
+                    titre: tacheParent.titre
+                };
+            }
             return data;
         }
     },
