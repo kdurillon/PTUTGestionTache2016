@@ -520,7 +520,9 @@ $('#selectCategorie').on('change',function(){
 Template.gantt.helpers({
     initTasks: function(){
             var userTasks = taches.find({userId: Meteor.userId(), fini: false}).fetch();
-
+        if(userTasks == undefined){
+            return 0;
+        }
         userTasks.forEach(function(task){
             if(task.categorie != undefined){
               var cat =  categories.findOne({nom: task.categorie});
