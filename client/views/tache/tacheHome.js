@@ -128,17 +128,23 @@ Template.tacheHome.events({
         swal({
             title: "Voulez-vous vraiment partager cette tâche ?",
             text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
-            type: "warning",
+            type: "question",
+            input: 'select',
+            inputOptions: {
+                'SRB': 'Serbia',
+                'UKR': 'Ukraine',
+                'HRV': 'Croatia'
+            },
+            inputPlaceholder: 'Select country',
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Oui, partagez!",
-            closeButtonText: "Non",
-            closeOnConfirm: false,
-            reverseButtons: true
-        }).then(function(){
-            //taches.update(id, {$set: {}});
-            swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
-        });
+            closeButtonText: "Non"
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
+            }
+        })
     }
 
 });
