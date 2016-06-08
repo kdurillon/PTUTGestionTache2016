@@ -7,9 +7,13 @@ Template.reponses.onRendered(function () {
     Session.set("nbFichiers",0);
     $("#tableauReponses").hide();
 
+
 });
 
 Template.reponses.helpers({
+
+
+    
 
     'Reponses': function(){
         
@@ -54,27 +58,15 @@ Template.reponses.events({
 
 "click #btDownload ":function(){
 
-    var download = document.createElement('a');
+   /* var zip = Meteor.call('getZip',$("#selectLeForm").val());
+    console.log(zip);*/
 
-    download.setAttribute('href',"download");
+  $(".allFilesDownload").click();
 
-   // download.setAttribute('download',"/uploads/"+$("#selectLeForm").val()+"/"+$("#selectFichier").val());
-    download.setAttribute('download'," uploads/7725NNZzbCNwDgDzC/Lighthouse.jpg");
-    download.click();
-
-    console.log(download);
-
-
-
-//$("<a href='"+"/uploads/"+$("#selectLeForm").val()+"/"+$("#selectFichier").val()+"' download></a>").trigger("click");
-},
-
-"change #selectFichier ":function(){
-
-    window.location = "/uploads/"+$("#selectLeForm").val()+"/"+$("#selectFichier").val();
 },
 
 "change #selectLeForm ":function(){
+
 
     $(".divFichiers").hide();
     $(".optionFichiers").remove();
@@ -127,7 +119,13 @@ Template.reponses.events({
                 else if (enr.type == 7) {
 
                   fichier=true;
+                    //template.gestionFichiersEnvoyes
+                    //template.gestionFichiersEnvoyes.create();
+                    //Blaze.render(Template.gestionFichiersEnvoyes.view);
+                    //Blaze.render(Template.gestionFichiersEnvoyes,#tableauReponses);
 
+
+                    // Blaze.render(Blaze.With(data, function () { return Template.reponses.gestionFichiersEnvoyes; })).
                   reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>Envoyé</div></div>";
 
 

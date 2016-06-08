@@ -7,7 +7,8 @@ Meteor.startup(function () {
             return formData.currentUserId + "/";
         },
         finished: function(file, formFields) {
-            uploads.insert({userId: formFields.currentUserId, file: file.name});
+            var newFile=formFields.currentEmailId+"__"+file.name;
+            uploads.insert({userId: formFields.currentUserId,EmailId:formFields.currentEmailId,numElement: formFields.currentElmtId,file: newFile});
         }
     });
 
@@ -21,6 +22,8 @@ Meteor.startup(function () {
         'getUserId': function() {
             return this.userId;
         }
+
+
     });
 
 });

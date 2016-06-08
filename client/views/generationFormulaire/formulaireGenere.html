@@ -85,7 +85,7 @@
 
                     <div class='text-center form-group ctrlsApercu '>
                         <label for='' class='labelApercu control-label'>{{label}}</label>
-                       <div> <button class='btn btn-info upload_button'><span class='glyphicon glyphicon-upload'></span> Envoyer un fichier </button></div>
+                       <div> <button  id="btEnvoyer{{numero}}" class='btEnvoyer btn btn-info upload_button' type="button"><span class='glyphicon glyphicon-upload'></span> Sélectionner un fichier </button></div>
                     </div>
 
                 {{/if}}
@@ -103,7 +103,7 @@
         <br><br>
 
         <div class="form-group text-center formBoutons" >
-            <input id="EnvoyerFormGenere" value="Envoyer" type="submit" class="btn btn-success " >
+            <input id="EnvoyerFormGenere" value="Valider" type="submit" class="btn btn-success " >
             <input  value="Effacer" type="reset"  class="btn btn-danger ">
         </div>
 

@@ -6,6 +6,12 @@
 {
     margin-bottom: 25px;
 }
+#divReponses,#btDownload{
+    clear: both;
+}
+#btDownload{
+    vertical-align: center;
+}
 
 #cadreApercuForm{
     border: 1px solid black;
@@ -28,12 +34,12 @@
     margin-bottom: 25px;
 }
 .double{
-    font-size:1.5em;
+    font-size:1.2em;
 
 }
 #tableauReponses,#spanFichiers{
     margin-bottom: 25px;
-    display: inline-block;
+
     padding: 12px;
 }
 #selectFichier{

@@ -17,26 +17,28 @@
 
         </select></div>
     </div>
-
-
     <hr>
-
-
-
-    <div id="divFichiers" class="text-center divFichiers" >
-        <span id="spanFichiers" class='label label-info double ' >Fichiers Envoyés <span class='badge white'>{{nombreFichiers}}</span></span>
-
-    </div>
-    <div class='divFichiers text-center'><select id='selectFichier' class='form-control'>
-
-    </select>
-    <button id="btDownload" class="btn btn-primary btn-file">Tout télécharger</button>
+    <div id="divFichiers" class=" divFichiers" >
+        <div>
+        <h2  id="spanFichiers"><span class='double badge white'>{{nombreFichiers}}</span> Fichiers Envoyés  </h2>
+        <button id="btDownload" class="btn btn-primary btn-file">Tout télécharger</button>
+        </div>
+        {{ > gestionFichiersEnvoyes }}
     </div>
 
-    <div class="text-center" >
-<span id="tableauReponses" class='label label-info double ' >Réponses<span class='badge white'>{{nombre}}</span></span>
 
-</div>
+
+
+    <div class='divFichiers text-center'>
+        <!--<select id='selectFichier' class='form-control'></select>-->
+
+    </div>
+
+    <div id="divReponses" class="" >
+    <h2 id="tableauReponses"  ><span class='double badge white'>{{nombre}}</span> Réponses</h2>
+    </div>
+
+
 
 
 </template>
