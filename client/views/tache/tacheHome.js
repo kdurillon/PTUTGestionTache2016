@@ -161,12 +161,13 @@ Template.modalInfoTache.events({
                 confirmButtonText: "Oui",
                 cancelButtonText: "Annuler",
                 closeOnConfirm: false
-            },
-            function(){
-                taches.remove(id);
-                gantt.deleteTask(id);
-                swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
-            });
+            }).then(
+            function(isConfirm){
+                if(isConfirm) {
+                    taches.remove(id);
+                    gantt.deleteTask(id);
+                    swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
+                }});
     }
 });
 
@@ -199,9 +200,10 @@ AutoForm.addHooks('tache', {
                     text: "La tâche à été créé correctement",
                     type: "success",
                     confirmButtonText: "OK"
-                }, function(){
-                    Router.go(Utils.pathFor('tacheHome'))
-                });
+                }).then( function(isConfirm){
+                    if(isConfirm) {
+                        Router.go(Utils.pathFor('tacheHome'))
+                    }});
             }
         },
 
@@ -215,9 +217,10 @@ AutoForm.addHooks('tache', {
                     text: "La tâche à été modifié correctement",
                     type: "success",
                     confirmButtonText: "OK"
-                }, function(){
-                    Router.go(Utils.pathFor('tacheHome'))
-                });
+                }).then( function(isConfirm){
+                    if(isConfirm) {
+                        Router.go(Utils.pathFor('tacheHome'))
+                    }});
             }
         }
     }

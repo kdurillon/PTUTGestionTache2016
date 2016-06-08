@@ -151,7 +151,7 @@ $('#selectCategorie').on('change',function(){
         if(value !== '' && value !== undefined){
             if ($('#selectCategorie').val() != 'Catégorie'){
                 gantt.clearAll();
-                var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value), categorie: $('#selectCategorie').val()}).fetch();
+                var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i'), categorie: $('#selectCategorie').val()}).fetch();
 
 
                 userTasks.forEach(function(task){
@@ -230,7 +230,7 @@ $('#selectCategorie').on('change',function(){
                 });
             }else{
                 gantt.clearAll();
-                var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value)}).fetch();
+                var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i')}).fetch();
 
 
                 userTasks.forEach(function(task){
@@ -426,7 +426,7 @@ $('#selectCategorie').on('change',function(){
             showCancelButton: true,
             confirmButtonColor: "#00A4C4",
             confirmButtonText: "PNG",
-            cancelButtonText: "PDF"},
+            cancelButtonText: "PDF"}).then(
             function(isConfirm){
                 if (isConfirm) {
                     gantt.exportToPNG();
