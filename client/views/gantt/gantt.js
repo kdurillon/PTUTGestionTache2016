@@ -436,6 +436,9 @@ $('#selectCategorie').on('change',function(){
             });
     });
 
+    /**
+     *
+     */
     function reset(){
         var userTasks = taches.find({userId: Meteor.userId(), fini: false}).fetch();
 
