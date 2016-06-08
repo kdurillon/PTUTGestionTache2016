@@ -4,7 +4,15 @@ i18n.setLanguage('fr');
  * rendered
  */
 Template.actionTableTache.rendered = function() {
+    Meteor.subscribe('getAllUser');
     $('[data-toggle="tooltip"]').tooltip();
+};
+
+Template.modalPartageTache.rendered = function() {
+    $(".select_user").select2({
+        placeholder: "Liste des collaborateurs",
+        allowClear: true
+    });
 };
 
 /**
@@ -34,14 +42,6 @@ Template.tacheHome.helpers({
         }
     }
 });
-
-/*function displayValueTable(value) {
-    if(_.isEmpty(value)) {
-        return new Spacebars.SafeString("");
-    }else {
-        return value;
-    }
-}*/
 
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
@@ -108,7 +108,7 @@ Template.tacheHome.events({
             });
         }
         taches.update(this._id, {$set: { fini: true }});
-        gantt.deleteTask(id);
+        gantt.deleteTask(this._id);
         swal("Archivage!", "La tâche à été archivé avec succès.", "success");
     },
 
@@ -124,36 +124,36 @@ Template.tacheHome.events({
     },
 
     "click .partage_tache": function() {
-        var id = this._id;
+        var tache = this;
+        var userOptions = [];
+        Meteor.users.find().map(function (c) {
+            var email = c.emails[0].address;
+            var currentEmail = Meteor.user().emails[0].address;
+            if(email !== currentEmail) {
+                userOptions.push({
+                    id: c._id,
+                    email: email
+                });
+            }
+        });
+
         swal({
             title: "Voulez-vous vraiment partager cette tâche ?",
             text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
             type: "question",
-            input: 'select',
-            inputClass: 'select2 form-control',
-            inputOptions: {
-                'SRB': 'Serbia',
-                'UKR': 'Ukraine',
-                'HRV': 'Croatia'
-            },
-            inputPlaceholder: 'Select country',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (!_.isEmpty(value)) {
-                        resolve();
-                    } else {
-                        reject('Vous devez sélectionner au moins un membre');
-                    }
-                });
-            },
             showCancelButton: true,
             confirmButtonText: "Oui, partagez!",
             closeButtonText: "Non"
-        }).then(function(result) {
-            if (result) {
-                swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                Modal.show('modalPartageTache', function () {
+                    return {
+                        tache: tache,
+                        userOptions: userOptions
+                    };
+                });
             }
-        })
+        });
     }
 
 });
@@ -177,6 +177,39 @@ Template.modalInfoTache.events({
                     gantt.deleteTask(id);
                     swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
                 }});
+    }
+});
+
+Template.modalPartageTache.events({
+    "submit #partageForm" : function(e) {
+        var tache = this.tache;
+        e.preventDefault();
+        var data = $('.select_user').select2('data');
+        var collaborateur = [];
+
+        var dataContext = {
+            expediteur: Meteor.user().emails[0].address,
+            tache: this.tache
+        };
+        var html=Blaze.toHTMLWithData(Template.emailPartageTemplate,dataContext);
+
+        _.each(data, function(c) {
+            collaborateur.push({
+                _id: c.id,
+                email: c.text
+            });
+
+            Meteor.call('sendEmail',
+                'noreply-ptuttask@iutinfobourg.fr',
+                c.text,
+                "Partage collaboratif de "+tache.titre,
+                html);
+
+        });
+
+        taches.update(tache._id, {$set: {userShare: collaborateur}});
+
+
     }
 });
 

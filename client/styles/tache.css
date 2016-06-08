@@ -19,3 +19,11 @@
 .lightgrey {
     background-color: lightgrey !important;
 }
+
+.swal2-modal h2 {
+    line-height: 45px;
+}
+
+.swal2-content {
+    margin: 10px;
+}

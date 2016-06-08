@@ -190,3 +190,42 @@
         </div>
     </div>
 </template>
+
+<template name="modalPartageTache">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">
+                        Partage de la tâche {{tache.titre}}
+                    </h4>
+                </div>
+
+                <form id="partageForm" method="post" role="form">
+                    <div class="modal-body">
+                        <label class="control-label">Choississez des collaborateurs</label>
+                        <select class="select_user form-control" multiple="multiple">
+                            {{#each userOptions}}
+                                <option value="{{id}}">{{email}}</option>
+                            {{/each}}
+                        </select>
+
+                        <br>
+
+                        <div class="alert alert-warning" role="alert">
+                            Ces collaborateurs pourront voir, modifier ainsi que supprimer vos tâches!
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</template>
