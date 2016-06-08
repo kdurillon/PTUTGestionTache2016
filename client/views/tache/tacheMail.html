@@ -28,11 +28,23 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="form-group{{#if afFieldIsInvalid name='dateCreation'}} has-error{{/if}}">
+                    <label class="control-label">Date de création</label>
+                    <div id="datetimepicker1" class="input-group">
+                        {{> afFieldInput class="dateCreation" name="dateCreation"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='dateCreation'}}
+                        <span class="help-block">{{afFieldMessage name='dateCreation'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
                     <label class="control-label">Date programmée</label>
                     <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
-                    <div class="input-group datetimepicker">
+                    <div id="datetimepicker2" class="input-group">
                         {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
@@ -81,11 +93,23 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="form-group{{#if afFieldIsInvalid name='dateCreation'}} has-error{{/if}}">
+                    <label class="control-label">Date de création</label>
+                    <div id="datetimepicker1" class="input-group">
+                        {{> afFieldInput class="dateCreation" name="dateCreation"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='dateCreation'}}
+                        <span class="help-block">{{afFieldMessage name='dateCreation'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
                     <label class="control-label">Date programmée</label>
                     <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
-                    <div class="input-group datetimepicker">
+                    <div id="datetimepicker2" class="input-group">
                         {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>

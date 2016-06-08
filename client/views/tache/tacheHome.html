@@ -60,6 +60,14 @@
         </div>
     </div>
 
+    <hr>
+
+    <h2 class="text-center">Vos tâches</h2>
+    {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
+
+    <hr>
+
+    <h2 class="text-center">Tâches partagées</h2>
     {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
 </template>
