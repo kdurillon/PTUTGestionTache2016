@@ -174,7 +174,9 @@ Template.modalInfoTache.events({
             function(isConfirm){
                 if(isConfirm) {
                     taches.remove(id);
-                    gantt.deleteTask(id);
+                    if(window.location.pathname == 'gantt'){
+                        gantt.deleteTask(id);
+                    }
                     swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
                 }});
     }
