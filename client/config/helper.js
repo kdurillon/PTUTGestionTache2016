@@ -58,7 +58,8 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 UI.registerHelper('getTache', function() {
     return taches.find({userId: Meteor.userId()}).fetch();
 });
-UI.registerHelper('getTache', function() {
+
+UI.registerHelper('getTacheShare', function() {
     return taches.find({userId: Meteor.userId()}).fetch();
 });
 

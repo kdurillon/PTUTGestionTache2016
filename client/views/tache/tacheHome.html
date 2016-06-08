@@ -124,6 +124,18 @@
                                 {{tacheParent.titre}}
                             </li>
                         {{/if}}
+                        {{#if userShare}}
+                            <li>
+                                <b>Collaborateurs : </b>
+                                <ul>
+                                    {{#each userShare}}
+                                        <li>
+                                            {{this.email}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            </li>
+                        {{/if}}
                         {{#if categorie}}
                             <li>
                                 <b>Catégorie : </b>
