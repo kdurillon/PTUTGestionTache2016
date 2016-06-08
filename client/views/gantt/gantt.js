@@ -2,7 +2,7 @@
 
 Template.gantt.rendered = function(){
     gantt.config.initial_scroll = true;
-    gantt.config.drag_resize = false;
+    gantt.config.drag_move = false;
     gantt.config.drag_progress = false;
     gantt.config.drag = false;
     gantt.config.drag_links = false;
@@ -15,9 +15,22 @@ Template.gantt.rendered = function(){
 
     gantt.config.round_dnd_dates = false;
 
-    gantt.attachEvent("onTaskClick", function (id, e) {
+    gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
 
-        console.log(e.srcElement.className);
+        var newEndDate = moment(new Date(task.end_date)).format("DD/MM/YYYY - hh:mm");
+        var newStartDate = moment(new Date(task.start_date)).format("DD/MM/YYYY - hh:mm");
+
+        taches.update(
+            id,{
+            $set :
+            {
+                dateFin: newEndDate,
+                dateCreation: newStartDate
+            }}
+        )
+    });
+
+    gantt.attachEvent("onTaskClick", function (id, e) {
 
         switch(e.srcElement.className) {
             case 'gantt_tree_icon gantt_open':
@@ -40,10 +53,8 @@ Template.gantt.rendered = function(){
     });
 
     gantt.attachEvent("onTaskCreated", function(task){
-        Modal.show('newTacheParentModal');
+        Router.go('/tache/parent');
     });
-
-
 
     gantt.init("princ");
 
@@ -405,6 +416,24 @@ $('#selectCategorie').on('change',function(){
         $('#selectCategorie').val('Catégorie');
         gantt.clearAll();
         reset();
+    });
+
+    $('#export').on('click',function(){
+        swal({
+            title: "Choisissez le format",
+            text: "Dans quel format voulez-vous exporter le gantt ?",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#00A4C4",
+            confirmButtonText: "PNG",
+            cancelButtonText: "PDF"},
+            function(isConfirm){
+                if (isConfirm) {
+                    gantt.exportToPNG();
+                } else {
+                    gantt.exportToPDF();
+                }
+            });
     });
 
     function reset(){
