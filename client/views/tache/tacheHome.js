@@ -108,7 +108,9 @@ Template.tacheHome.events({
             });
         }
         taches.update(this._id, {$set: { fini: true }});
-        gantt.deleteTask(this._id);
+        if(window.location.pathname == 'gantt'){
+            gantt.deleteTask(id);
+        }
         swal("Archivage!", "La tâche à été archivé avec succès.", "success");
     },
 
