@@ -76,6 +76,8 @@ UI.registerHelper('getUpload', function() {
     return uploads.find({userId: Meteor.userId()}).fetch();
 });
 
+
+
 UI.registerHelper('getUploadOption', function() {
     return uploads.find({userId: Meteor.userId()}).map(function (c) {
         return {label: c.file, value: c._id};

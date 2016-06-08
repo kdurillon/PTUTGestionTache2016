@@ -9,7 +9,7 @@ Uploader.localisation = {
 
 Template['uploadModal'].helpers({
     cuserId: function() {
-        return {  currentUserId: Meteor.userId() }
+        return {  currentUserId: Meteor.userId() ,currentElmtId :"0",currentEmailId:"0"  }
     }
 });
 

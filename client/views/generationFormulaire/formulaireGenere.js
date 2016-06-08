@@ -11,6 +11,11 @@ Template.formulaireGenere.rendered = function(data) {
     Session.set("nbElementForm",0);
     Session.set("ckboxgroup",[]);
     Session.set("NumeroReps",0);
+   Session.set("tabUpload",[]);
+
+    var params =Router.current().params;
+    Session.set("idForm",params["_id"]);
+    Session.set("idEmail",params["mailEncode"]);
 
    $(".navbar").hide();
 
@@ -21,14 +26,6 @@ Template.formulaireGenere.rendered = function(data) {
 
 Template.formulaireGenere.helpers({
 
-       'Uploads': function(){
-
-           var params =Router.current().params;
-           var form=params["_id"];
-           alert(form);
-
-       },
-
 
 
         'Form': function(){
@@ -38,7 +35,7 @@ Template.formulaireGenere.helpers({
         var params =Router.current().params;
 
 
-       var encodedEmail = base64("toto@laposte.fr","encode");
+       var encodedEmail = base64("abc@abc.com","encode");
 
        console.log(encodedEmail);
 
@@ -61,10 +58,9 @@ Template.formulaireGenere.helpers({
         idEmail=base64(params["mailEncode"],"decode");
         if(checkmail){
             var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:idEmail}).fetch();
-            console.log(reponse);
+           // console.log(reponse);
             if(reponse.length==0){
                 $(".formBoutons").show();
-
                  return tempFormulaire.find({_id:""+params["_id"]});
              }
             else{
@@ -139,10 +135,21 @@ Template.formulaireGenere.helpers({
 Template.formulaireGenere.events({
 
     'click .upload_button': function (event) {
-        event.preventDefault();
-        Modal.show('uploadModalExt');
+
+      var num= $(event.target).attr("id");
+      num=num.substring(9,num.length);
+
+      var repondu = uploads.find({"userId":Session.get("idForm"),"numElement":num,"EmailId": Session.get("idEmail")}).fetch();
+      console.log(repondu);
+        if(repondu.length>=1){
+             swal("Interdit","Vous avez déjà envoyé un fichier","error");
+        }
+        else{
+            Modal.show('uploadModalExt');
+        }
+
     },
-    
+
     'submit form': function (event) {
 
         event.preventDefault();
@@ -178,10 +185,12 @@ Template.formulaireGenere.events({
 
         if(verif2.length>=tabCkBox.length){
 
-             idUser=base64(idUser,"decode");
-             reponsesForm.insert({"idForm":idForm,"idUser":idUser,"reponses":reps});
-             swal("Réussite","Formulaire envoyé !","success");
-            formulaireEnvoye();
+            if(verificationEnvoiFichiers()) {
+                idUser = base64(idUser, "decode");
+                reponsesForm.insert({"idForm": idForm, "idUser": idUser, "reponses": reps});
+                swal("Réussite", "Formulaire envoyé !", "success");
+                formulaireEnvoye();
+            }
         }
         else{
             Session.set("ckboxgroup",[]);
@@ -197,7 +206,32 @@ Template.formulaireGenere.events({
 
 //************************************************************ fonctions
 
+verificationEnvoiFichiers = function(){
 
+
+    var tabUpload=Session.get("tabUpload");
+    var verif = true;
+    tabUpload.forEach(function(fichier){
+
+        var repondu = uploads.find({"userId":Session.get("idForm"),"numElement":""+fichier,"EmailId": Session.get("idEmail")}).fetch();
+        if(repondu.length==0){
+        verif=false;
+        }
+
+
+    });
+
+    if(verif){
+        return true;
+    }
+    else{
+        swal("Envoi(s)","Vous avez oublié d'envoyer un ou plusieurs fichiers","error");
+        return false;
+    }
+    //console.log(verif);
+
+
+}
 
 tableauReponses= function(idForm,idUser){
 
@@ -258,6 +292,9 @@ tableauReponses= function(idForm,idUser){
             Session.set("ckboxgroup",tabCkBox);
         }
         if(type==7){
+            var tabUpload=Session.get("tabUpload");
+            tabUpload.push(num);
+            Session.set("tabUpload",tabUpload);
            reps.push({"num":numElmt,"type":type,"label":form.controls[i].control[0].label,"reponse":"fichier joint"});
         }
 
