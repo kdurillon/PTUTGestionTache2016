@@ -94,6 +94,10 @@ Globals.schemas.Taches = new SimpleSchema({
     dateCreation: {
         type: String
     },
+    UserIdShare: {
+        type: [String],
+        defaultValue: []
+    },
     fini: {
         type: Boolean,
         defaultValue: false,

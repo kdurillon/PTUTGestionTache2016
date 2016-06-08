@@ -121,6 +121,24 @@ Template.tacheHome.events({
         }
         taches.update(this._id, {$set: { fini: false }});
         swal("Archivage!", "La tâche à été enlevé de l'archive.", "success");
+    },
+
+    "click .partage_tache": function() {
+        var id = this._id;
+        swal({
+            title: "Voulez-vous vraiment partager cette tâche ?",
+            text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui, partagez!",
+            closeButtonText: "Non",
+            closeOnConfirm: false,
+            reverseButtons: true
+        }).then(function(){
+            //taches.update(id, {$set: {}});
+            swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
+        });
     }
 
 });
