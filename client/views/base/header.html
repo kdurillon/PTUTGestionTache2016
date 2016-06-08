@@ -15,6 +15,7 @@
             <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse ">
                 {{#if currentUser}}
                     <ul class="nav navbar-nav">
+                        <li class="{{active '/gantt' }}"><a href="{{pathFor route='gantt'}}"><span class="glyphicon glyphicon-calendar"></span> Gantt</a></li>
                         <li class="{{active '/tache' }}"><a href="{{pathFor route='tacheHome'}}"><span class="glyphicon glyphicon-plus"></span> Tâches</a></li>
                         <li class="{{active '/category'}}"><a href="{{pathFor route='categoriesHome'}}"><span class="glyphicon glyphicon-tag"></span> Catégories</a></li>
                         <li class="{{active '/mailinglist'}}"><a href="{{pathFor route='mailingList'}}"><span class="glyphicon glyphicon-th-list"></span> Mailing lists</a></li>

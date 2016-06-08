@@ -3,13 +3,24 @@ Template.newTacheNote.rendered = function() {
     $('.bootstrap-tagsinput').addClass('form-control');
     $('.bootstrap-tagsinput input').removeAttr('style');
     $('.bootstrap-tagsinput input').removeAttr('size');
-    $('.datetimepicker').datetimepicker({
+    $('#datetimepicker1').datetimepicker({
         format: 'L - LT',
         locale: 'fr',
-        minDate: moment().add(1, 'd')
+        minDate: moment()
+    });
+    $('#datetimepicker2').datetimepicker({
+        format: 'L - LT',
+        locale: 'fr',
+        useCurrent: false
+    });
+    $("#datetimepicker1").on("dp.change", function (e) {
+        $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker2").on("dp.change", function (e) {
+        $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
     });
     tinymce.init({
-        selector: 'textarea',
+        selector: '.textarea',
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });

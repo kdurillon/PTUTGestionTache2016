@@ -13,17 +13,18 @@ Template.gestionDocuments.events({
                 confirmButtonText: "Oui",
                 cancelButtonText: "Annuler",
                 closeOnConfirm: false
-            },
-            function(){
-                Meteor.call('deleteUploads', id, function(err,response) {
-                    if(err) {
-                        swal("Echec!", "La suppression à echoué, raison :"+err, "error");
-                        return;
-                    }
-                    swal("Suppression!", "Le fichier à été supprimé.", "success");
-                });
+        }).then(
+            function(isConfirm){
+                if(isConfirm) {
+                    Meteor.call('deleteUploads', id, function (err, response) {
+                        if (err) {
+                            swal("Echec!", "La suppression à echoué, raison :" + err, "error");
+                            return;
+                        }
+                        swal("Suppression!", "Le fichier à été supprimé.", "success");
+                    });
 
-
+                }
             });
     },
 });

@@ -92,22 +92,11 @@ Globals.schemas.Taches = new SimpleSchema({
         optional :true
     },
     dateCreation: {
-        type: String,
-        denyUpdate: true,
-        autoValue: function(){
-            if(this.isInsert){
-                return moment().format('L - LT');
-            }
-            else if(this.isUpsert){
-                return {$setOnInsert: moment().format('L - LT')};
-            }
-            else{
-                this.unset();
-            }
-        },
-        autoform: {
-            omit: true
-        }
+        type: String
+    },
+    UserIdShare: {
+        type: [String],
+        defaultValue: []
     },
     fini: {
         type: Boolean,

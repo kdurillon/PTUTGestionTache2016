@@ -60,6 +60,14 @@
         </div>
     </div>
 
+    <hr>
+
+    <h2 class="text-center">Vos tâches</h2>
+    {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
+
+    <hr>
+
+    <h2 class="text-center">Tâches partagées</h2>
     {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
 
 </template>
@@ -85,6 +93,9 @@
     {{else}}
         <button data-toggle="tooltip" title="Archiver la tâche" class="btn btn-xs btn-primary archive_tache">
             <span class="glyphicon glyphicon glyphicon-download"></span>
+        </button>
+        <button data-toggle="tooltip" title="Partager la tâche" class="btn btn-xs btn-success partage_tache">
+            <span class="glyphicon glyphicon glyphicon-share-alt"></span>
         </button>
     {{/if}}
 

@@ -121,6 +121,39 @@ Template.tacheHome.events({
         }
         taches.update(this._id, {$set: { fini: false }});
         swal("Archivage!", "La tâche à été enlevé de l'archive.", "success");
+    },
+
+    "click .partage_tache": function() {
+        var id = this._id;
+        swal({
+            title: "Voulez-vous vraiment partager cette tâche ?",
+            text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
+            type: "question",
+            input: 'select',
+            inputClass: 'select2 form-control',
+            inputOptions: {
+                'SRB': 'Serbia',
+                'UKR': 'Ukraine',
+                'HRV': 'Croatia'
+            },
+            inputPlaceholder: 'Select country',
+            inputValidator: function(value) {
+                return new Promise(function(resolve, reject) {
+                    if (!_.isEmpty(value)) {
+                        resolve();
+                    } else {
+                        reject('Vous devez sélectionner au moins un membre');
+                    }
+                });
+            },
+            showCancelButton: true,
+            confirmButtonText: "Oui, partagez!",
+            closeButtonText: "Non"
+        }).then(function(result) {
+            if (result) {
+                swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
+            }
+        })
     }
 
 });
@@ -137,12 +170,13 @@ Template.modalInfoTache.events({
                 confirmButtonText: "Oui",
                 cancelButtonText: "Annuler",
                 closeOnConfirm: false
-            },
-            function(){
-                taches.remove(id);
-                gantt.deleteTask(id);
-                swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
-            });
+            }).then(
+            function(isConfirm){
+                if(isConfirm) {
+                    taches.remove(id);
+                    gantt.deleteTask(id);
+                    swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
+                }});
     }
 });
 
@@ -175,9 +209,10 @@ AutoForm.addHooks('tache', {
                     text: "La tâche à été créé correctement",
                     type: "success",
                     confirmButtonText: "OK"
-                }, function(){
-                    Router.go(Utils.pathFor('tacheHome'))
-                });
+                }).then( function(isConfirm){
+                    if(isConfirm) {
+                        Router.go(Utils.pathFor('tacheHome'))
+                    }});
             }
         },
 
@@ -191,9 +226,10 @@ AutoForm.addHooks('tache', {
                     text: "La tâche à été modifié correctement",
                     type: "success",
                     confirmButtonText: "OK"
-                }, function(){
-                    Router.go(Utils.pathFor('tacheHome'))
-                });
+                }).then( function(isConfirm){
+                    if(isConfirm) {
+                        Router.go(Utils.pathFor('tacheHome'))
+                    }});
             }
         }
     }

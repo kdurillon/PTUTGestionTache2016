@@ -17,12 +17,13 @@ Template.categoriesHome.events({
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Oui",
-                cancelButtonText: "Annuler",
-                closeOnConfirm: false
-            },
-            function(){
-                categories.remove(id);
-                swal("Suppression!", "La catégorie à été supprimé.", "success");
+                cancelButtonText: "Annuler"
+            }).then(
+            function(isConfirm){
+                if(isConfirm){
+                    categories.remove(id);
+                    swal("Suppression!", "La catégorie à été supprimé.", "success");
+                }
             });
     },
     'click .upload_button': function() {

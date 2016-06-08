@@ -16,10 +16,22 @@
         {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
         <div class="row">
             <div class="col-sm-6">
+                <div class="form-group{{#if afFieldIsInvalid name='dateCreation'}} has-error{{/if}}">
+                    <label class="control-label">Date de création</label>
+                    <div id="datetimepicker1" class="input-group">
+                        {{> afFieldInput class="dateCreation" name="dateCreation"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='dateCreation'}}
+                        <span class="help-block">{{afFieldMessage name='dateCreation'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
-                    <label class="control-label">Date du rappel : </label>
-                    <input id="dateEnable" type="checkbox" checked="checked"> Rappel activé
-                    <div class="input-group datetimepicker">
+                    <label class="control-label">Date programmée</label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
+                    <div id="datetimepicker2" class="input-group">
                         {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
@@ -28,7 +40,9 @@
                     {{/if}}
                 </div>
             </div>
-            <div class="col-sm-5">
+        </div>
+        <div class="row">
+            <div class="col-sm-11">
                 {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
             </div>
             <div class="col-sm-1">
@@ -38,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                {{> afQuickField name="contenu"}}
+                {{> afQuickField name="contenu" class="textarea"}}
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>
@@ -63,10 +77,22 @@
         {{> afQuickField id="insertTag" name="tags" data-role="tagsinput"}}
         <div class="row">
             <div class="col-sm-6">
+                <div class="form-group{{#if afFieldIsInvalid name='dateCreation'}} has-error{{/if}}">
+                    <label class="control-label">Date de création</label>
+                    <div id="datetimepicker1" class="input-group">
+                        {{> afFieldInput class="dateCreation" name="dateCreation"}}
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                    {{#if afFieldIsInvalid name='dateCreation'}}
+                        <span class="help-block">{{afFieldMessage name='dateCreation'}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group{{#if afFieldIsInvalid name='dateFin'}} has-error{{/if}}">
-                    <label class="control-label">Date du rappel : </label>
-                    <input id="dateEnable" type="checkbox" checked="checked"> Rappel activé
-                    <div class="input-group datetimepicker">
+                    <label class="control-label">Date programmée</label>
+                    <input id="dateEnable" type="checkbox" checked="checked"> Mail programmé
+                    <div id="datetimepicker2" class="input-group">
                         {{> afFieldInput class="dateFin" name="dateFin"}}
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
@@ -75,7 +101,9 @@
                     {{/if}}
                 </div>
             </div>
-            <div class="col-sm-5">
+        </div>
+        <div class="row">
+            <div class="col-sm-11">
                 {{> afQuickField class="select_categorie" name="categorie" options=getCategorieOption firstOption="Catégorie"}}
             </div>
             <div class="col-sm-1">
@@ -85,7 +113,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                {{> afQuickField name="contenu"}}
+                {{> afQuickField name="contenu" class="textarea"}}
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>

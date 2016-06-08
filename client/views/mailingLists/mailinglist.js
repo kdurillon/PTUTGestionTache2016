@@ -117,12 +117,13 @@ Template.mailingList.events({
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
-          closeOnConfirm: false
-        },
-        function(){
-          resetApercu();
-          mailingList.remove(id);
-          swal("Suppression!", "La mailing list à été supprimé.", "success");
+        }).then(
+        function(isConfirm){
+            if(isConfirm){
+                resetApercu();
+                mailingList.remove(id);
+                swal("Suppression!", "La mailing list à été supprimé.", "success");
+            }
         });
 
   },
