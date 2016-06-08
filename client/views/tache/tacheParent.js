@@ -1,6 +1,6 @@
 Template.newTacheParent.rendered = function() {
     tinymce.init({
-        selector: 'textarea',
+        selector: '.textarea',
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
