@@ -130,18 +130,27 @@ Template.tacheHome.events({
             text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
             type: "question",
             input: 'select',
+            inputClass: 'select2 form-control',
             inputOptions: {
                 'SRB': 'Serbia',
                 'UKR': 'Ukraine',
                 'HRV': 'Croatia'
             },
             inputPlaceholder: 'Select country',
+            inputValidator: function(value) {
+                return new Promise(function(resolve, reject) {
+                    if (!_.isEmpty(value)) {
+                        resolve();
+                    } else {
+                        reject('Vous devez sélectionner au moins un membre');
+                    }
+                });
+            },
             showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
             confirmButtonText: "Oui, partagez!",
             closeButtonText: "Non"
-        }).then(function(isConfirm) {
-            if (isConfirm) {
+        }).then(function(result) {
+            if (result) {
                 swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
             }
         })

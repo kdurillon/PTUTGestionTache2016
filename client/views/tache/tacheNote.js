@@ -20,7 +20,7 @@ Template.newTacheNote.rendered = function() {
         $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
     });
     tinymce.init({
-        selector: 'textarea',
+        selector: '.textarea',
         skin_url: '/packages/teamon_tinymce/skins/lightgray',
         language: 'fr_FR'
     });
