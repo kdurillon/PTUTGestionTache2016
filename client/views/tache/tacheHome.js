@@ -84,9 +84,9 @@ Template.tacheHome.events({
                 formulaire._id = Random.id();
                 formulaire.titre+= (tache.dateCreation);
                 tempFormulaire.insert(formulaire);
-                lien = Meteor.absoluteUrl("/formulaire/" + formulaire._id + "/" + utf8_to_b64(email));
+                lien = Meteor.absoluteUrl("formulaire/" + formulaire._id + "/" + utf8_to_b64(email));
             }else if(tache.typeTache === "document") {
-                lien = Meteor.absoluteUrl("/uploads/"+tache.document.userId+"/"+tache.document.file);
+                lien = Meteor.absoluteUrl("uploads/"+tache.document.userId+"/"+tache.document.file);
             }
             var dataContext = {
                 contenu: tache.contenu,
