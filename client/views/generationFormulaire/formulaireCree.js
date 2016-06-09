@@ -200,8 +200,8 @@ apercuDiv =function(label,elmt){
         //un choix oui / non
         case "4":{
 
-            ctrl = "<div><label for='' class='radioGen radio-inline'><input name='radio"+plus+"' type='radio' class=' '  >Oui</label>"+
-                    "<label for='' class='radioGen radio-inline'><input name='radio"+plus+"' type='radio' class=' '  >Non</label></div>";
+            ctrl = "<div ><div class='radio-inline'><label for='' class='radioGen '><input name='radio"+plus+"' type='radio' class=' '  >Oui</label></div>"+
+                    "<div class='radio-inline'><label for='' class='radioGen '><input name='radio"+plus+"' type='radio' class=' '  >Non</label></div></div>";
             break;
         }
             //un choix à réponse unique
@@ -210,16 +210,17 @@ apercuDiv =function(label,elmt){
 
             var ctrl="<br>";
             for(i=0;i<reps.length;i++){
-                ctrl += "<div class='radio '><label for=''><input name='radio"+plus+"' type='radio' class=' '  >"+reps[i]["libelle"]+"</label></div>";
+                ctrl += "<div class='radio-inline '><label for=''><input name='radio"+plus+"' type='radio' class=' '  >"+reps[i]["libelle"]+"</label></div>";
             }
             break;
             }
             //un choix à réponse multiple
         case "6":{
-            var ctrl="";
+            var ctrl="<div>";
             for(i=0;i<reps.length;i++){
-                ctrl += "<div class='checkbox '><label for=''><input name='checkbox' type='checkbox' class=' ' >"+reps[i]["libelle"]+"</label></div>";
+                ctrl += "<div class='checkbox-inline '><label for=''><input name='checkbox' type='checkbox' class=' ' >"+reps[i]["libelle"]+"</label></div>";
             }
+            ctrl+="</div>";
             break;
             }
             //une date et une heure
