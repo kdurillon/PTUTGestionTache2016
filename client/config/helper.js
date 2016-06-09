@@ -65,11 +65,11 @@ UI.registerHelper('getTacheShare', function() {
 
 
 UI.registerHelper('getTacheParent', function() {
-    return taches.find({userId: Meteor.userId(), typeTache: "parent"}).fetch();
+    return taches.find({userId: Meteor.userId(), typeTache: "parent", fini: false}).fetch();
 });
 
 UI.registerHelper('getTacheParentOption', function() {
-    return taches.find({userId: Meteor.userId(), typeTache: "parent"}).map(function (c) {
+    return taches.find({userId: Meteor.userId(), typeTache: "parent", fini: false}).map(function (c) {
         return {label: c.titre, value: c._id};
     });
 });
