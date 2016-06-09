@@ -241,6 +241,16 @@ AutoForm.addHooks('tache', {
                 };
             }
             return data;
+        },
+        update: function(data) {
+            if(!_.isUndefined(data.$set.tacheParent)) {
+                var tacheParent = taches.findOne({_id: data.$set.tacheParent});
+                data.$set.tacheParent = {
+                    _id: tacheParent._id,
+                    titre: tacheParent.titre
+                };
+            }
+            return data;
         }
     },
     after: {

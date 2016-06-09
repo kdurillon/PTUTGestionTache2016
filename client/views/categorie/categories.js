@@ -16,7 +16,7 @@ Template.categoriesHome.events({
             function(isConfirm){
                 if(isConfirm){
                     categories.remove(id);
-                    swal("Suppression!", "La catégorie à été supprimé.", "success");
+                    swal("Suppression!", "La catégorie à été supprimée.", "success");
                 }
             });
     },

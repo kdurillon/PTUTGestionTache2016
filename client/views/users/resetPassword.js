@@ -20,7 +20,7 @@ Template.forgotPassword.events({
                     }
                 } else {
                     swal('Email envoyé, verifier votre messagerie électronique!');
-                    Router.go(Utils.pathFor('home'));
+                    Router.go(Utils.pathFor('gantt'));
                 }
             });
 
@@ -57,7 +57,7 @@ Template.resetPassword.events({
                 } else {
                     swal("Votre mot de passe a correctement été changé!");
                     Session.set('resetPassword', null);
-                    Router.go(Utils.pathFor('home'));
+                    Router.go(Utils.pathFor('gantt'));
                 }
             });
         }

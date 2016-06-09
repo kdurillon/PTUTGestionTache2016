@@ -12,11 +12,16 @@ Template.login.events({
 
             Meteor.loginWithPassword(email, password, function(err) {
                 if (err) {
-                    swal("Erreur", "Email ou mot de passe incorrect!", "error");
+                    swal({
+                        title: 'Erreur',
+                        type: 'error',
+                        html: "<h3>Email ou mot de passe incorrecte</h3>" +
+                        "<a href='"+route+"'>Mot de passe oublié ?</a>"
+                    })
                 }
             });
 
-            Router.go(Utils.pathFor('home'));
+            Router.go(Utils.pathFor('gantt'));
         }else {
             var route = Utils.pathFor('forgotpassword');
             swal({

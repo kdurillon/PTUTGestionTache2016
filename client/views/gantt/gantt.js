@@ -12,10 +12,10 @@ Template.gantt.rendered = function(){
     gantt.config.api_date = "%d/%m %H:%i";
     gantt.config.date_grid = "%d/%m %H:%i";
     gantt.config.start_date = gantt.date.day_start(new Date());
-
+    gantt.config.show_errors = false;
     gantt.config.round_dnd_dates = false;
 
-    gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+    gantt.attachEvent("onTaskDrag", function(id, mode, task){
 
         var newEndDate = moment(new Date(task.end_date)).format("DD/MM/YYYY - hh:mm");
         var newStartDate = moment(new Date(task.start_date)).format("DD/MM/YYYY - hh:mm");
@@ -73,69 +73,11 @@ $('#selectCategorie').on('change',function(){
             couleur = cat.couleur;
             text = 'white';
         }
-        else if(task.fini == true){
+        else if(task.fini === true){
             couleur = 'lightgrey';
             text = 'black';
         }
-
-        if(task.dateFin != undefined){
-            if (!_.isUndefined(task.tacheParent._id)){
-                gantt.addTask({
-                    id: task._id,
-                    text: task.titre,
-                    start_date: task.dateCreation,
-                    end_date: task.dateFin,
-                    color: couleur,
-                    textColor: text,
-                    parent: task.tacheParent._id
-                })}else{
-                gantt.addTask({
-                    id: task._id,
-                    text: task.titre,
-                    start_date: task.dateCreation,
-                    end_date: task.dateFin,
-                    color: couleur,
-                    textColor: text
-                })
-            }
-
-
-        }else{
-            if (task.typeTache === 'parent'){
-                gantt.addTask({
-                    id: task._id,
-                    text: task.titre,
-                    start_date: task.dateCreation,
-                    color: couleur,
-                    textColor: text,
-                    type:'project'
-                })
-            }
-            else{
-                if (!_.isUndefined(task.tacheParent._id)){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        duration: 30,
-                        color: couleur,
-                        textColor: text,
-                        parent: task.tacheParent._id
-                    })
-                }else{
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        duration: 30,
-                        color: couleur,
-                        textColor: text
-                    })
-                }
-            }
-        }
-
-
+        addGant(task, couleur, text);
     });
 
 }else{
@@ -146,10 +88,11 @@ $('#selectCategorie').on('change',function(){
 
     $('#searchText').on('keyup',function(){
         var value = this.value;
+        var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i')}).fetch();
         if(!_.isEmpty(value) && !_.isUndefined(value)){
             if ($('#selectCategorie').val() !== 'Catégorie'){
                 gantt.clearAll();
-                var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i'), categorie: $('#selectCategorie').val()}).fetch();
+                userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i'), categorie: $('#selectCategorie').val()}).fetch();
 
 
                 userTasks.forEach(function(task){
@@ -164,70 +107,10 @@ $('#selectCategorie').on('change',function(){
                         couleur = 'lightgrey';
                         text = 'black';
                     }
-
-                    if(task.dateFin != undefined){
-                        if (task.tacheParent._id != undefined){
-                            gantt.addTask({
-                                id: task._id,
-                                text: task.titre,
-                                start_date: task.dateCreation,
-                                end_date: task.dateFin,
-                                color: couleur,
-                                textColor: text,
-                                parent: task.tacheParent._id
-                            })}else{
-                            gantt.addTask({
-                                id: task._id,
-                                text: task.titre,
-                                start_date: task.dateCreation,
-                                end_date: task.dateFin,
-                                color: couleur,
-                                textColor: text
-                            })
-                        }
-
-
-                    }else{
-                        if (task.typeTache === 'parent'){
-                            gantt.addTask({
-                                id: task._id,
-                                text: task.titre,
-                                start_date: task.dateCreation,
-                                color: couleur,
-                                textColor: text,
-                                type:'project'
-                            })
-                        }
-                        else{
-                            if (task.tacheParent._id != undefined){
-                                gantt.addTask({
-                                    id: task._id,
-                                    text: task.titre,
-                                    start_date: task.dateCreation,
-                                    duration: 30,
-                                    color: couleur,
-                                    textColor: text,
-                                    parent: task.tacheParent._id
-                                })
-                            }else{
-                                gantt.addTask({
-                                    id: task._id,
-                                    text: task.titre,
-                                    start_date: task.dateCreation,
-                                    duration: 30,
-                                    color: couleur,
-                                    textColor: text
-                                })
-                            }
-                        }
-                    }
-
-
+                    addGant(task, couleur, text);
                 });
             }else{
                 gantt.clearAll();
-                var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i')}).fetch();
-
 
                 userTasks.forEach(function(task){
                     var couleur = "white";
@@ -237,69 +120,11 @@ $('#selectCategorie').on('change',function(){
                         couleur = cat.couleur;
                         text = 'white';
                     }
-                    else if(task.fini == true){
+                    else if(task.fini === true){
                         couleur = 'lightgrey';
                         text = 'black';
                     }
-
-                    if (!_.isUndefined(task.dateFin)){
-                        if (!_.isUndefined(task.tacheParent._id)){
-                            gantt.addTask({
-                                id: task._id,
-                                text: task.titre,
-                                start_date: task.dateCreation,
-                                end_date: task.dateFin,
-                                color: couleur,
-                                textColor: text,
-                                parent: task.tacheParent._id
-                            })}else{
-                            gantt.addTask({
-                                id: task._id,
-                                text: task.titre,
-                                start_date: task.dateCreation,
-                                end_date: task.dateFin,
-                                color: couleur,
-                                textColor: text
-                            })
-                        }
-
-
-                    }else{
-                        if (task.typeTache === 'parent'){
-                            gantt.addTask({
-                                id: task._id,
-                                text: task.titre,
-                                start_date: task.dateCreation,
-                                color: couleur,
-                                textColor: text,
-                                type:'project'
-                            })
-                        }
-                        else{
-                            if (!_.isUndefined(task.tacheParent._id)){
-                                gantt.addTask({
-                                    id: task._id,
-                                    text: task.titre,
-                                    start_date: task.dateCreation,
-                                    duration: 30,
-                                    color: couleur,
-                                    textColor: text,
-                                    parent: task.tacheParent._id
-                                })
-                            }else{
-                                gantt.addTask({
-                                    id: task._id,
-                                    text: task.titre,
-                                    start_date: task.dateCreation,
-                                    duration: 30,
-                                    color: couleur,
-                                    textColor: text
-                                })
-                            }
-                        }
-                    }
-
-
+                    addGant(task, couleur, text);
                 });
             }
 
@@ -326,65 +151,7 @@ $('#selectCategorie').on('change',function(){
                 couleur = 'lightgrey';
                 text = 'black';
             }
-
-            if(!_.isUndefined(task.dateFin)){
-                if (!_.isUndefined(task.tacheParent._id)){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        end_date: task.dateFin,
-                        color: couleur,
-                        textColor: text,
-                        parent: task.tacheParent._id
-                    })}else{
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        end_date: task.dateFin,
-                        color: couleur,
-                        textColor: text
-                    })
-                }
-
-
-            }else{
-                if (task.typeTache === 'parent'){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        color: couleur,
-                        textColor: text,
-                        type:'project'
-                    })
-                }
-                else{
-                    if (!_.isUndefined(task.tacheParent._id)){
-                        gantt.addTask({
-                            id: task._id,
-                            text: task.titre,
-                            start_date: task.dateCreation,
-                            duration: 30,
-                            color: couleur,
-                            textColor: text,
-                            parent: task.tacheParent._id
-                        })
-                    }else{
-                        gantt.addTask({
-                            id: task._id,
-                            text: task.titre,
-                            start_date: task.dateCreation,
-                            duration: 30,
-                            color: couleur,
-                            textColor: text
-                        })
-                    }
-                }
-            }
-
-
+            addGant(task, couleur, text);
         });
 
         if($('#showArchive').hasClass('btn-success')){
@@ -442,65 +209,7 @@ $('#selectCategorie').on('change',function(){
                 couleur = cat.couleur;
                 text = 'white';
             }
-
-            if(!_.isUndefined(task.dateFin)){
-                if (!_.isUndefined(task.tacheParent._id)){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        end_date: task.dateFin,
-                        color: couleur,
-                        textColor: text,
-                        parent: task.tacheParent._id
-                    })}else{
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        end_date: task.dateFin,
-                        color: couleur,
-                        textColor: text
-                    })
-                }
-
-
-            }else{
-                if (task.typeTache === 'parent'){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        color: couleur,
-                        textColor: text,
-                        type:'project'
-                    })
-                }
-                else{
-                    if (!_.isUndefined(task.tacheParent._id)){
-                        gantt.addTask({
-                            id: task._id,
-                            text: task.titre,
-                            start_date: task.dateCreation,
-                            duration: 30,
-                            color: couleur,
-                            textColor: text,
-                            parent: task.tacheParent._id
-                        })
-                    }else{
-                        gantt.addTask({
-                            id: task._id,
-                            text: task.titre,
-                            start_date: task.dateCreation,
-                            duration: 30,
-                            color: couleur,
-                            textColor: text
-                        })
-                    }
-                }
-            }
-
-
+            addGant(task, couleur, text);
         });
     }
 };
@@ -510,82 +219,80 @@ $('#selectCategorie').on('change',function(){
 Template.gantt.helpers({
     initTasks: function(){
         var userTasks = taches.find({userId: Meteor.userId(), fini: false}).fetch();
-        if(_.isUndefined(userTasks)){
-            return 0;
+        if(!_.isUndefined(userTasks)){
+            userTasks.forEach(function(task){
+                var couleur = "white";
+                var text = 'black';
+                if(!_.isUndefined(task.categorie)){
+                    var cat =  categories.findOne({nom: task.categorie});
+                    couleur = cat.couleur;
+                    text = 'white';
+                }
+                addGant(task, couleur, text);
+            });
         }
-        userTasks.forEach(function(task){
-            var couleur = "white";
-            var text = 'black';
-            if(!_.isUndefined(task.categorie)){
-              var cat =  categories.findOne({nom: task.categorie});
-                couleur = cat.couleur;
-                text = 'white';
-            }
-
-            if(!_.isUndefined(task.dateFin)){
-                if (!_.isUndefined(task.tacheParent._id)){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        end_date: task.dateFin,
-                        color: couleur,
-                        textColor: text,
-                        parent: task.tacheParent._id
-                    })
-                }else{
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        end_date: task.dateFin,
-                        color: couleur,
-                        textColor: text
-                    })
-                }
-
-
-            }else{
-                if (task.typeTache === 'parent'){
-                    gantt.addTask({
-                        id: task._id,
-                        text: task.titre,
-                        start_date: task.dateCreation,
-                        color: couleur,
-                        textColor: text,
-                        type:'project'
-                    })
-                }
-                else{
-                    if (!_.isUndefined(task.tacheParent._id)){
-                        gantt.addTask({
-                            id: task._id,
-                            text: task.titre,
-                            start_date: task.dateCreation,
-                            duration: 30,
-                            color: couleur,
-                            textColor: text,
-                            parent: task.tacheParent._id
-                        })
-                    }else{
-                        gantt.addTask({
-                            id: task._id,
-                            text: task.titre,
-                            start_date: task.dateCreation,
-                            duration: 30,
-                            color: couleur,
-                            textColor: text
-                        })
-                    }
-                }
-            }
-
-
-        });
-    },
+    }
 
 });
 
+addGant = function(task, couleur, text) {
+    if(!_.isUndefined(task.dateFin)){
+        if (!_.isUndefined(task.tacheParent)){
+            gantt.addTask({
+                id: task._id,
+                text: task.titre,
+                start_date: task.dateCreation,
+                end_date: task.dateFin,
+                color: couleur,
+                textColor: text,
+                parent: task.tacheParent._id
+            })
+        }else{
+            gantt.addTask({
+                id: task._id,
+                text: task.titre,
+                start_date: task.dateCreation,
+                end_date: task.dateFin,
+                color: couleur,
+                textColor: text
+            })
+        }
 
+
+    }else{
+        if (task.typeTache === 'parent'){
+            gantt.addTask({
+                id: task._id,
+                text: task.titre,
+                start_date: task.dateCreation,
+                color: couleur,
+                textColor: text,
+                type:'project'
+            })
+        }
+        else{
+            if (!_.isUndefined(task.tacheParent)){
+                gantt.addTask({
+                    id: task._id,
+                    text: task.titre,
+                    start_date: task.dateCreation,
+                    duration: 30,
+                    color: couleur,
+                    textColor: text,
+                    parent: task.tacheParent._id
+                })
+            }else{
+                gantt.addTask({
+                    id: task._id,
+                    text: task.titre,
+                    start_date: task.dateCreation,
+                    duration: 30,
+                    color: couleur,
+                    textColor: text
+                })
+            }
+        }
+    }
+};
 
 

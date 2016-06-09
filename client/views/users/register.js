@@ -15,7 +15,7 @@ Template.register.events({
                 password: password
             });
 
-            Router.go(Utils.pathFor('home'));
+            Router.go(Utils.pathFor('gantt'));
         }
     }
 });
