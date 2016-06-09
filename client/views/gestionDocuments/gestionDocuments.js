@@ -27,23 +27,25 @@ Template.gestionDocuments.events({
 
                 }
             });
-    },
+    }
 });
 
 
 Template.gestionDocuments.helpers({
-    'newFile':function(file){
+    'newFile': function(file){
 
         var tab = file.split("__");
         var newFile =file.substring((tab[0].length+2),file.length);
 
         return newFile;
     },
-    'fileBis':function(file){
-
+    'fileBis': function(file){
         var fileBis = file.substring(3,file.length);
-        console.log(fileBis);
         return fileBis;
+    },
+
+    'displayExtension': function (file) {
+        return file.substr(file.length - 3);
     }
 
 

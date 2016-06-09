@@ -16,16 +16,7 @@ UI.registerHelper('isImg', function (file) {
     var re = /(?:\.([^.]+))?$/;
     var ext = re.exec(file)[1];
     var img = ['jpg','jpeg','png','gif','bmp'];
-    if($.inArray(ext,img) != -1){
-        return true;
-    }
-    else{
-        return false;
-    }
-});
-
-UI.registerHelper('displayExtension', function (file) {
-    return file.substr(file.length - 3);
+    return $.inArray(ext, img) != -1;
 });
 
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
