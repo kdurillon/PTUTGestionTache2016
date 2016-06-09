@@ -6,14 +6,14 @@
             {{#each getUpload}}
                 <div class="col-md-3">
                     <div class="panel panel-default">
-                        <div class="panel-heading">{{file}}</div>
+                        <div class="panel-heading">{{newFile file }}</div>
                         <div class="panel-body">
-                            <img class="img-thumbnail img-responsive" src="/uploads/{{userId}}/{{file}}" onError="this.onerror=null;this.src='http://fakeimg.pl/350x200/?text=aucun%20aper%C3%A7u';">
+                            <img class="img-thumbnail img-responsive" src="/uploads/{{userId}}/{{fileBis file}}" onError="this.onerror=null">
                         </div>
                         <div class="panel-footer clearfix">
                             Fichier {{displayExtension file}}
                             <span class="pull-right">
-                                <a href="/uploads/{{userId}}/{{file}}" download="{{file}}" target="_parent" class="btn btn-xs btn-success">
+                                <a href="/uploads/{{userId}}/{{fileBis file}}" download="{{fileBis file}}" target="_parent" class="btn btn-xs btn-success">
                                     <span class="glyphicon glyphicon-download"></span>
                                 </a>
                                 <button class="btn btn-xs btn-danger delete_doc">

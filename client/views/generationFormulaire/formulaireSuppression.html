@@ -1,0 +1,55 @@
+<template name="formulaireSupprime">
+
+
+     {{setTitle 'Suppression de formulaires'}}
+
+        <h1 class="text-center">Suppression de Formulaires</h1>
+        <br><br>
+    <hr>
+        <h2 class="">Supprimer un modèle de Formulaire</h2><br>
+
+
+
+
+
+
+
+
+           <div class="form-group">
+
+               <select name="" id="selectFormModel" class="form-control">
+                   {{#each ModeleFormulaires}}
+                       <option value="{{_id}}">{{titre}}</option>
+                    {{/each}}
+               </select>
+               <div class="panel pull-right"><br>
+               <button class="btn btn-xs btn-danger delete_categorie trashModel">
+                   <span class=" glyphicon glyphicon-trash"></span>
+               </button>
+               </div>
+           </div>
+    <br>
+    <hr>
+    <br>
+
+
+        <h2 class="">Supprimer un Formulaire envoyé et ses réponses</h2><br>
+
+
+        <div class="form-group">
+
+            <select name="" id="selectFormEnvoye" class="form-control">
+                {{#each FormulairesGeneres}}
+                    <option value="{{_id}}">{{titre}}</option>
+                {{/each}}
+            </select>
+            <div class="panel pull-right"><br>
+                <button class="btn btn-xs btn-danger delete_categorie trashForm">
+                    <span class=" glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+        </div>
+
+
+
+</template>
