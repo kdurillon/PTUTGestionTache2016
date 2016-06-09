@@ -155,7 +155,7 @@ Template.tacheHome.events({
 
 Template.modalInfoTache.events({
     "click .delete_tache": function() {
-        var id = this._id;
+        var tache = this;
         swal({
                 title: "Etes vous sûr?",
                 text: "La tâche sera définitivement supprimée!",
@@ -168,9 +168,15 @@ Template.modalInfoTache.events({
             }).then(
             function(isConfirm){
                 if(isConfirm) {
-                    taches.remove(id);
-                    if(window.location.pathname == 'gantt'){
-                        gantt.deleteTask(id);
+                    if(tache.typeTache === "parent") {
+                        var listTaches = taches.find({tacheParent: this._id}).fetch();
+                        _.each(listTaches, function(tache) {
+                            taches.remove(tache._id);
+                        });
+                    }
+                    taches.remove(tache._id);
+                    if(window.location.pathname === 'gantt'){
+                        gantt.deleteTask(tache._id);
                     }
                     swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
                 }});

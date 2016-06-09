@@ -1,9 +1,3 @@
-Template.categoriesHome.helpers({
-   'List': function(){
-       return categories.find().fetch();
-   }
-});
-
 Template.categoriesHome.events({
     'click .modif_categorie': function() {
         Router.go(Utils.pathFor('updateCategorie',{_id: this._id}));
@@ -28,7 +22,7 @@ Template.categoriesHome.events({
     },
     'click .upload_button': function() {
         Modal.show('uploadModal');
-    },
+    }
 
 });
 
