@@ -63,6 +63,10 @@ Globals.schemas.Taches = new SimpleSchema({
         optional: true,
         regEx: SimpleSchema.RegEx.Email
     },
+    dateCreation: {
+        type: String,
+        defaultValue: moment().format('L - LT')
+    },
     dateFin: {
         type: String,
         optional: true
@@ -91,12 +95,13 @@ Globals.schemas.Taches = new SimpleSchema({
         type: String,
         optional :true
     },
-    dateCreation: {
-        type: String
-    },
-    UserIdShare: {
+    userShare: {
         type: [String],
-        defaultValue: []
+        defaultValue: [],
+        optional: true,
+        autoform: {
+            omit: true
+        }
     },
     fini: {
         type: Boolean,

@@ -1,0 +1,157 @@
+<template name="modalInfoTache">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">
+                        {{titre}}
+                        {{#if fini}}
+                            - Tache finalisée
+                        {{/if}}
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <ul>
+                        <li><b>Type : </b>{{typeTache}}</li>
+                        {{#if tacheParent}}
+                            <li>
+                                <b>Tâche parent : </b>
+                                {{tacheParent.titre}}
+                            </li>
+                        {{/if}}
+                        {{#if userShare}}
+                            <li>
+                                <b>Collaborateurs : </b>
+                                <ul>
+                                    {{#each userShare}}
+                                        <li>
+                                            {{this}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            </li>
+                        {{/if}}
+                        {{#if categorie}}
+                            <li>
+                                <b>Catégorie : </b>
+                                {{categorie}}
+                            </li>
+                        {{/if}}
+                        {{#if emails}}
+                            <li>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <b>
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    {{emails.length}} Destinataires (cliquez pour afficher la liste complète)
+                                                </a>
+                                            </b>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <ul>
+                                                {{#each emails}}
+                                                    <li>{{this}}</li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/if}}
+                        {{#if contenu}}
+                            <li>
+                                <b>Contenu : </b>
+                                <div class="well">{{{contenu}}}</div>
+                            </li>
+                        {{/if}}
+                        {{#if document}}
+                            <li>
+                                <b>Image : </b>
+                                <img class="img-responsive img-thumbnail" src="/uploads/{{document.userId}}/{{document.file}}" alt="{{document.file}}" onError="this.onerror=null;this.src='http://fakeimg.pl/350x200/?text=aucun%20aper%C3%A7u';">
+                            </li>
+                        {{/if}}
+                        {{#if dateCreation}}
+                            <li>
+                                <b>Date de création : </b>
+                                {{dateCreation}}
+                            </li>
+                        {{/if}}
+                        {{#if dateFin}}
+                            <li><b>Date de fin/rappel : </b>{{dateFin}}</li>
+                        {{/if}}
+                    </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <button aria-label="La suppression est irréversible!" type="button" class="hint--top hint--error btn btn-danger delete_tache" data-dismiss="modal">
+                        <span class=" glyphicon-class glyphicon trash"></span>
+                        Supprimer
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="modalPartageTache">
+    <div class="modal fade modalPartageTache">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">
+                        {{#if getUserShare tache._id}}
+                            <span class="label label-success">Partagé</span>
+                        {{/if}}
+                        Partage de la tâche {{tache.titre}}
+                    </h4>
+                </div>
+
+                <form id="partageForm" method="post" role="form">
+                    <div class="modal-body">
+                        <label class="control-label">Ajoutez des collaborateurs</label>
+                        <select class="select_user form-control" multiple="multiple">
+                            {{#each getUserMail tache._id}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+
+                        <br>
+
+                        <label class="control-label">Collaborateurs actuels</label>
+                        <ul>
+                            {{#each getUserShare tache._id}}
+                                <li>
+                                    {{this}}
+                                    <span class="label label-danger remove_share">Révoquer l'accès</span>
+                                </li>
+                            {{/each}}
+                        </ul>
+
+                        <div class="alert alert-info" role="alert">
+                            Le collaborateur
+                        </div>
+
+                        <div class="alert alert-warning" role="alert">
+                            Les collaborateurs peuvent voir, modifier ainsi que supprimer vos tâches!
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</template>

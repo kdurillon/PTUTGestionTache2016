@@ -3,8 +3,11 @@ i18n.setLanguage('fr');
 /**
  * rendered
  */
-Template.actionTableTache.rendered = function() {
-    $('[data-toggle="tooltip"]').tooltip();
+Template.modalPartageTache.rendered = function() {
+    $(".select_user").select2({
+        placeholder: "Liste des collaborateurs",
+        allowClear: true
+    });
 };
 
 /**
@@ -14,7 +17,7 @@ Template.tacheHome.helpers({
     optionsReactiveTable: function() {
         return {
             fields: [
-                { key: 'titre', label: 'Titre' },
+                { key: 'titre', tmpl: Template.titreTableTache, label: 'Titre' },
                 { key: 'typeTache', label: 'Type' },
                 { key: 'tacheParent.titre', label: 'Parent' },
                 { key: 'categorie', label: 'Catégorie' },
@@ -35,14 +38,6 @@ Template.tacheHome.helpers({
     }
 });
 
-/*function displayValueTable(value) {
-    if(_.isEmpty(value)) {
-        return new Spacebars.SafeString("");
-    }else {
-        return value;
-    }
-}*/
-
 Template.actionTableTache.helpers({
     mailExist: function (_id) {
         var tache = taches.findOne({_id: _id});
@@ -58,6 +53,14 @@ Template.actionTableTache.helpers({
             return false;
         }
         return tache.fini === false;
+    },
+
+    ownTache: function(_id) {
+        var tache = taches.findOne({_id: _id});
+        if(_.isUndefined(tache)) {
+            return false;
+        }
+        return tache.userId === Meteor.userId();
     }
 });
 
@@ -86,7 +89,7 @@ Template.tacheHome.events({
                 contenu: tache.contenu,
                 lien: lien
             };
-            var html=Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
+            var html = Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
             Meteor.call('sendEmail',
                 'noreply-ptuttask@iutinfobourg.fr',
                 email,
@@ -108,8 +111,8 @@ Template.tacheHome.events({
             });
         }
         taches.update(this._id, {$set: { fini: true }});
-        gantt.deleteTask(id);
-        swal("Archivage!", "La tâche à été archivé avec succès.", "success");
+        gantt.deleteTask(this._id);
+        swal("Archivage!", "La tâche à été archivée avec succès.", "success");
     },
 
     "click .desarchive_tache": function() {
@@ -120,40 +123,29 @@ Template.tacheHome.events({
             });
         }
         taches.update(this._id, {$set: { fini: false }});
-        swal("Archivage!", "La tâche à été enlevé de l'archive.", "success");
+        swal("Archivage!", "La tâche à été enlevée de l'archive.", "success");
     },
 
     "click .partage_tache": function() {
-        var id = this._id;
+        var tache = this;
+
         swal({
             title: "Voulez-vous vraiment partager cette tâche ?",
             text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
-            type: "question",
-            input: 'select',
-            inputClass: 'select2 form-control',
-            inputOptions: {
-                'SRB': 'Serbia',
-                'UKR': 'Ukraine',
-                'HRV': 'Croatia'
-            },
-            inputPlaceholder: 'Select country',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (!_.isEmpty(value)) {
-                        resolve();
-                    } else {
-                        reject('Vous devez sélectionner au moins un membre');
-                    }
-                });
-            },
+            type: "warning",
             showCancelButton: true,
             confirmButtonText: "Oui, partagez!",
             closeButtonText: "Non"
-        }).then(function(result) {
-            if (result) {
-                swal("Tâche partagée!", "Votre tâche à été partagée.", "success");
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                Session.set('currentTache', tache);
+                Modal.show('modalPartageTache', function () {
+                    return {
+                        tache: tache
+                    };
+                });
             }
-        })
+        });
     }
 
 });
@@ -163,7 +155,7 @@ Template.modalInfoTache.events({
         var id = this._id;
         swal({
                 title: "Etes vous sûr?",
-                text: "La tâche sera définitivement supprimé!",
+                text: "La tâche sera définitivement supprimée!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -174,9 +166,53 @@ Template.modalInfoTache.events({
             function(isConfirm){
                 if(isConfirm) {
                     taches.remove(id);
-                    gantt.deleteTask(id);
+                    if(window.location.pathname == 'gantt'){
+                        gantt.deleteTask(id);
+                    }
                     swal("Suppression!", "La tâche à été supprimé avec succès.", "success");
                 }});
+    }
+});
+
+Template.modalPartageTache.events({
+    "submit #partageForm" : function(e) {
+        e.preventDefault();
+        var tache = this.tache;
+        var data = $('.select_user').select2('data');
+        var collaborateur = tache.userShare;
+
+        var dataContext = {
+            expediteur: Meteor.user().emails[0].address,
+            tache: tache
+        };
+        var html = Blaze.toHTMLWithData(Template.emailPartageTemplate,dataContext);
+
+        _.each(data, function(c) {
+            collaborateur.push(c.text);
+
+            Meteor.call('sendEmail',
+                'noreply-ptuttask@iutinfobourg.fr',
+                c.text,
+                "Partage collaboratif de "+tache.titre,
+                html);
+        });
+
+        taches.update(tache._id, {$set: {userShare: collaborateur}});
+
+        $('.modalPartageTache').modal('hide');
+
+        swal({
+            title: "Partage de tâche",
+            text: "La tâche "+tache.titre+" à été partagée avec succès!",
+            type: "success"
+        });
+    },
+
+    "click .remove_share": function() {
+        var tache = Session.get('currentTache');
+        var collaborateur = _.without(tache.userShare, _.findWhere(tache.userShare, this));
+        taches.update(tache._id, {$set: {userShare: collaborateur}});
+        Session.set('currentTache', taches.findOne(tache._id));
     }
 });
 

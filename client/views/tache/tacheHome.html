@@ -62,14 +62,31 @@
 
     <hr>
 
-    <h2 class="text-center">Vos tâches</h2>
+    {{#if getTache}}
+        <h2 class="text-center">Vos tâches</h2>
     {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
+    {{else}}
+        <h2 class="text-center text-bold">Aucune tâche</h2>
+    {{/if}}
 
     <hr>
 
-    <h2 class="text-center">Tâches partagées</h2>
-    {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTache settings=optionsReactiveTable}}
+    {{#if getTacheShare}}
+        <h2 class="text-center">Tâches partagées</h2>
+        {{> reactiveTable class="table table-hover table-bordered text-center" collection=getTacheShare settings=optionsReactiveTable}}
+    {{else}}
+        <h2 class="text-center text-bold">Aucune tâche partagée</h2>
+    {{/if}}
 
+    <hr>
+
+</template>
+
+<template name="titreTableTache">
+    {{titre}}
+    {{#if userShare}}
+        <span aria-label="cette tâche est partagé avec des collaborateurs" class="hint--top label label-success">Partagé</span>
+    {{/if}}
 </template>
 
 <template name="actionTableTache">
@@ -79,114 +96,26 @@
             <span class="glyphicon glyphicon-send"></span>
         </button>
         {{/if}}
-        <a data-toggle="tooltip" title="Editer la tâche" class="btn btn-xs btn-warning edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
+        <a aria-label="Editer la tâche" class="btn btn-xs btn-warning hint--top edit_tache" href="tache/{{typeTache}}/edit/{{_id}}">
             <span class="glyphicon glyphicon-pencil"></span>
         </a>
     {{/if}}
-    <button data-toggle="tooltip" title="Voir informations" class="btn btn-xs btn-info info_tache">
+    <button aria-label="Voir informations" class="btn btn-xs btn-info hint--top info_tache">
         <span class="glyphicon glyphicon-info-sign"></span>
     </button>
-    {{# if fini}}
-        <button data-toggle="tooltip" title="Désarchiver la tâche" class="btn btn-xs btn-primary desarchive_tache">
+    {{#if fini}}
+        <button aria-label="Désarchiver la tâche" class="btn btn-xs btn-primary hint--top desarchive_tache">
             <span class="glyphicon glyphicon glyphicon-upload"></span>
         </button>
     {{else}}
-        <button data-toggle="tooltip" title="Archiver la tâche" class="btn btn-xs btn-primary archive_tache">
+        <button aria-label="Archiver la tâche" class="btn btn-xs btn-primary hint--top archive_tache">
             <span class="glyphicon glyphicon glyphicon-download"></span>
         </button>
-        <button data-toggle="tooltip" title="Partager la tâche" class="btn btn-xs btn-success partage_tache">
+        {{#if ownTache _id}}
+        <button aria-label="Partager la tâche" class="btn btn-xs btn-success hint--top partage_tache">
             <span class="glyphicon glyphicon glyphicon-share-alt"></span>
         </button>
+        {{/if}}
     {{/if}}
 
-</template>
-
-<template name="modalInfoTache">
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header text-center">
-                    <h4 class="modal-title">
-                        {{titre}}
-                        {{#if fini}}
-                            - Tache finalisée
-                        {{/if}}
-                    </h4>
-                </div>
-
-                <div class="modal-body">
-                    <ul>
-                        <li><b>Type : </b>{{typeTache}}</li>
-                        {{#if tacheParent}}
-                            <li>
-                                <b>Tâche parent : </b>
-                                {{tacheParent.titre}}
-                            </li>
-                        {{/if}}
-                        {{#if categorie}}
-                            <li>
-                                <b>Catégorie : </b>
-                                {{categorie}}
-                            </li>
-                        {{/if}}
-                        {{#if emails}}
-                            <li>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <b>
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    {{emails.length}} Destinataires (cliquez pour afficher la liste complète)
-                                                </a>
-                                            </b>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <ul>
-                                            {{#each emails}}
-                                                <li>{{this}}</li>
-                                            {{/each}}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        {{/if}}
-                        {{#if contenu}}
-                            <li>
-                                <b>Contenu : </b>
-                                <div class="well">{{{contenu}}}</div>
-                            </li>
-                        {{/if}}
-                        {{#if document}}
-                            <li>
-                                <b>Image : </b>
-                                <img class="img-responsive img-thumbnail" src="/uploads/{{document.userId}}/{{document.file}}" alt="{{document.file}}" onError="this.onerror=null;this.src='http://fakeimg.pl/350x200/?text=aucun%20aper%C3%A7u';">
-                            </li>
-                        {{/if}}
-                        {{#if dateCreation}}
-                            <li>
-                                <b>Date de création : </b>
-                                {{dateCreation}}
-                            </li>
-                        {{/if}}
-                         {{#if dateFin}}
-                            <li><b>Date de fin/rappel : </b>{{dateFin}}</li>
-                         {{/if}}
-                    </ul>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger delete_tache" data-dismiss="modal">
-                        <span class="glyphicon-class glyphicon trash"></span>
-                        Supprimer
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
 </template>
