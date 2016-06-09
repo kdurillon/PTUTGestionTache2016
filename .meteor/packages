@@ -27,8 +27,6 @@ accounts-base
 zimme:select2-bootstrap3-css
 aldeed:autoform-select2
 natestrauser:select2
-autopublish
-insecure
 risul:bootstrap-colorpicker
 aldeed:simple-schema
 matb33:bootstrap-glyphicons
@@ -48,3 +46,6 @@ rochal:slimscroll
 check
 email
 percolate:synced-cron
+random
+autopublish
+insecure

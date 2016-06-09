@@ -40,7 +40,7 @@ SyncedCron.add(
         }
 });
 
-//SyncedCron.start();
+SyncedCron.start();
 
 finalisationTache = function() {
     var now = moment();
