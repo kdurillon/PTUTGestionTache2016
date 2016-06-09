@@ -120,7 +120,7 @@ UI.registerHelper('getFormulaire', function() {
 });
 
 UI.registerHelper('getFormulaireOption', function() {
-    return tempFormulaire.find().map(function (c) {
+    return tempFormulaire.find({model: true}).map(function (c) {
         return {'label': c.titre, 'value': c._id};
     });
 });
@@ -183,4 +183,44 @@ getTache = function (_id) {
     tache.emails = _.uniq(tache.emails);
 
     return tache;
+};
+
+/**
+ * Fonctions
+ */
+trimInput = function(val) {
+    return val.replace(/^\s*|\s*$/g, "");
+};
+
+validationMail = function (email) {
+    return SimpleSchema.RegEx.Email.test(email);
+};
+
+doublonEmail = function (email) {
+    var emailExist = (_.findWhere(Session.get('emailsMailingList'), email));
+    return !!emailExist;
+};
+
+doublonName = function (nom) {
+    var nameExist = (_.findWhere(mailingList.find().fetch(), {nom: nom}));
+    return !!nameExist;
+};
+
+resetApercu = function () {
+    $('#selectListe').prop('selectedIndex',0);
+    Session.set("idMailingList", "");
+    Session.set("nameMailingList", "");
+    Session.set("emailsMailingList", []);
+    showApercuMail();
+};
+
+showApercuMail = function () {
+    if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
+        $('#apercuMailingList').show();
+        $('#apercuMail').slimScroll({
+            height: '250px'
+        });
+    }else{
+        $('#apercuMailingList').hide();
+    }
 };

@@ -1,5 +1,8 @@
 Meteor.startup(function () {
-    smtp = {
+    Accounts.urls.resetPassword = function(token) {
+        return Meteor.absoluteUrl('reset-password/' + token);
+    };
+    var smtp = {
         username: 'noreply-ptuttask@iutinfobourg.fr',
         password: 'METINET02',
         server:   'smtp.iutinfobourg.fr',

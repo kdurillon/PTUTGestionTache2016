@@ -169,41 +169,5 @@ Template.mailingList.events({
 
 });
 
-/**
- * Fonctions
- */
-validationMail = function (email) {
-  return SimpleSchema.RegEx.Email.test(email);
-};
-
-doublonEmail = function (email) {
-  var emailExist = (_.findWhere(Session.get('emailsMailingList'), email));
-  return !!emailExist;
-};
-
-doublonName = function (nom) {
-    var nameExist = (_.findWhere(mailingList.find().fetch(), {nom: nom}));
-    return !!nameExist;
-}
-
-resetApercu = function () {
-  $('#selectListe').prop('selectedIndex',0);
-  Session.set("idMailingList", "");
-  Session.set("nameMailingList", "");
-  Session.set("emailsMailingList", []);
-  showApercuMail();
-};
-
-showApercuMail = function () {
-  if(!_.isEmpty(Session.get('nameMailingList')) || !_.isEmpty(Session.get('emailsMailingList'))) {
-    $('#apercuMailingList').show();
-    $('#apercuMail').slimScroll({
-      height: '250px'
-    });
-  }else{
-    $('#apercuMailingList').hide();
-  }
-};
-
 
 

@@ -18,7 +18,13 @@ Template.login.events({
 
             Router.go(Utils.pathFor('home'));
         }else {
-            swal("Erreur", "Formulaire invalide!", "error");
+            var route = Utils.pathFor('forgotpassword');
+            swal({
+                title: 'Erreur',
+                type: 'error',
+                html: "<h3>Formulaire invalide</h3>" +
+                "<a href='"+route+"'>Mot de passe oublié ?</a>"
+            })
         }
     }
 });

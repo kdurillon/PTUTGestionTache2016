@@ -81,7 +81,11 @@ Template.tacheHome.events({
         _.each(tache.emails, function(email) {
             var lien = null;
             if(tache.typeTache === "formulaire") {
-                lien = window.location.origin + "/formulaire/" + tache.formulaire + "/" + utf8_to_b64(email);
+                var formulaire = tempFormulaire.findOne(tache.formulaire);
+                formulaire._id = new Meteor.Collection.ObjectID().valueOf();
+                formulaire.titre+= (tache.dateCreation);
+                tempFormulaire.insert(formulaire);
+                lien = window.location.origin + "/formulaire/" + formulaire._id + "/" + utf8_to_b64(email);
             }else if(tache.typeTache === "document") {
                 lien = window.location.origin+"/uploads/"+tache.document.userId+"/"+tache.document.file;
             }
@@ -89,12 +93,12 @@ Template.tacheHome.events({
                 contenu: tache.contenu,
                 lien: lien
             };
-            var html = Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
+            /*var html = Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
             Meteor.call('sendEmail',
                 'noreply-ptuttask@iutinfobourg.fr',
                 email,
                 tache.titre,
-                html);
+                html);*/
         });
     },
     "click .info_tache": function() {
