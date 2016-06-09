@@ -182,18 +182,24 @@ $('#selectCategorie').on('change',function(){
             title: "Choisissez le format",
             text: "Dans quel format voulez-vous exporter le gantt ?",
             type: "info",
-            showCancelButton: true,
-            confirmButtonColor: "#00A4C4",
-            confirmButtonText: "PNG",
-            cancelButtonText: "PDF"}).then(
-            function(isConfirm){
-                if (isConfirm) {
-                    gantt.exportToPNG();
-                } else {
-                    gantt.exportToPDF();
-                }
-            });
+            showCancelButton: false,
+            showConfirmButton: false,
+            html: "Dans quel format voulez-vous exporter votre gantt ?<br>" +
+            "<button id='btn_png' class='styled btn-warning'>PNG</button>" +
+            "<button id='btn_pdf' class='styled btn-info'>PDF</button>"
+        });
+
+        $('#btn_pdf').on('click', function() {
+            swal.close();
+            gantt.exportToPDF();
+        });
+
+        $('#btn_png').on('click', function() {
+            swal.close();
+            gantt.exportToPNG();
+        });
     });
+
 
     /**
      *
