@@ -66,22 +66,20 @@ $('#selectCategorie').on('change',function(){
     var userTasks = taches.find({userId: Meteor.userId(), categorie: value}).fetch();
 
     userTasks.forEach(function(task){
-        if(task.categorie != undefined){
+        var couleur = "white";
+        var text = 'black';
+        if(!_.isUndefined(task.categorie)){
             var cat =  categories.findOne({nom: task.categorie});
-            var couleur = cat.couleur;
-            var text = 'white';
+            couleur = cat.couleur;
+            text = 'white';
         }
         else if(task.fini == true){
-            var couleur = 'lightgrey';
-            var text = 'black';
-        }
-        else {
-            var couleur = "white";
-            var text = 'black';
+            couleur = 'lightgrey';
+            text = 'black';
         }
 
         if(task.dateFin != undefined){
-            if (task.tacheParent != undefined){
+            if (!_.isUndefined(task.tacheParent._id)){
                 gantt.addTask({
                     id: task._id,
                     text: task.titre,
@@ -89,7 +87,7 @@ $('#selectCategorie').on('change',function(){
                     end_date: task.dateFin,
                     color: couleur,
                     textColor: text,
-                    parent: task.tacheParent
+                    parent: task.tacheParent._id
                 })}else{
                 gantt.addTask({
                     id: task._id,
@@ -114,7 +112,7 @@ $('#selectCategorie').on('change',function(){
                 })
             }
             else{
-                if (task.tacheParent != undefined){
+                if (!_.isUndefined(task.tacheParent._id)){
                     gantt.addTask({
                         id: task._id,
                         text: task.titre,
@@ -122,7 +120,7 @@ $('#selectCategorie').on('change',function(){
                         duration: 30,
                         color: couleur,
                         textColor: text,
-                        parent: task.tacheParent
+                        parent: task.tacheParent._id
                     })
                 }else{
                     gantt.addTask({
@@ -148,29 +146,27 @@ $('#selectCategorie').on('change',function(){
 
     $('#searchText').on('keyup',function(){
         var value = this.value;
-        if(value !== '' && value !== undefined){
-            if ($('#selectCategorie').val() != 'Catégorie'){
+        if(!_.isEmpty(value) && !_.isUndefined(value)){
+            if ($('#selectCategorie').val() !== 'Catégorie'){
                 gantt.clearAll();
                 var userTasks = taches.find({userId: Meteor.userId(), titre: new RegExp(value,'i'), categorie: $('#selectCategorie').val()}).fetch();
 
 
                 userTasks.forEach(function(task){
-                    if(task.categorie != undefined){
+                    var couleur = "white";
+                    var text = 'black';
+                    if(!_.isUndefined(task.categorie)){
                         var cat =  categories.findOne({nom: task.categorie});
-                        var couleur = cat.couleur;
-                        var text = 'white';
+                        couleur = cat.couleur;
+                        text = 'white';
                     }
-                    else if(task.fini == true){
-                        var couleur = 'lightgrey';
-                        var text = 'black';
-                    }
-                    else {
-                        var couleur = "white";
-                        var text = 'black';
+                    else if(task.fini === true){
+                        couleur = 'lightgrey';
+                        text = 'black';
                     }
 
                     if(task.dateFin != undefined){
-                        if (task.tacheParent != undefined){
+                        if (task.tacheParent._id != undefined){
                             gantt.addTask({
                                 id: task._id,
                                 text: task.titre,
@@ -178,7 +174,7 @@ $('#selectCategorie').on('change',function(){
                                 end_date: task.dateFin,
                                 color: couleur,
                                 textColor: text,
-                                parent: task.tacheParent
+                                parent: task.tacheParent._id
                             })}else{
                             gantt.addTask({
                                 id: task._id,
@@ -203,7 +199,7 @@ $('#selectCategorie').on('change',function(){
                             })
                         }
                         else{
-                            if (task.tacheParent != undefined){
+                            if (task.tacheParent._id != undefined){
                                 gantt.addTask({
                                     id: task._id,
                                     text: task.titre,
@@ -211,7 +207,7 @@ $('#selectCategorie').on('change',function(){
                                     duration: 30,
                                     color: couleur,
                                     textColor: text,
-                                    parent: task.tacheParent
+                                    parent: task.tacheParent._id
                                 })
                             }else{
                                 gantt.addTask({
@@ -234,22 +230,20 @@ $('#selectCategorie').on('change',function(){
 
 
                 userTasks.forEach(function(task){
-                    if(task.categorie != undefined){
+                    var couleur = "white";
+                    var text = 'black';
+                    if(!_.isUndefined(task.categorie)){
                         var cat =  categories.findOne({nom: task.categorie});
-                        var couleur = cat.couleur;
-                        var text = 'white';
+                        couleur = cat.couleur;
+                        text = 'white';
                     }
                     else if(task.fini == true){
-                        var couleur = 'lightgrey';
-                        var text = 'black';
-                    }
-                    else {
-                        var couleur = "white";
-                        var text = 'black';
+                        couleur = 'lightgrey';
+                        text = 'black';
                     }
 
-                    if(task.dateFin != undefined){
-                        if (task.tacheParent != undefined){
+                    if (!_.isUndefined(task.dateFin)){
+                        if (!_.isUndefined(task.tacheParent._id)){
                             gantt.addTask({
                                 id: task._id,
                                 text: task.titre,
@@ -257,7 +251,7 @@ $('#selectCategorie').on('change',function(){
                                 end_date: task.dateFin,
                                 color: couleur,
                                 textColor: text,
-                                parent: task.tacheParent
+                                parent: task.tacheParent._id
                             })}else{
                             gantt.addTask({
                                 id: task._id,
@@ -282,7 +276,7 @@ $('#selectCategorie').on('change',function(){
                             })
                         }
                         else{
-                            if (task.tacheParent != undefined){
+                            if (!_.isUndefined(task.tacheParent._id)){
                                 gantt.addTask({
                                     id: task._id,
                                     text: task.titre,
@@ -290,7 +284,7 @@ $('#selectCategorie').on('change',function(){
                                     duration: 30,
                                     color: couleur,
                                     textColor: text,
-                                    parent: task.tacheParent
+                                    parent: task.tacheParent._id
                                 })
                             }else{
                                 gantt.addTask({
@@ -321,22 +315,20 @@ $('#selectCategorie').on('change',function(){
         var userTasks = taches.find({userId: Meteor.userId()}).fetch();
 
         userTasks.forEach(function(task){
-            if(task.categorie != undefined){
+            var couleur = "white";
+            var text = 'black';
+            if(!_.isUndefined(task.categorie)){
                 var cat =  categories.findOne({nom: task.categorie});
-                var couleur = cat.couleur;
-                var text = 'white';
+                couleur = cat.couleur;
+                text = 'white';
             }
-            else if(task.fini == true){
-                var couleur = 'lightgrey';
-                var text = 'black';
-            }
-            else {
-                var couleur = "white";
-                var text = 'black';
+            else if(task.fini === true){
+                couleur = 'lightgrey';
+                text = 'black';
             }
 
-            if(task.dateFin != undefined){
-                if (task.tacheParent != undefined){
+            if(!_.isUndefined(task.dateFin)){
+                if (!_.isUndefined(task.tacheParent._id)){
                     gantt.addTask({
                         id: task._id,
                         text: task.titre,
@@ -344,7 +336,7 @@ $('#selectCategorie').on('change',function(){
                         end_date: task.dateFin,
                         color: couleur,
                         textColor: text,
-                        parent: task.tacheParent
+                        parent: task.tacheParent._id
                     })}else{
                     gantt.addTask({
                         id: task._id,
@@ -369,7 +361,7 @@ $('#selectCategorie').on('change',function(){
                     })
                 }
                 else{
-                    if (task.tacheParent != undefined){
+                    if (!_.isUndefined(task.tacheParent._id)){
                         gantt.addTask({
                             id: task._id,
                             text: task.titre,
@@ -377,7 +369,7 @@ $('#selectCategorie').on('change',function(){
                             duration: 30,
                             color: couleur,
                             textColor: text,
-                            parent: task.tacheParent
+                            parent: task.tacheParent._id
                         })
                     }else{
                         gantt.addTask({
@@ -443,18 +435,16 @@ $('#selectCategorie').on('change',function(){
         var userTasks = taches.find({userId: Meteor.userId(), fini: false}).fetch();
 
         userTasks.forEach(function(task){
-            if(task.categorie != undefined){
+            var couleur = "white";
+            var text = 'black';
+            if(!_.isUndefined(task.categorie)){
                 var cat =  categories.findOne({nom: task.categorie});
-                var couleur = cat.couleur;
-                var text = 'white';
-            }
-            else {
-                var couleur = "white";
-                var text = 'black';
+                couleur = cat.couleur;
+                text = 'white';
             }
 
-            if(task.dateFin != undefined){
-                if (task.tacheParent != undefined){
+            if(!_.isUndefined(task.dateFin)){
+                if (!_.isUndefined(task.tacheParent._id)){
                     gantt.addTask({
                         id: task._id,
                         text: task.titre,
@@ -462,7 +452,7 @@ $('#selectCategorie').on('change',function(){
                         end_date: task.dateFin,
                         color: couleur,
                         textColor: text,
-                        parent: task.tacheParent
+                        parent: task.tacheParent._id
                     })}else{
                     gantt.addTask({
                         id: task._id,
@@ -487,7 +477,7 @@ $('#selectCategorie').on('change',function(){
                     })
                 }
                 else{
-                    if (task.tacheParent != undefined){
+                    if (!_.isUndefined(task.tacheParent._id)){
                         gantt.addTask({
                             id: task._id,
                             text: task.titre,
@@ -495,7 +485,7 @@ $('#selectCategorie').on('change',function(){
                             duration: 30,
                             color: couleur,
                             textColor: text,
-                            parent: task.tacheParent
+                            parent: task.tacheParent._id
                         })
                     }else{
                         gantt.addTask({
@@ -524,18 +514,16 @@ Template.gantt.helpers({
             return 0;
         }
         userTasks.forEach(function(task){
-            if(task.categorie != undefined){
+            var couleur = "white";
+            var text = 'black';
+            if(!_.isUndefined(task.categorie)){
               var cat =  categories.findOne({nom: task.categorie});
-                var couleur = cat.couleur;
-                var text = 'white';
-            }
-            else {
-                var couleur = "white";
-                var text = 'black';
+                couleur = cat.couleur;
+                text = 'white';
             }
 
-            if(task.dateFin != undefined){
-                if (task.tacheParent != undefined){
+            if(!_.isUndefined(task.dateFin)){
+                if (!_.isUndefined(task.tacheParent._id)){
                     gantt.addTask({
                         id: task._id,
                         text: task.titre,
@@ -543,8 +531,9 @@ Template.gantt.helpers({
                         end_date: task.dateFin,
                         color: couleur,
                         textColor: text,
-                        parent: task.tacheParent
-                    })}else{
+                        parent: task.tacheParent._id
+                    })
+                }else{
                     gantt.addTask({
                         id: task._id,
                         text: task.titre,
@@ -568,7 +557,7 @@ Template.gantt.helpers({
                     })
                 }
                 else{
-                    if (task.tacheParent != undefined){
+                    if (!_.isUndefined(task.tacheParent._id)){
                         gantt.addTask({
                             id: task._id,
                             text: task.titre,
@@ -576,7 +565,7 @@ Template.gantt.helpers({
                             duration: 30,
                             color: couleur,
                             textColor: text,
-                            parent: task.tacheParent
+                            parent: task.tacheParent._id
                         })
                     }else{
                         gantt.addTask({
