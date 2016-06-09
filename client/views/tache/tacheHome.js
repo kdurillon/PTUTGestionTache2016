@@ -82,7 +82,7 @@ Template.tacheHome.events({
             if(tache.typeTache === "formulaire") {
                 var formulaire = tempFormulaire.findOne(tache.formulaire);
                 formulaire._id = Random.id();
-                formulaire.titre+= (tache.dateCreation);
+                formulaire.titre+= " ("+tache.dateCreation+")";
                 tempFormulaire.insert(formulaire);
                 lien = Meteor.absoluteUrl("formulaire/" + formulaire._id + "/" + utf8_to_b64(email));
             }else if(tache.typeTache === "document") {
