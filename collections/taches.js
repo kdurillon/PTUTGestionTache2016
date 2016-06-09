@@ -96,9 +96,9 @@ Globals.schemas.Taches = new SimpleSchema({
         optional :true
     },
     userShare: {
-        type: [Object],
+        type: [String],
+        defaultValue: [],
         optional: true,
-        blackbox: true,
         autoform: {
             omit: true
         }

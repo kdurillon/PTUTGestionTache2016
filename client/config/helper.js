@@ -60,8 +60,18 @@ UI.registerHelper('getTache', function() {
 });
 
 UI.registerHelper('getTacheShare', function() {
-    return taches.find({userId: Meteor.userId()}).fetch();
+    var listTaches = taches.find().fetch();
+    var listTachesShare = [];
+
+    _.each(listTaches, function(tache) {
+        var user = _.findWhere(tache.userShare, Meteor.user().emails[0].address);
+        if(!_.isUndefined(user)) {
+            listTachesShare.push(tache);
+        }
+    });
+    return listTachesShare;
 });
+
 
 UI.registerHelper('getTacheParent', function() {
     return taches.find({userId: Meteor.userId(), typeTache: "parent"}).fetch();
@@ -113,6 +123,24 @@ UI.registerHelper('getFormulaireOption', function() {
     return tempFormulaire.find().map(function (c) {
         return {'label': c.titre, 'value': c._id};
     });
+});
+
+UI.registerHelper('getUserMail', function(_id) {
+    var tache = taches.findOne({_id: _id});
+
+    var userMailOptions = [];
+    Meteor.users.find().map(function (c) {
+        var email = c.emails[0].address;
+        var currentEmail = Meteor.user().emails[0].address;
+        if(email !== currentEmail && !_.contains(tache.userShare, email)) {
+            userMailOptions.push(email);
+        }
+    });
+    return userMailOptions;
+});
+
+UI.registerHelper('getUserShare', function(_id) {
+    return taches.findOne({_id: _id}).userShare;
 });
 
 base64= function (str,mode){

@@ -27,3 +27,7 @@
 .swal2-content {
     margin: 10px;
 }
+
+.remove_share {
+    cursor: pointer
+}

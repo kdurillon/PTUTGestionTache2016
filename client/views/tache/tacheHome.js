@@ -3,11 +3,6 @@ i18n.setLanguage('fr');
 /**
  * rendered
  */
-Template.actionTableTache.rendered = function() {
-    Meteor.subscribe('getAllUser');
-    $('[data-toggle="tooltip"]').tooltip();
-};
-
 Template.modalPartageTache.rendered = function() {
     $(".select_user").select2({
         placeholder: "Liste des collaborateurs",
@@ -22,7 +17,7 @@ Template.tacheHome.helpers({
     optionsReactiveTable: function() {
         return {
             fields: [
-                { key: 'titre', label: 'Titre' },
+                { key: 'titre', tmpl: Template.titreTableTache, label: 'Titre' },
                 { key: 'typeTache', label: 'Type' },
                 { key: 'tacheParent.titre', label: 'Parent' },
                 { key: 'categorie', label: 'Catégorie' },
@@ -58,6 +53,14 @@ Template.actionTableTache.helpers({
             return false;
         }
         return tache.fini === false;
+    },
+
+    ownTache: function(_id) {
+        var tache = taches.findOne({_id: _id});
+        if(_.isUndefined(tache)) {
+            return false;
+        }
+        return tache.userId === Meteor.userId();
     }
 });
 
@@ -86,7 +89,7 @@ Template.tacheHome.events({
                 contenu: tache.contenu,
                 lien: lien
             };
-            var html=Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
+            var html = Blaze.toHTMLWithData(Template.emailTemplate,dataContext);
             Meteor.call('sendEmail',
                 'noreply-ptuttask@iutinfobourg.fr',
                 email,
@@ -109,7 +112,7 @@ Template.tacheHome.events({
         }
         taches.update(this._id, {$set: { fini: true }});
         gantt.deleteTask(this._id);
-        swal("Archivage!", "La tâche à été archivé avec succès.", "success");
+        swal("Archivage!", "La tâche à été archivée avec succès.", "success");
     },
 
     "click .desarchive_tache": function() {
@@ -120,36 +123,25 @@ Template.tacheHome.events({
             });
         }
         taches.update(this._id, {$set: { fini: false }});
-        swal("Archivage!", "La tâche à été enlevé de l'archive.", "success");
+        swal("Archivage!", "La tâche à été enlevée de l'archive.", "success");
     },
 
     "click .partage_tache": function() {
         var tache = this;
-        var userOptions = [];
-        Meteor.users.find().map(function (c) {
-            var email = c.emails[0].address;
-            var currentEmail = Meteor.user().emails[0].address;
-            if(email !== currentEmail) {
-                userOptions.push({
-                    id: c._id,
-                    email: email
-                });
-            }
-        });
 
         swal({
             title: "Voulez-vous vraiment partager cette tâche ?",
             text: "Votre tâche sera partagé avec les autres membres qui pourront ensuite y apporter des modifications!",
-            type: "question",
+            type: "warning",
             showCancelButton: true,
             confirmButtonText: "Oui, partagez!",
             closeButtonText: "Non"
         }).then(function(isConfirm) {
             if (isConfirm) {
+                Session.set('currentTache', tache);
                 Modal.show('modalPartageTache', function () {
                     return {
-                        tache: tache,
-                        userOptions: userOptions
+                        tache: tache
                     };
                 });
             }
@@ -163,7 +155,7 @@ Template.modalInfoTache.events({
         var id = this._id;
         swal({
                 title: "Etes vous sûr?",
-                text: "La tâche sera définitivement supprimé!",
+                text: "La tâche sera définitivement supprimée!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -184,34 +176,43 @@ Template.modalInfoTache.events({
 
 Template.modalPartageTache.events({
     "submit #partageForm" : function(e) {
-        var tache = this.tache;
         e.preventDefault();
+        var tache = this.tache;
         var data = $('.select_user').select2('data');
-        var collaborateur = [];
+        var collaborateur = tache.userShare;
 
         var dataContext = {
             expediteur: Meteor.user().emails[0].address,
-            tache: this.tache
+            tache: tache
         };
-        var html=Blaze.toHTMLWithData(Template.emailPartageTemplate,dataContext);
+        var html = Blaze.toHTMLWithData(Template.emailPartageTemplate,dataContext);
 
         _.each(data, function(c) {
-            collaborateur.push({
-                _id: c.id,
-                email: c.text
-            });
+            collaborateur.push(c.text);
 
             Meteor.call('sendEmail',
                 'noreply-ptuttask@iutinfobourg.fr',
                 c.text,
                 "Partage collaboratif de "+tache.titre,
                 html);
-
         });
 
         taches.update(tache._id, {$set: {userShare: collaborateur}});
 
+        $('.modalPartageTache').modal('hide');
 
+        swal({
+            title: "Partage de tâche",
+            text: "La tâche "+tache.titre+" à été partagée avec succès!",
+            type: "success"
+        });
+    },
+
+    "click .remove_share": function() {
+        var tache = Session.get('currentTache');
+        var collaborateur = _.without(tache.userShare, _.findWhere(tache.userShare, this));
+        taches.update(tache._id, {$set: {userShare: collaborateur}});
+        Session.set('currentTache', taches.findOne(tache._id));
     }
 });
 
