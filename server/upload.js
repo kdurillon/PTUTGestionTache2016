@@ -1,7 +1,7 @@
 Meteor.startup(function () {
     UploadServer.init({
-        tmpDir: process.cwd() + '/../../../../../public/uploads/tmp',
-        uploadDir: process.cwd() + '/../../../../../public/uploads/',
+        tmpDir: process.cwd() + '/../web.browser/app/public/uploads/tmp',
+        uploadDir: process.cwd() + '/../web.browser/app/public/uploads/',
         checkCreateDirectories: true, //create the directories for you
         getDirectory: function (fileInfo, formData) {
             return formData.currentUserId + "/";
