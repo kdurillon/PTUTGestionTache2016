@@ -81,10 +81,12 @@ Template.tacheHome.events({
             var lien = null;
             if(tache.typeTache === "formulaire") {
                 var formulaire = tempFormulaire.findOne(tache.formulaire);
-                formulaire._id = Random.id();
-                formulaire.titre+= " ("+tache.dateCreation+")";
-                tempFormulaire.insert(formulaire);
-                lien = Meteor.absoluteUrl("formulaire/" + formulaire._id + "/" + base64(email,"encode"));
+                if(!_.isUndefined(formulaire)) {
+                    formulaire._id = Random.id();
+                    formulaire.titre+= " ("+moment().format('L - LT')+")";
+                    tempFormulaire.insert(formulaire);
+                    lien = Meteor.absoluteUrl("formulaire/" + formulaire._id + "/" + base64(email,"encode"));
+                }
             }else if(tache.typeTache === "document") {
                 lien = Meteor.absoluteUrl("uploads/"+tache.document.userId+"/"+tache.document.file);
             }

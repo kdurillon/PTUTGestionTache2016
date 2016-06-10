@@ -6,14 +6,6 @@ Template.formulaireCree.rendered = function() {
     Session.set("typeControls",[]);
     Session.set("numReponse",0);
     $('#formRegister').validator();
-    $('.datetimepicker').datetimepicker({
-        format: 'L - LT',
-        locale: 'fr',
-        minDate: moment().add(1, 'd')
-    });
-
-    
-   
 
 };
 
@@ -54,6 +46,11 @@ Template.formulaireCree.events({
                    }
                }
 
+               tinymce.init({
+                   selector: '.textarea',
+                   skin_url: '/packages/teamon_tinymce/skins/lightgray',
+                   language: 'fr_FR'
+               });
                $('.datetimepicker').datetimepicker({
                    format: 'L - LT',
                    locale: 'fr'
@@ -146,7 +143,7 @@ Template.formulaireCree.events({
             }
             else{
                 var idForm= tempFormulaire.insert({"titre": $("#inputTitreGenForm").val(), "controls": controls , "model":true,"activation":true});
-                console.log(controls);
+
                 $("#inputTitreGenForm").val("");
                 $("#apercuForm").html("Titre du formulaire");
                 swal("Succès","Formulaire généré !", "success");
@@ -184,7 +181,7 @@ apercuDiv =function(label,elmt){
         }
         //un message
         case "2":{
-       ctrl="<textarea rows='10'  class=' form-control'  type='text'  placeholder='Entrez votre texte ici.'></textarea>";
+       ctrl="<textarea rows='10' class='form-control textarea' placeholder='Entrez votre texte ici.'></textarea>";
        break;
         }
         //une date et une heure

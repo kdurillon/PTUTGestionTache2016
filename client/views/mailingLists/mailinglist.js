@@ -116,13 +116,13 @@ Template.mailingList.events({
           text: "Voulez-vous supprimer la mailing List ?",
           type: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
+          confirmButtonColor: "#DD6B55"
         }).then(
         function(isConfirm){
             if(isConfirm){
                 resetApercu();
                 mailingList.remove(id);
-                swal("Suppression!", "La mailing list à été supprimé.", "success");
+                swal("Suppression!", "La mailing list à été supprimée.", "success");
             }
         });
 
