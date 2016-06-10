@@ -28,6 +28,8 @@ Template.formulaireGenere.helpers({
          //On decode l'email de l'envoi
         var decodedEmail = base64(params["mailEncode"],"decode");
 
+            console.log(base64("abc@abc.com","encode"));
+
        // On vérifie que l'email encodé existe dans une mailinglist
         var checkmail=false;
         var mailingslists = mailingList.find().fetch();
