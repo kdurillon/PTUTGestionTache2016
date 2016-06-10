@@ -1,114 +1,120 @@
 <template name="formulaireGenere">
     <section id="corpsForm">
 
+        <div class="container">
+            <div class="row">
+                <form id="formRegister" method="post" role="form" novalidate>
 
-     {{setTitle 'Formulaire'}}
-    <form id="formRegister" method="post" role="form" novalidate>
-
-    {{#each Form}}
-
-
-        <h1 id="titreGenere" class="text-center"><span class="label label-default">{{titre}}</span></h1>
-
-        {{#each controls}}
-
-            {{#each control}}
+                    {{#each Form}}
 
 
-                {{#if isInputText typeControl}}
+                        <h1 id="titreGenere" class="text-center"><span class="label label-default">{{titre}}</span></h1>
 
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <input id="inputText{{numero}}" name="inputText{{numero}}"  class='form-control'  type='text'   placeholder='Entrez votre texte ici.' required/>
-                    </div>
+                        {{#each controls}}
 
-                {{/if}}
+                            {{#each control}}
 
-                {{#if isTextArea typeControl}}
 
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <textarea id="textArea{{numero}}" name="textArea{{numero}}" rows='10'  class='form-control textarea'   placeholder='Entrez votre texte ici.' required></textarea>
-                    </div>
+                                {{#if isInputText typeControl}}
 
-                {{/if}}
+                                    <div class='text-center form-group ctrlsApercu col-md-12'>
+                                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                                        <input id="inputText{{numero}}" name="inputText{{numero}}"  class='form-control'  type='text'   placeholder='Entrez votre texte ici.' required/>
+                                    </div>
 
-                {{#if isInputDate typeControl}}
+                                {{/if}}
 
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <input id='date{{numero}}' name='date{{numero}}' class='form-control datetimepicker'  type='date' required />
-                    </div>
+                                {{#if isTextArea typeControl}}
 
-                {{/if}}
+                                    <div class='text-center form-group ctrlsApercu col-md-12'>
+                                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                                        <textarea id="textArea{{numero}}" name="textArea{{numero}}" rows='10'  class='form-control textarea'   placeholder='Entrez votre texte ici.' required></textarea>
+                                    </div>
 
-                {{#if isInputChoixBinaire typeControl}}
+                                {{/if}}
 
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <div class="form-control">
-                        <div><label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' value="oui" required >Oui</label>
-                        <label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder=''  value="non">Non</label></div>
-                    </div></div>
+                                {{#if isInputDate typeControl}}
 
-                {{/if}}
+                                    <div class='text-center form-group ctrlsApercu col-md-12'>
+                                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                                        <input id='date{{numero}}' name='date{{numero}}' class='form-control datetimepicker'  type='text' required />
+                                    </div>
 
-                {{#if isInputRadios typeControl}}
+                                {{/if}}
 
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='control-label'>{{label}}</label><br>
-                        <div class="form-control">
-                        {{#each reponse in reponses}}
-                        <div class='radio-inline'><label for=''><input  name='radio{{numero}}' type='radio'  required>{{reponse.libelle}}</label></div>
+                                {{#if isInputChoixBinaire typeControl}}
+
+                                    <div class='text-center form-group ctrlsApercu col-md-12'>
+                                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                                        <div class="form-control">
+                                            <div><label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder='' value="oui" required >Oui</label>
+                                                <label for='' class='radioGen radio-inline'><input id='radio{{numero}}' name='radio{{numero}}' type='radio' class=' ' placeholder=''  value="non">Non</label></div>
+                                        </div></div>
+
+                                {{/if}}
+
+                                {{#if isInputRadios typeControl}}
+
+                                    <div class='text-center form-group ctrlsApercu col-md-12'>
+                                        <label for='' class='control-label'>{{label}}</label><br>
+                                        <div class="form-control">
+                                            {{#each reponse in reponses}}
+                                                <div class='radio-inline'><label for=''><input  name='radio{{numero}}' type='radio'  required>{{reponse.libelle}}</label></div>
+                                            {{/each}}
+
+                                        </div>
+                                    </div>
+
+                                {{/if}}
+
+                                {{#if isInputCheckboxs typeControl}}
+
+                                    <div class='text-center form-group ctrlsApercu required col-md-12'>
+                                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                                        <div class="form-control">
+                                            {{#each reponse in reponses}}
+                                                <div class='checkbox-inline '><label for=''><input id='checkboxname{{numero}}-{{reponse.num}}'  type='checkbox' class=' ' placeholder='' >{{reponse.libelle}}</label></div>
+                                            {{/each}}
+                                        </div>
+                                        <div class="errorCkBox errorCkBox{{numero}}">Vous devez au moins choisir une réponse</div>
+                                    </div>
+
+                                {{/if}}
+
+                                {{#if isInputUpload typeControl}}
+
+                                    <div class='text-center form-group ctrlsApercu col-md-12'>
+                                        <label for='' class='labelApercu control-label'>{{label}}</label>
+                                        <div> <button  id="btEnvoyer{{numero}}" class='btEnvoyer btn btn-info upload_button' type="button"><span class='glyphicon glyphicon-upload'></span> Sélectionner un fichier </button></div>
+                                    </div>
+
+                                {{/if}}
+
+                            {{/each}}
+
+
                         {{/each}}
 
-                    </div>
-                    </div>
 
-                {{/if}}
+                    {{/each}}
 
-                {{#if isInputCheckboxs typeControl}}
 
-                    <div class='text-center form-group ctrlsApercu required'>
-                        <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <div class="form-control">
-                        {{#each reponse in reponses}}
-                      <div class='checkbox-inline '><label for=''><input id='checkboxname{{numero}}-{{reponse.num}}'  type='checkbox' class=' ' placeholder='' >{{reponse.libelle}}</label></div>
-                        {{/each}}
-                        </div>
-                        <div class="errorCkBox errorCkBox{{numero}}">Vous devez au moins choisir une réponse</div>
+
+                    <br><br>
+
+                    <div class="form-group text-center formBoutons" >
+                        <input id="EnvoyerFormGenere" value="Valider" type="submit" class="btn btn-success " >
+                        <input  value="Effacer" type="reset"  class="btn btn-danger ">
                     </div>
 
-                {{/if}}
 
-                {{#if isInputUpload typeControl}}
-
-                    <div class='text-center form-group ctrlsApercu '>
-                        <label for='' class='labelApercu control-label'>{{label}}</label>
-                       <div> <button  id="btEnvoyer{{numero}}" class='btEnvoyer btn btn-info upload_button' type="button"><span class='glyphicon glyphicon-upload'></span> Sélectionner un fichier </button></div>
-                    </div>
-
-                {{/if}}
-
-            {{/each}}
-
-
-        {{/each}}
-
-
-    {{/each}}
-
-
-
-        <br><br>
-
-        <div class="form-group text-center formBoutons" >
-            <input id="EnvoyerFormGenere" value="Valider" type="submit" class="btn btn-success " >
-            <input  value="Effacer" type="reset"  class="btn btn-danger ">
+                </form>
+            </div>
         </div>
 
 
-    </form>
+     {{setTitle 'Formulaire'}}
+
     </section>
 
 

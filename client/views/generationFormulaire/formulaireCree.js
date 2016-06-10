@@ -37,9 +37,6 @@ Template.formulaireCree.events({
 
                var html = apercuDiv($("#inputTextGenForm").val(), $("#inputSelectGenForm").val());
 
-               console.log(html);
-
-
                var plus = Session.get("plus");
                Session.set("numReponse", 0);
 
@@ -56,6 +53,11 @@ Template.formulaireCree.events({
                        $(".formApercu" + plus).after(html);
                    }
                }
+
+               $('.datetimepicker').datetimepicker({
+                   format: 'L - LT',
+                   locale: 'fr'
+               });
                resetFormGenere();
            }
         }
@@ -81,8 +83,6 @@ Template.formulaireCree.events({
             var reponses=Session.get("reponses");
             reponses.push({"num":num,"libelle":rep});
             Session.set("reponses",reponses);
-
-            console.log(reponses);
 
             $(" .rep"+reponses.length).after("<div class='repTemp rep"+(reponses.length+1)+"'>"+rep+"</div>");
 
@@ -172,7 +172,6 @@ apercuDiv =function(label,elmt){
 
     controls.push({"control":[{"numero":nbElement,"label":label,"typeControl":elmt,"reponses":reps}]});
 
-    console.log(controls);
     Session.set("controls",controls);
     plus++;
 
@@ -191,7 +190,7 @@ apercuDiv =function(label,elmt){
         //une date et une heure
         case "3":
         {
-            ctrl="<input  class='form-control'  type='date'    />";
+            ctrl="<input  class='form-control datetimepicker'  type=text'    />";
            /* ctrl = "<div class='input-group datetimepicker'>"+
                    "<span class='input-group-addon'><i class='glyphicon glyphicon-calendar'></i></span></div>";*/
 
@@ -209,7 +208,7 @@ apercuDiv =function(label,elmt){
 
 
             var ctrl="<br>";
-            for(i=0;i<reps.length;i++){
+            for(var i=0;i<reps.length;i++){
                 ctrl += "<div class='radio-inline '><label for=''><input name='radio"+plus+"' type='radio' class=' '  >"+reps[i]["libelle"]+"</label></div>";
             }
             break;
@@ -217,7 +216,7 @@ apercuDiv =function(label,elmt){
             //un choix à réponse multiple
         case "6":{
             var ctrl="<div>";
-            for(i=0;i<reps.length;i++){
+            for(var i=0;i<reps.length;i++){
                 ctrl += "<div class='checkbox-inline '><label for=''><input name='checkbox' type='checkbox' class=' ' >"+reps[i]["libelle"]+"</label></div>";
             }
             ctrl+="</div>";
@@ -230,7 +229,7 @@ apercuDiv =function(label,elmt){
             }
     }
 
-    var html="<div class='ctrlsApercu text-center form-group formApercu"+plus+" '><label for='' class='labelApercu control-label'>"+label+"</label>"+ctrl+"</div>";
+    var html="<div class='ctrlsApercu col-md-12 text-center form-group formApercu"+plus+" '><label for='' class='labelApercu control-label'>"+label+"</label>"+ctrl+"</div>";
     Session.set("plus",plus);
     $("#inputLabelRepGenForm").val("");
     Session.set("reponses",[]);
