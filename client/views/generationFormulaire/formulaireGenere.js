@@ -1,111 +1,75 @@
+var renduLoad = false;
 
-
-Template.formulaireGenere.rendered = function(data) {
-
-    tinymce.init({
-        selector: 'textarea',
-        skin_url: '/packages/teamon_tinymce/skins/lightgray',
-        language: 'fr_FR'
-    });
+Template.formulaireGenere.rendered = function() {
 
     Session.set("nbElementForm",0);
     Session.set("ckboxgroup",[]);
     Session.set("NumeroReps",0);
-   Session.set("tabUpload",[]);
+    Session.set("tabUpload",[]);
 
-    var params =Router.current().params;
+    var params = Router.current().params;
     Session.set("idForm",params["_id"]);
     Session.set("idEmail",params["mailEncode"]);
 
    $(".navbar").hide();
 
-
+    renduLoad = false
 };
 
 
 
 Template.formulaireGenere.helpers({
-
-
-
         'Form': function(){
 
         //on récupère les paramètres de la requête
 
-        var params =Router.current().params;
-
-
-       var encodedEmail = base64("abc@abc.com","encode");
-
-       console.log(encodedEmail);
-
+        var params = Router.current().params;
 
          //On decode l'email de l'envoi
         var decodedEmail = base64(params["mailEncode"],"decode");
-       // console.log(decodedEmail);
-        //var decodeEmail =encodedEmail;
 
        // On vérifie que l'email encodé existe dans une mailinglist
         var checkmail=false;
         var mailingslists = mailingList.find().fetch();
         mailingslists.forEach(function(mailinglist){
             mailinglist.emails.forEach(function(email){
-                if(email===decodedEmail){
+                if(email === decodedEmail){
                     checkmail=true;
                 }
             });
         });
-        idEmail=base64(params["mailEncode"],"decode");
+        var idEmail = base64(params["mailEncode"],"decode");
         if(checkmail){
             var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:idEmail}).fetch();
-           // console.log(reponse);
-            if(reponse.length==0){
+            if(_.isEmpty(reponse)){
                 $(".formBoutons").show();
                  return tempFormulaire.find({_id:""+params["_id"]});
              }
             else{
                  formulaireEnvoye();
              }
-
-
         }
         else{
            personneInconnue();
         }
 
-        //Si le formulaire a déjà été rempli, on masque le formulaire
-        var reponse = reponsesForm.find({idForm:""+params["_id"],idUser:""+params["mailEncode"]}).fetch();
-        console.log(reponse);
-
-
 
     },
     'isInputText': function(display){
-        if(display=="1"){
-            return true;
-        }
-        return false;
+        return display == "1";
+
     },
     'isTextArea': function(display){
-        if(display=="2"){
+        return display == "2";
 
-            return true;
-        }
-        return false;
     },
     'isInputDate': function(display){
-        if(display=="3"){
+        return display == "3";
 
-            return true;
-        }
-        return false;
     },
     'isInputChoixBinaire': function(display){
-        if(display=="4"){
+        return display == "4";
 
-            return true;
-        }
-        return false;
     },
     'isInputRadios': function(display){
         if(display=="5"){
@@ -124,15 +88,27 @@ Template.formulaireGenere.helpers({
         return false;
     },
     'isInputUpload': function(display){
-        if(display=="7"){
-            
-            return true;
-        }
-        return false;
+        return display == "7";
+
     }
 });
 
 Template.formulaireGenere.events({
+
+    'mousemove #corpsForm': function() {
+        if(!renduLoad) {
+            tinymce.init({
+                selector: '.textarea',
+                skin_url: '/packages/teamon_tinymce/skins/lightgray',
+                language: 'fr_FR'
+            });
+            $('.datetimepicker').datetimepicker({
+                format: 'L - LT',
+                locale: 'fr'
+            });
+            renduLoad = true;
+        }
+    },
 
     'click .upload_button': function (event) {
 
@@ -140,8 +116,7 @@ Template.formulaireGenere.events({
       num=num.substring(9,num.length);
 
       var repondu = uploads.find({"userId":Session.get("idForm"),"numElement":num,"EmailId": Session.get("idEmail")}).fetch();
-      console.log(repondu);
-        if(repondu.length>=1){
+        if(!_.isEmpty(repondu)){
              swal("Interdit","Vous avez déjà envoyé un fichier","error");
         }
         else{
@@ -154,9 +129,7 @@ Template.formulaireGenere.events({
 
         event.preventDefault();
 
-
-        var params =Router.current().params;
-        console.log(params);
+        var params = Router.current().params;
         var idUser=params["mailEncode"];
         var idForm=params["_id"];
 
@@ -194,8 +167,6 @@ Template.formulaireGenere.events({
         }
         else{
             Session.set("ckboxgroup",[]);
-
-
         }
 
     }
@@ -228,7 +199,6 @@ verificationEnvoiFichiers = function(){
         swal("Envoi(s)","Vous avez oublié d'envoyer un ou plusieurs fichiers","error");
         return false;
     }
-    //console.log(verif);
 
 
 }
@@ -310,12 +280,12 @@ formulaireEnvoye = function(){
     $("#retour").show();
 }
 
-personneInconnue=function(){
+personneInconnue = function(){
     $(".formBoutons").hide();
     $("#corpsForm").hide();
     $("#inconnu").show();
 }
 
-afficherForm =function(){
+afficherForm = function(){
     $(".formBoutons").show();
 }

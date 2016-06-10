@@ -24,14 +24,14 @@ Template.reponses.helpers({
 
         data.forEach(function(row) {
 
-            var trouve=false;
+            var trouve = false;
             for(var d=0;d<titres.length;d++){
                 if(titres[d]["_id"]==row.idForm){
                     trouve=true;
                 }
 
             }
-            if(trouve==false){
+            if(trouve === false){
                 titres.push( {"_id" :row.idForm,"titre":tempFormulaire.findOne({"_id":row.idForm}).titre});
             }
 
@@ -57,10 +57,6 @@ Template.reponses.helpers({
 Template.reponses.events({
 
 "click #btDownload ":function(){
-
-   /* var zip = Meteor.call('getZip',$("#selectLeForm").val());
-    console.log(zip);*/
-
   $(".allFilesDownload").click();
 
 },
@@ -84,8 +80,6 @@ Template.reponses.events({
 
         reponses = reponsesForm.find({"idForm": $("#selectLeForm").val()});
 
-       // console.log("reponses :" + reponses);
-
         reponses.forEach(function (row) {
 
             tabReponses.push({"personne": row.idUser, "reponses": row.reponses});
@@ -101,11 +95,11 @@ Template.reponses.events({
 
             reponses.forEach(function (enr) {
 
-                if (enr.type == 3) {
-                    var dateFormat = moment(enr.reponse, 'YYYY-MM-DD').format('DD-MM-YYYY');
+                if (enr.type === 3) {
+                    var dateFormat = moment(enr.reponse).format('DD-MM-YYYY');
                     reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>" + dateFormat + "</div></div>";
                 }
-                else if (enr.type == 6) {
+                else if (enr.type === 6) {
 
                 reps += "<div class='row  panel-default'><div class=' col-md-6 panel-heading'>" + enr.label + "</div><div class='col-md-offset-1 col-md-4 panel-body'>";
                     divCheckbox="";
@@ -116,7 +110,7 @@ Template.reponses.events({
                  reps+="</div></div>";
 
                 }
-                else if (enr.type == 7) {
+                else if (enr.type === 7) {
 
                   fichier=true;
                     //template.gestionFichiersEnvoyes

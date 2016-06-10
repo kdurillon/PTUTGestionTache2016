@@ -3,7 +3,7 @@
 
 
      {{setTitle 'Formulaire'}}
-    <form id="formRegister" method="post" role="form">
+    <form id="formRegister" method="post" role="form" novalidate>
 
     {{#each Form}}
 
@@ -28,7 +28,7 @@
 
                     <div class='text-center form-group ctrlsApercu '>
                         <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <textarea id="textArea{{numero}}" name="textArea{{numero}}" rows='10'  class='form-control'   placeholder='Entrez votre texte ici.' required></textarea>
+                        <textarea id="textArea{{numero}}" name="textArea{{numero}}" rows='10'  class='form-control textarea'   placeholder='Entrez votre texte ici.' required></textarea>
                     </div>
 
                 {{/if}}
@@ -37,7 +37,7 @@
 
                     <div class='text-center form-group ctrlsApercu '>
                         <label for='' class='labelApercu control-label'>{{label}}</label>
-                        <input id='date{{numero}}' name='date{{numero}}' class='form-control'  type='date'   required />
+                        <input id='date{{numero}}' name='date{{numero}}' class='form-control datetimepicker'  type='date' required />
                     </div>
 
                 {{/if}}
@@ -112,7 +112,7 @@
     </section>
 
 
-    <h1 id="retour" class="text-center">  Merci pour votre retour </h1>
+    <h1 id="retour" class="text-center">  Merci pour votre retour. </h1>
     <h1 id="inconnu" class="text-center"> Désolé, nous ne vous connaissons pas. </h1>
 
 </template>
